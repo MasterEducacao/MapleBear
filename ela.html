@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELA Y5 · MapleBear</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange-50: #fff7ed;
+    --orange-100: #ffedd5;
+    --orange-200: #fed7aa;
+    --orange-300: #fdba74;
+    --orange-400: #fb923c;
+    --orange-500: #f97316;
+    --orange-600: #ea580c;
+    --orange-700: #c2410c;
+    --white: #ffffff;
+    --glass-bg: rgba(255,255,255,0.65);
+    --glass-border: rgba(249,115,22,0.18);
+    --shadow-soft: 0 8px 32px rgba(249,115,22,0.10);
+    --shadow-card: 0 4px 24px rgba(249,115,22,0.13);
+    --radius-xl: 2rem;
+    --radius-lg: 1.25rem;
+    --radius-md: 0.875rem;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 40%, #fff3e0 70%, #fde8d0 100%);
+    min-height: 100vh;
+    color: #3a1a00;
+  }
+
+  body::before {
+    content:''; position: fixed; top: -120px; right: -120px;
+    width: 520px; height: 520px;
+    background: radial-gradient(circle, rgba(251,146,60,0.18) 0%, transparent 70%);
+    border-radius: 50%; pointer-events: none; z-index: 0;
+  }
+  body::after {
+    content:''; position: fixed; bottom: -100px; left: -100px;
+    width: 440px; height: 440px;
+    background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
+    border-radius: 50%; pointer-events: none; z-index: 0;
+  }
+
+  header {
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(18px) saturate(1.4);
+    background: rgba(255,255,255,0.72);
+    border-bottom: 1.5px solid rgba(249,115,22,0.15);
+    box-shadow: 0 2px 18px rgba(249,115,22,0.08);
+    padding: 0.7rem 2rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  }
+  .logo { display: flex; align-items: center; gap: 0.7rem; }
+  .logo-icon { width: 42px; height: 42px; background: linear-gradient(135deg, var(--orange-400), var(--orange-600)); border-radius: 12px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; box-shadow: 0 4px 12px rgba(234,88,12,0.25); }
+  .logo-text { font-family: 'Baloo 2', cursive; font-weight:800; font-size:1.2rem; color: var(--orange-600); }
+  .logo-sub { font-size:0.72rem; font-weight:600; color: var(--orange-400); letter-spacing:.04em; }
+
+  .progress-bar-wrap { flex:1; max-width:320px; }
+  .progress-label { font-size:0.7rem; font-weight:700; color:var(--orange-500); margin-bottom:4px; text-transform:uppercase; letter-spacing:.06em; }
+  .progress-track { height:8px; background:rgba(253,186,116,0.35); border-radius:99px; overflow:hidden; }
+  .progress-fill { height:100%; background: linear-gradient(90deg, var(--orange-400), var(--orange-600)); border-radius:99px; transition: width .6s cubic-bezier(.4,0,.2,1); width:0%; }
+
+  .score-badge { background: linear-gradient(135deg, var(--orange-400), var(--orange-600)); color:#fff; font-weight:800; font-size:0.95rem; padding:.38rem .9rem; border-radius:99px; box-shadow: 0 3px 12px rgba(234,88,12,0.28); display:flex; align-items:center; gap:.4rem; }
+
+  .hero { text-align:center; padding: 3.5rem 1.5rem 2.5rem; position:relative; z-index:1; }
+  .hero-badge { display:inline-block; background: linear-gradient(90deg,#fb923c22,#f9731611); border:1.5px solid var(--orange-300); border-radius:99px; padding:.3rem 1rem; font-size:.78rem; font-weight:700; color:var(--orange-600); letter-spacing:.06em; text-transform:uppercase; margin-bottom:1.1rem; }
+  .hero h1 { font-family:'Baloo 2',cursive; font-weight:800; font-size:clamp(2rem,5vw,3rem); color:var(--orange-700); line-height:1.15; margin-bottom:.6rem; }
+  .hero p { font-size:1.05rem; color:#a05022; max-width:620px; margin:0 auto; font-weight:500; }
+
+  /* UNIT DIVIDER */
+  .unit-divider {
+    max-width:860px; margin: 2rem auto 0; padding: 0 1rem;
+    position:relative; z-index:1;
+  }
+  .unit-label {
+    display:flex; align-items:center; gap:.8rem;
+    background: linear-gradient(90deg, rgba(234,88,12,0.10), transparent);
+    border-left: 4px solid var(--orange-600);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: .6rem 1.2rem;
+    margin-bottom:.3rem;
+  }
+  .unit-label span { font-family:'Baloo 2',cursive; font-weight:800; font-size:1.05rem; color:var(--orange-700); }
+  .unit-label small { font-size:.75rem; font-weight:700; color:var(--orange-400); }
+
+  /* SECTION NAV DOTS */
+  /* SECTION NAV DOTS (padrão visual das outras páginas) */
+  .section-nav {
+    display: flex;
+    justify-content: center;
+    gap: 1.1rem;
+    padding: 1rem 0 .5rem;
+    position: relative;
+    z-index: 1;
+    flex-wrap: wrap;
+  }
+  .nav-dot {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--orange-200);
+    border: 2.5px solid var(--orange-300);
+    cursor: pointer;
+    transition: all .25s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--orange-700);
+    box-shadow: 0 2px 8px rgba(249,115,22,0.10);
+    position: relative;
+  }
+  .nav-dot.active {
+    background: var(--orange-500);
+    border-color: var(--orange-600);
+    color: #fff;
+    transform: scale(1.18);
+    box-shadow: 0 4px 16px rgba(249,115,22,0.18);
+  }
+  .nav-dot.done {
+    background: var(--orange-400);
+    border-color: var(--orange-500);
+    color: #fff;
+  }
+
+  .lesson-section { max-width:860px; margin:2rem auto; padding:0 1rem; position:relative; z-index:1; }
+
+  .section-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(1.3);
+    border: 1.5px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-soft);
+    padding: 2rem 2.2rem 1.8rem;
+    margin-bottom: 1.5rem;
+    position:relative; overflow:hidden;
+    transition: transform .25s, box-shadow .25s;
+  }
+  .section-card:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(249,115,22,0.14); }
+  .section-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:4px;
+    background: linear-gradient(90deg, var(--orange-400), var(--orange-600), var(--orange-300));
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+
+  .section-header { display:flex; align-items:center; gap:.9rem; margin-bottom:1.5rem; }
+  .section-icon { width:52px; height:52px; background:linear-gradient(135deg,var(--orange-400),var(--orange-600)); border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center; font-size:1.6rem; box-shadow:0 4px 16px rgba(234,88,12,0.22); flex-shrink:0; }
+  .section-title { font-family:'Baloo 2',cursive; font-weight:800; font-size:1.5rem; color:var(--orange-700); }
+  .section-subtitle { font-size:.78rem; font-weight:700; color:var(--orange-400); text-transform:uppercase; letter-spacing:.07em; }
+
+  .section-body { font-size:1rem; line-height:1.75; color:#4a2000; }
+  .section-body p { margin-bottom:1rem; }
+
+  .key-phrase-pt {
+    background: linear-gradient(90deg, rgba(253,186,116,0.35), rgba(249,115,22,0.10));
+    border-left: 4px solid var(--orange-500);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: .7rem 1.1rem; margin: 1.2rem 0;
+    font-weight:700; font-size:1.02rem; color:var(--orange-700); position:relative;
+  }
+  .key-phrase-pt::before { content:'🔑 PT'; position:absolute; top:-.62rem; left:.8rem; font-size:.65rem; font-weight:800; background:var(--orange-500); color:#fff; padding:.15rem .45rem; border-radius:99px; letter-spacing:.04em; }
+
+  .key-phrase-en {
+    background: linear-gradient(90deg, rgba(251,191,36,0.18), rgba(245,158,11,0.08));
+    border-left: 4px solid #f59e0b;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: .7rem 1.1rem; margin: 1.2rem 0;
+    font-weight:700; font-size:1.02rem; color:#92400e; font-style:italic; position:relative;
+  }
+  .key-phrase-en::before { content:'🔑 EN'; position:absolute; top:-.62rem; left:.8rem; font-size:.65rem; font-weight:800; background:#f59e0b; color:#fff; padding:.15rem .45rem; border-radius:99px; letter-spacing:.04em; }
+
+  .example-box {
+    background: rgba(255,247,237,0.85);
+    border: 1.5px solid rgba(253,186,116,0.45);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.3rem; margin: 1rem 0;
+  }
+  .example-box strong { color: var(--orange-600); }
+  .example-box p { margin-bottom:.4rem; }
+
+  .example-grid { display:flex; flex-wrap:wrap; gap:.45rem .9rem; margin-top:.55rem; }
+  .example-pair { background: white; border: 1.5px solid var(--orange-200); border-radius: 99px; padding: .25rem .8rem; font-size:.88rem; font-weight:700; color: var(--orange-700); }
+
+  /* GRAMMAR TABLE */
+  .grammar-table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:.92rem; }
+  .grammar-table th { background: linear-gradient(135deg,var(--orange-400),var(--orange-600)); color:white; padding:.55rem .9rem; text-align:left; font-family:'Baloo 2',cursive; font-weight:700; }
+  .grammar-table th:first-child { border-radius:var(--radius-md) 0 0 0; }
+  .grammar-table th:last-child { border-radius:0 var(--radius-md) 0 0; }
+  .grammar-table td { padding:.5rem .9rem; border-bottom:1px solid rgba(253,186,116,0.3); color:#4a2000; font-weight:600; background: rgba(255,255,255,0.6); }
+  .grammar-table tr:last-child td { border-bottom:none; }
+  .grammar-table tr:last-child td:first-child { border-radius:0 0 0 var(--radius-md); }
+  .grammar-table tr:last-child td:last-child { border-radius:0 0 var(--radius-md) 0; }
+  .grammar-table tr:hover td { background:rgba(255,237,213,0.7); }
+
+  /* WRITING STEPS */
+  .writing-steps { display:flex; flex-direction:column; gap:.7rem; margin:1rem 0; }
+  .writing-step {
+    display:flex; align-items:flex-start; gap:.9rem;
+    background: rgba(255,255,255,0.75);
+    border: 1.5px solid rgba(253,186,116,0.35);
+    border-radius: var(--radius-md);
+    padding: .8rem 1.1rem;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .writing-step:hover { transform:translateX(4px); box-shadow:0 4px 16px rgba(249,115,22,0.12); }
+  .step-num { width:36px; height:36px; background:linear-gradient(135deg,var(--orange-400),var(--orange-600)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Baloo 2',cursive; font-weight:800; color:white; font-size:1rem; flex-shrink:0; }
+  .step-body h4 { font-family:'Baloo 2',cursive; font-weight:800; color:var(--orange-700); font-size:1rem; }
+  .step-body p { font-size:.88rem; color:#5c2800; margin-top:.2rem; }
+
+  /* BOOK INFO */
+  .book-info {
+    display: flex; align-items: center; gap: 1.2rem;
+    background: linear-gradient(135deg, rgba(255,237,213,0.9), rgba(254,215,170,0.6));
+    border: 1.5px solid rgba(253,186,116,0.5);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.4rem; margin-bottom: 1.5rem;
+  }
+  .book-emoji { font-size: 2.8rem; flex-shrink: 0; }
+  .book-details h3 { font-family:'Baloo 2',cursive; font-weight:800; color:var(--orange-700); font-size:1.1rem; }
+  .book-details p { font-size:.85rem; color:#7c3500; font-weight:600; margin-top:.15rem; }
+
+  /* CHAR CARDS */
+  .char-grid { display:flex; flex-wrap:wrap; gap:.7rem; margin:1rem 0; }
+  .char-card {
+    flex:1; min-width:160px;
+    background:rgba(255,255,255,0.8);
+    border:1.5px solid rgba(253,186,116,0.4);
+    border-radius:var(--radius-md);
+    padding:.8rem 1rem;
+  }
+  .char-name { font-family:'Baloo 2',cursive; font-weight:800; color:var(--orange-600); font-size:.95rem; margin-bottom:.35rem; }
+  .char-traits { font-size:.85rem; color:#5c2800; font-weight:600; }
+
+  /* VOCAB */
+  .vocab-box {
+    background: linear-gradient(135deg, rgba(255,237,213,0.8), rgba(255,247,237,0.9));
+    border: 1.5px solid rgba(253,186,116,0.5);
+    border-radius: var(--radius-lg);
+    padding: 1.2rem 1.5rem; margin: 1.5rem 0;
+  }
+  .vocab-title { font-family:'Baloo 2',cursive; font-weight:800; color:var(--orange-600); font-size:1rem; margin-bottom:.8rem; display:flex; align-items:center; gap:.4rem; }
+  .vocab-grid { display:flex; flex-wrap:wrap; gap:.5rem; }
+  .vocab-term {
+    background: white; border: 1.5px solid var(--orange-300); border-radius:99px;
+    padding:.28rem .85rem; font-size:.83rem; font-weight:700; color:var(--orange-700);
+    cursor:pointer; transition:all .2s; position:relative;
+  }
+  .vocab-term:hover { background:var(--orange-500); color:white; transform:translateY(-2px); box-shadow:0 4px 12px rgba(249,115,22,0.28); }
+  .vocab-tooltip {
+    display:none; position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%);
+    background:rgba(58,26,0,0.92); color:white; border-radius:var(--radius-md); padding:.5rem .85rem;
+    font-size:.78rem; font-weight:600; white-space:nowrap; z-index:200;
+    box-shadow:0 4px 16px rgba(0,0,0,0.18);
+  }
+  .vocab-tooltip::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:5px solid transparent; border-top-color:rgba(58,26,0,0.92); }
+  .vocab-term:hover .vocab-tooltip { display:block; animation: fadeInUp .2s ease; }
+
+  /* QUIZ */
+  .quiz-section {
+    background: var(--glass-bg); backdrop-filter: blur(20px) saturate(1.3);
+    border: 1.5px solid var(--glass-border); border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card); padding: 1.8rem 2.2rem;
+    margin-bottom: 1.5rem; position:relative; overflow:hidden;
+  }
+  .quiz-section::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:4px;
+    background: linear-gradient(90deg, #f59e0b, var(--orange-500), #f97316);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+  .quiz-header { display:flex; align-items:center; gap:.8rem; margin-bottom:1.5rem; }
+  .quiz-icon { font-size:1.4rem; }
+  .quiz-title { font-family:'Baloo 2',cursive; font-weight:800; font-size:1.15rem; color:var(--orange-700); }
+  .quiz-lang-badge { margin-left:auto; font-size:.7rem; font-weight:800; padding:.22rem .65rem; border-radius:99px; letter-spacing:.05em; text-transform:uppercase; }
+  .badge-pt { background:rgba(249,115,22,0.12); color:var(--orange-600); border:1.5px solid var(--orange-300); }
+  .badge-en { background:rgba(245,158,11,0.12); color:#b45309; border:1.5px solid #fbbf24; }
+
+  .question-block { margin-bottom:1.5rem; }
+  .question-num { font-size:.73rem; font-weight:800; color:var(--orange-400); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.35rem; }
+  .question-text { font-weight:700; font-size:1rem; color:#3a1a00; margin-bottom:.85rem; line-height:1.5; }
+
+  .options { display:flex; flex-direction:column; gap:.55rem; }
+  .option-btn {
+    background: rgba(255,255,255,0.8); border: 2px solid rgba(253,186,116,0.4);
+    border-radius: var(--radius-md); padding:.75rem 1.1rem;
+    font-family:'Nunito',sans-serif; font-size:.93rem; font-weight:600; color:#5c2800;
+    cursor:pointer; text-align:left; transition:all .2s; display:flex; align-items:center; gap:.7rem;
+  }
+  .option-btn:hover:not(:disabled) { background:rgba(255,237,213,0.95); border-color:var(--orange-400); transform:translateX(4px); }
+  .option-letter { width:28px; height:28px; background:linear-gradient(135deg,var(--orange-200),var(--orange-300)); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.82rem; color:var(--orange-700); flex-shrink:0; transition:all .2s; }
+  .option-btn.correct { background:rgba(187,247,208,0.7); border-color:#22c55e; color:#14532d; }
+  .option-btn.correct .option-letter { background:#22c55e; color:white; }
+  .option-btn.wrong { background:rgba(254,202,202,0.7); border-color:#ef4444; color:#7f1d1d; }
+  .option-btn.wrong .option-letter { background:#ef4444; color:white; }
+  .option-btn:disabled { cursor:default; }
+
+  .feedback-msg { border-radius:var(--radius-md); padding:.7rem 1rem; font-weight:700; font-size:.9rem; margin-top:.7rem; display:none; animation: slideIn .3s ease; }
+  .feedback-msg.correct { background:rgba(187,247,208,0.6); color:#15803d; border:1.5px solid #86efac; display:flex; gap:.5rem; align-items:center; }
+  .feedback-msg.wrong { background:rgba(254,202,202,0.6); color:#dc2626; border:1.5px solid #fca5a5; display:flex; gap:.5rem; align-items:center; }
+
+  .confetti-container { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
+  .confetti-piece { position:absolute; width:10px; height:10px; border-radius:2px; animation: confettiFall 1.2s ease-in forwards; }
+
+  .section-complete {
+    display:none; text-align:center; padding:1.5rem; margin-top:1rem;
+    background:linear-gradient(135deg,rgba(187,247,208,0.4),rgba(134,239,172,0.2));
+    border:1.5px solid #86efac; border-radius:var(--radius-lg); animation: fadeInUp .4s ease;
+  }
+  .section-complete.show { display:block; }
+  .section-complete h3 { font-family:'Baloo 2',cursive; font-weight:800; color:#15803d; font-size:1.3rem; margin-bottom:.4rem; }
+  .section-complete p { color:#166534; font-size:.9rem; }
+
+  .next-section-btn {
+    display:none; margin: 1rem auto 0; padding:.8rem 2rem;
+    background:linear-gradient(135deg,var(--orange-400),var(--orange-600));
+    color:white; border:none; border-radius:99px; font-family:'Baloo 2',cursive;
+    font-weight:800; font-size:1rem; cursor:pointer; box-shadow:0 4px 16px rgba(234,88,12,0.28);
+    transition:all .25s; text-transform:uppercase; letter-spacing:.05em;
+  }
+  .next-section-btn:hover { transform:translateY(-2px) scale(1.03); box-shadow:0 8px 24px rgba(234,88,12,0.35); }
+  .next-section-btn.show { display:block; animation: fadeInUp .4s ease; }
+
+  .final-trophy { display:none; text-align:center; padding:3rem 2rem; position:relative; z-index:1; }
+  .final-trophy.show { display:block; animation: fadeInUp .6s ease; }
+  .trophy-card { background:var(--glass-bg); backdrop-filter:blur(20px); border:2px solid rgba(253,186,116,0.4); border-radius:var(--radius-xl); padding:3rem 2rem; max-width:540px; margin:0 auto; box-shadow:0 16px 48px rgba(249,115,22,0.15); }
+  .trophy-emoji { font-size:5rem; margin-bottom:1rem; display:block; animation: bounce 1s ease infinite; }
+  .trophy-card h2 { font-family:'Baloo 2',cursive; font-weight:800; font-size:2rem; color:var(--orange-700); margin-bottom:.7rem; }
+  .trophy-score { font-size:3rem; font-weight:900; color:var(--orange-600); font-family:'Baloo 2',cursive; }
+  .trophy-card p { color:#a05022; margin-top:.8rem; font-size:1rem; }
+
+  @keyframes fadeInUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes slideIn { from { opacity:0; transform:translateX(-10px); } to { opacity:1; transform:translateX(0); } }
+  @keyframes confettiFall { 0% { opacity:1; transform:translateY(0) rotate(0deg) scale(1); } 100% { opacity:0; transform:translateY(100vh) rotate(540deg) scale(.6); } }
+  @keyframes bounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-12px); } }
+
+  .fade-in { animation: fadeInUp .5s ease both; }
+  .reveal { opacity:0; transform:translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  @media(max-width:600px) {
+    .section-card, .quiz-section { padding:1.3rem 1.1rem; }
+    header { padding:.6rem 1rem; }
+    .logo-text { font-size:1rem; }
+    .progress-bar-wrap { max-width:160px; }
+    .char-grid { flex-direction:column; }
+    .grammar-table { font-size:.78rem; }
+    .grammar-table th, .grammar-table td { padding:.4rem .6rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="confetti-container" id="confettiContainer"></div>
+
+<header style="position:relative;">
+  <div class="logo">
+    <a href="index.html" style="display:flex;gap:4px;padding:0;background:none;box-shadow:none;border-radius:0;align-items:center;cursor:pointer;text-decoration:none;">
+      <img src="logo1.png" alt="Logo 1" style="width:38px;height:38px;object-fit:contain;border-radius:8px;background:#fff;box-shadow:0 2px 8px rgba(249,115,22,0.10);">
+    </a>
+    <div style="margin-left:10px;">
+      <div class="logo-text">MapleBear Y5</div>
+      <div class="logo-sub">ELA · English Language and Arts</div>
+    </div>
+  </div>
+  <img src="logo2.png" alt="Logo 2" style="position:absolute;right:2rem;top:50%;transform:translateY(-50%);width:38px;height:38px;object-fit:contain;border-radius:8px;background:#fff;box-shadow:0 2px 8px rgba(249,115,22,0.10);">
+  <div class="progress-bar-wrap">
+    <div class="progress-label">Progresso · Progress</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+  <div class="score-badge">⭐ <span id="scoreDisplay">0</span> pts</div>
+</header>
+
+<div class="hero fade-in">
+  <div class="hero-badge">ELA · Year 5 · Units 1 · 2 · 3</div>
+  <h1>English Language and Arts<br><span style="font-size:.65em;color:var(--orange-500);">Inglês — Linguagem e Literatura</span></h1>
+  <p>Building Community · Writing Process · Reading Novels — Research Materials 1 to 10</p>
+</div>
+
+<div class="section-nav" id="sectionNav">
+  <div class="nav-dot active"  data-section="0" title="ELA 1 — Irregular Verbs">1</div>
+  <div class="nav-dot" data-section="1" title="ELA 2 — Past Perfect">2</div>
+  <div class="nav-dot" data-section="2" title="ELA 3 — Present Continuous">3</div>
+  <div class="nav-dot" data-section="3" title="ELA 4 — Writing Process">4</div>
+  <div class="nav-dot" data-section="4" title="ELA 5 — Linking Verbs">5</div>
+  <div class="nav-dot" data-section="5" title="ELA 6 — Verbs &amp; Verbals">6</div>
+  <div class="nav-dot" data-section="6" title="ELA 7 — Tales of a Fourth Grade Nothing">7</div>
+  <div class="nav-dot" data-section="7" title="ELA 8 — Adjectives &amp; Personality Traits">8</div>
+  <div class="nav-dot" data-section="8" title="ELA 9 — Comparatives &amp; Superlatives">9</div>
+  <div class="nav-dot" data-section="9" title="ELA 10 — Adverbs of Manner">10</div>
+</div>
+
+<!-- ==================== UNIT 1 DIVIDER ==================== -->
+<div class="unit-divider reveal" id="ud0">
+  <div class="unit-label">
+    <span>📚 Unit 1: Building a Classroom Community</span>
+    <small>Research Materials 1, 2 &amp; 3</small>
+  </div>
+</div>
+
+<!-- ==================== SEC 0 — ELA 1: IRREGULAR VERBS ==================== -->
+<div class="lesson-section reveal" id="sec0">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">📝</div>
+      <div>
+        <div class="section-subtitle">ELA 1 · Seção 1 of 10</div>
+        <div class="section-title">Irregular Verbs · Verbos Irregulares</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>Irregular verbs are verbs that <strong>do not follow the regular rule</strong> when we change them to the past. Instead of adding <strong>-ed</strong>, they change in a completely different way.</p>
+
+      <div class="key-phrase-en">Regular verbs → add -ed in the past. Irregular verbs → change in a different way (they do not follow one rule).</div>
+      <div class="key-phrase-pt">Verbos regulares adicionam -ed no passado. Verbos irregulares mudam de forma diferente — cada um à sua maneira.</div>
+
+      <div class="example-box">
+        <strong>Regular Verbs — add -ed:</strong>
+        <div class="example-grid">
+          <span class="example-pair">play → played</span>
+          <span class="example-pair">walk → walked</span>
+          <span class="example-pair">jump → jumped</span>
+        </div>
+        <div style="margin-top:.8rem;"><strong>Irregular Verbs — change differently:</strong></div>
+        <div class="example-grid">
+          <span class="example-pair">go → went</span>
+          <span class="example-pair">eat → ate</span>
+          <span class="example-pair">see → saw</span>
+        </div>
+      </div>
+
+      <p>Here is the full irregular verb reference table from Research Material 1:</p>
+
+      <table class="grammar-table">
+        <tr><th>Base Form</th><th>Simple Past</th><th>Past Participle</th><th>Base Form</th><th>Simple Past</th><th>Past Participle</th></tr>
+        <tr><td>be</td><td>was / were</td><td>been</td><td>keep</td><td>kept</td><td>kept</td></tr>
+        <tr><td>become</td><td>became</td><td>become</td><td>know</td><td>knew</td><td>known</td></tr>
+        <tr><td>begin</td><td>began</td><td>begun</td><td>leave</td><td>left</td><td>left</td></tr>
+        <tr><td>bend</td><td>bent</td><td>bent</td><td>lend</td><td>lent</td><td>lent</td></tr>
+        <tr><td>bite</td><td>bit</td><td>bitten</td><td>lose</td><td>lost</td><td>lost</td></tr>
+        <tr><td>blow</td><td>blew</td><td>blown</td><td>make</td><td>made</td><td>made</td></tr>
+        <tr><td>break</td><td>broke</td><td>broken</td><td>meet</td><td>met</td><td>met</td></tr>
+        <tr><td>bring</td><td>brought</td><td>brought</td><td>pay</td><td>paid</td><td>paid</td></tr>
+        <tr><td>build</td><td>built</td><td>built</td><td>put</td><td>put</td><td>put</td></tr>
+        <tr><td>buy</td><td>bought</td><td>bought</td><td>read</td><td>read</td><td>read</td></tr>
+        <tr><td>catch</td><td>caught</td><td>caught</td><td>ride</td><td>rode</td><td>ridden</td></tr>
+        <tr><td>choose</td><td>chose</td><td>chosen</td><td>ring</td><td>rang</td><td>rung</td></tr>
+        <tr><td>come</td><td>came</td><td>come</td><td>run</td><td>ran</td><td>run</td></tr>
+        <tr><td>cost</td><td>cost</td><td>cost</td><td>say</td><td>said</td><td>said</td></tr>
+        <tr><td>cut</td><td>cut</td><td>cut</td><td>see</td><td>saw</td><td>seen</td></tr>
+        <tr><td>do</td><td>did</td><td>done</td><td>sell</td><td>sold</td><td>sold</td></tr>
+        <tr><td>draw</td><td>drew</td><td>drawn</td><td>send</td><td>sent</td><td>sent</td></tr>
+      </table>
+    </div>
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Key Words</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Irregular verb<div class="vocab-tooltip">Verbo que não segue a regra -ed. / A verb with an unpredictable past.</div></div>
+        <div class="vocab-term">Base form<div class="vocab-tooltip">Forma base do verbo (infinitivo). / The verb's infinitive form.</div></div>
+        <div class="vocab-term">Simple past<div class="vocab-tooltip">Passado simples. / The basic past tense.</div></div>
+        <div class="vocab-term">Past participle<div class="vocab-tooltip">Particípio passado (usado com have/had). / Used with have/had.</div></div>
+        <div class="vocab-term">Regular verb<div class="vocab-tooltip">Verbo que adiciona -ed no passado. / Verb that adds -ed in the past.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🧠</span><span class="quiz-title">Quiz — Verbos Irregulares</span><span class="quiz-lang-badge badge-pt">🇧🇷 Português</span></div>
+    <div id="quiz-s0-pt"></div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🌎</span><span class="quiz-title">Quiz — Irregular Verbs</span><span class="quiz-lang-badge badge-en">🇨🇦 English</span></div>
+    <div id="quiz-s0-en"></div>
+  </div>
+  <div class="section-complete" id="complete-s0"><h3>🎉 Seção concluída! · Section Complete!</h3><p>Arrasou nos Irregular Verbs! · You nailed Irregular Verbs!</p></div>
+  <button class="next-section-btn" id="next-s0" onclick="goToSection(1)">Próxima Seção ➜</button>
+</div>
+
+<!-- ==================== SEC 1 — ELA 2: PAST PERFECT ==================== -->
+<div class="lesson-section reveal" id="sec1" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">⏮️</div>
+      <div>
+        <div class="section-subtitle">ELA 2 · Seção 2 of 10</div>
+        <div class="section-title">Past Perfect · Passado Perfeito</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>We use <strong>HAD + past participle</strong> to talk about something that happened <strong>before another action in the past</strong>. This is called the <strong>Past Perfect</strong>.</p>
+
+      <div class="key-phrase-en">Structure: Subject + HAD + past participle — use HAD + past participle for the FIRST action in the past.</div>
+      <div class="key-phrase-pt">Estrutura: Sujeito + HAD + particípio passado — usamos para a ação que aconteceu PRIMEIRO no passado.</div>
+
+      <div class="example-box">
+        <strong>Examples · Exemplos:</strong>
+        <p>E.g 1: I <strong>had eaten</strong> before school. <em>(Eu tinha comido antes da escola.)</em></p>
+        <p>E.g 2: She <strong>had finished</strong> her homework before dinner. <em>(Ela tinha terminado o dever antes do jantar.)</em></p>
+        <p>E.g 3: <strong>I had eaten before I went to school.</strong></p>
+        <p style="font-size:.85rem;color:#7c3500;">→ What happened first? <strong>I had eaten</strong> ✅ &nbsp;|&nbsp; What happened second? <strong>I went to school</strong></p>
+      </div>
+
+      <p>When do we use <strong>"had + past participle"</strong>?<br>We use it when <strong>two things happened in the past</strong>, and we want to show which one happened first.</p>
+
+      <div class="example-box">
+        <strong>More examples · Mais exemplos:</strong>
+        <p>E.g 4: She <strong>had finished</strong> the book before the test.</p>
+        <p>E.g 5: We <strong>had studied</strong> before the exam.</p>
+        <p>E.g 6: He <strong>had gone</strong> home before it rained.</p>
+      </div>
+    </div>
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Key Words</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Past Perfect<div class="vocab-tooltip">Passado perfeito: had + particípio. / Had + past participle tense.</div></div>
+        <div class="vocab-term">HAD<div class="vocab-tooltip">Auxiliar do Past Perfect (passado de "have"). / Auxiliary verb for past perfect.</div></div>
+        <div class="vocab-term">Past participle<div class="vocab-tooltip">Terceira coluna dos verbos. Ex: eaten, done, gone.</div></div>
+        <div class="vocab-term">Before<div class="vocab-tooltip">Antes — conecta as duas ações no passado. / Connects the two past actions.</div></div>
+        <div class="vocab-term">First action<div class="vocab-tooltip">A ação que aconteceu primeiro usa HAD. / The action that happened first uses HAD.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🧠</span><span class="quiz-title">Quiz — Past Perfect</span><span class="quiz-lang-badge badge-pt">🇧🇷 Português</span></div>
+    <div id="quiz-s1-pt"></div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🌎</span><span class="quiz-title">Quiz — Past Perfect</span><span class="quiz-lang-badge badge-en">🇨🇦 English</span></div>
+    <div id="quiz-s1-en"></div>
+  </div>
+  <div class="section-complete" id="complete-s1"><h3>🎉 Seção concluída! · Section Complete!</h3><p>Você dominou o Past Perfect! · You mastered the Past Perfect!</p></div>
+  <button class="next-section-btn" id="next-s1" onclick="goToSection(2)">Próxima Seção ➜</button>
+</div>
+
+<!-- ==================== SEC 2 — ELA 3: PRESENT CONTINUOUS ==================== -->
+<div class="lesson-section reveal" id="sec2" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">▶️</div>
+      <div>
+        <div class="section-subtitle">ELA 3 · Seção 3 of 10</div>
+        <div class="section-title">Present Continuous · Presente Contínuo</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>The Present Continuous is used to talk about things <strong>happening now, at this moment</strong>. It describes actions currently in progress.</p>
+
+      <div class="key-phrase-en">Structure: am / is / are + verb + ing — use it for actions happening NOW or at this moment.</div>
+      <div class="key-phrase-pt">Estrutura: am/is/are + verbo + ing — usado para ações que estão acontecendo AGORA ou neste momento.</div>
+
+      <table class="grammar-table">
+        <tr><th>Subject · Sujeito</th><th>Verb "to be"</th><th>Example</th></tr>
+        <tr><td><strong>I</strong></td><td>am</td><td>I <strong>am reading</strong> a book.</td></tr>
+        <tr><td><strong>He / She / It</strong></td><td>is</td><td>She <strong>is writing</strong> a paragraph.</td></tr>
+        <tr><td><strong>You / We / They</strong></td><td>are</td><td>They <strong>are working</strong> together.</td></tr>
+      </table>
+
+      <p>We use the Present Continuous for:</p>
+      <div class="example-box">
+        <p>✅ <strong>Actions happening now</strong> · <em>Ações acontecendo agora</em></p>
+        <p>✅ <strong>Actions happening at the moment</strong> · <em>Ações acontecendo neste momento</em></p>
+        <p>✅ <strong>Temporary actions</strong> · <em>Ações temporárias</em></p>
+        <br>
+        <p>E.g 4: I <strong>am doing</strong> my homework now.</p>
+        <p>E.g 5: She <strong>is reading</strong> a novel.</p>
+        <p>E.g 6: We <strong>are helping</strong> our classmates.</p>
+      </div>
+    </div>
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Key Words</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Present Continuous<div class="vocab-tooltip">Presente contínuo: am/is/are + verb+ing.</div></div>
+        <div class="vocab-term">am / is / are<div class="vocab-tooltip">Verbos auxiliares do Present Continuous.</div></div>
+        <div class="vocab-term">-ing form<div class="vocab-tooltip">Forma do verbo com -ing. Ex: reading, playing.</div></div>
+        <div class="vocab-term">At this moment<div class="vocab-tooltip">Neste momento — indica que a ação ocorre agora.</div></div>
+        <div class="vocab-term">Temporary<div class="vocab-tooltip">Temporário — algo que não é permanente.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🧠</span><span class="quiz-title">Quiz — Presente Contínuo</span><span class="quiz-lang-badge badge-pt">🇧🇷 Português</span></div>
+    <div id="quiz-s2-pt"></div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🌎</span><span class="quiz-title">Quiz — Present Continuous</span><span class="quiz-lang-badge badge-en">🇨🇦 English</span></div>
+    <div id="quiz-s2-en"></div>
+  </div>
+  <div class="section-complete" id="complete-s2"><h3>🎉 Seção concluída! · Section Complete!</h3><p>Present Continuous dominado! · Present Continuous mastered!</p></div>
+  <button class="next-section-btn" id="next-s2" onclick="goToSection(3)">Próxima Seção ➜</button>
+</div>
+
+<!-- ==================== UNIT 2 DIVIDER ==================== -->
+<div class="unit-divider reveal" id="ud1" style="display:none">
+  <div class="unit-label">
+    <span>✍️ Unit 2: Establishing the Writing Process</span>
+    <small>Research Materials 4, 5, 6 &amp; 7</small>
+  </div>
+</div>
+
+<!-- ==================== SEC 3 — ELA 4: WRITING PROCESS ==================== -->
+<div class="lesson-section reveal" id="sec3" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">✍️</div>
+      <div>
+        <div class="section-subtitle">ELA 4 · Seção 4 of 10</div>
+        <div class="section-title">The Writing Process · O Processo de Escrita</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>The Writing Process is <strong>the steps we follow to write a good text</strong>. Good writers do not write everything at once — they write step by step to make their writing better.</p>
+
+      <div class="key-phrase-en">The Writing Process has 5 steps: Prewriting → Drafting → Revising → Editing → Publishing.</div>
+      <div class="key-phrase-pt">O processo de escrita tem 5 etapas: Pré-escrita → Rascunho → Revisão → Edição → Publicação.</div>
+
+      <div class="writing-steps">
+        <div class="writing-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Prewriting · Pré-escrita (Think and Plan)</h4>
+            <p>This is when you think about your ideas and plan your writing. Brainstorm ideas and organize your thoughts.</p>
+          </div>
+        </div>
+        <div class="writing-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>Drafting · Rascunho (Write)</h4>
+            <p>This is when you write your first text (first draft). Get your ideas down — don't worry about mistakes yet.</p>
+          </div>
+        </div>
+        <div class="writing-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Revising · Revisão (Make it Better)</h4>
+            <p>This is when you improve your writing. Add and change ideas to make it better.</p>
+          </div>
+        </div>
+        <div class="writing-step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Editing · Edição (Fix Mistakes)</h4>
+            <p>This is when you fix the mistakes — check spelling, fix punctuation, correct grammar.</p>
+          </div>
+        </div>
+        <div class="writing-step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <h4>Publishing · Publicação (Final Copy)</h4>
+            <p>This is when you write the final copy and share your work with others.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Key Words</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Prewriting<div class="vocab-tooltip">Planejar e organizar ideias antes de escrever.</div></div>
+        <div class="vocab-term">Drafting<div class="vocab-tooltip">Escrever o primeiro rascunho do texto.</div></div>
+        <div class="vocab-term">Revising<div class="vocab-tooltip">Melhorar o conteúdo do texto.</div></div>
+        <div class="vocab-term">Editing<div class="vocab-tooltip">Corrigir erros de ortografia, pontuação e gramática.</div></div>
+        <div class="vocab-term">Publishing<div class="vocab-tooltip">Escrever a versão final e compartilhar.</div></div>
+        <div class="vocab-term">Draft<div class="vocab-tooltip">Rascunho — versão inicial, não final.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🧠</span><span class="quiz-title">Quiz — Processo de Escrita</span><span class="quiz-lang-badge badge-pt">🇧🇷 Português</span></div>
+    <div id="quiz-s3-pt"></div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🌎</span><span class="quiz-title">Quiz — The Writing Process</span><span class="quiz-lang-badge badge-en">🇨🇦 English</span></div>
+    <div id="quiz-s3-en"></div>
+  </div>
+  <div class="section-complete" id="complete-s3"><h3>🎉 Seção concluída! · Section Complete!</h3><p>Incrível! Você dominou o Writing Process! · Amazing! You mastered the Writing Process!</p></div>
+  <button class="next-section-btn" id="next-s3" onclick="goToSection(4)">Próxima Seção ➜</button>
+</div>
+
+<!-- ==================== SEC 4 — ELA 5: LINKING VERBS ==================== -->
+<div class="lesson-section reveal" id="sec4" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">🔗</div>
+      <div>
+        <div class="section-subtitle">ELA 5 · Seção 5 of 10</div>
+        <div class="section-title">Linking Verbs · Verbos de Ligação</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>Linking verbs are verbs that <strong>connect the subject to a description or state</strong>. They do not show action — they describe what the subject <em>is</em> or <em>feels like</em>.</p>
+
+      <div class="key-phrase-en">Linking verbs: am, is, are, was, were, seem, become — they connect the subject to a description, feeling, or state.</div>
+      <div class="key-phrase-pt">Verbos de ligação: am, is, are, was, were, seem, become — conectam o sujeito a uma descrição, sentimento ou estado.</div>
+
+      <div class="example-box">
+        <strong>Linking Verbs — Main Examples:</strong>
+        <div class="example-grid">
+          <span class="example-pair">am · is · are</span>
+          <span class="example-pair">was · were</span>
+          <span class="example-pair">seem · become</span>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <strong>Examples with characters · Exemplos com os personagens:</strong>
+        <p>👦 <strong>Peter is</strong> frustrated. <em>(Peter está frustrado.)</em></p>
+        <p>😄 <strong>Fudge is</strong> funny. <em>(Fudge é engraçado.)</em></p>
+        <p>👨‍👩‍👦 <strong>His parents are</strong> patient. <em>(Seus pais são pacientes.)</em></p>
+        <p>📖 <strong>The story seems</strong> interesting. <em>(A história parece interessante.)</em></p>
+        <p>⭐ <strong>Peter becomes</strong> more patient. <em>(Peter se torna mais paciente.)</em></p>
+      </div>
+
+      <p>We use linking verbs to describe <strong>characters, feelings, and events</strong> from stories — for example from <em>Tales of a Fourth Grade Nothing</em>.</p>
+    </div>
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Key Words</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Linking verb<div class="vocab-tooltip">Verbo de ligação — conecta sujeito ao estado.</div></div>
+        <div class="vocab-term">is / am / are<div class="vocab-tooltip">Presente dos verbos de ligação mais comuns.</div></div>
+        <div class="vocab-term">was / were<div class="vocab-tooltip">Passado dos verbos de ligação.</div></div>
+        <div class="vocab-term">seem<div class="vocab-tooltip">Parecer — ex: "The story seems interesting."</div></div>
+        <div class="vocab-term">become<div class="vocab-tooltip">Tornar-se — ex: "Peter becomes patient."</div></div>
+        <div class="vocab-term">Description<div class="vocab-tooltip">Descrição — o que o linking verb conecta ao sujeito.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🧠</span><span class="quiz-title">Quiz — Verbos de Ligação</span><span class="quiz-lang-badge badge-pt">🇧🇷 Português</span></div>
+    <div id="quiz-s4-pt"></div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🌎</span><span class="quiz-title">Quiz — Linking Verbs</span><span class="quiz-lang-badge badge-en">🇨🇦 English</span></div>
+    <div id="quiz-s4-en"></div>
+  </div>
+  <div class="section-complete" id="complete-s4"><h3>🎉 Seção concluída! · Section Complete!</h3><p>Ótimo! Linking Verbs no papo! · Great! Linking Verbs done!</p></div>
+  <button class="next-section-btn" id="next-s4" onclick="goToSection(5)">Próxima Seção ➜</button>
+</div>
+
+<!-- ==================== SEC 5 — ELA 6: VERBS & VERBALS ==================== -->
+<div class="lesson-section reveal" id="sec5" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">⚡</div>
+      <div>
+        <div class="section-subtitle">ELA 6 · Seção 6 of 10</div>
+        <div class="section-title">Verbs &amp; Verbals · Verbos e Verbais</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p><strong>Verbs</strong> are <em>action words</em>. They show what someone or something <strong>does</strong>.</p>
+
+      <div class="key-phrase-en">Verb = action. Verbal = a word that comes from a verb but acts as a NOUN (not an action) in the sentence.</div>
+      <div class="key-phrase-pt">Verbo = ação. Verbal = palavra derivada de um verbo que funciona como SUBSTANTIVO (não ação) na frase.</div>
+
+      <div class="example-box">
+        <strong>Verbs · Verbos (action = ação):</strong>
+        <p>• I <strong>run</strong> every day. &nbsp;• She <strong>reads</strong> a book. &nbsp;• They <strong>play</strong> soccer. &nbsp;• He <strong>writes</strong> a story.</p>
+        <p style="font-size:.85rem;color:var(--orange-600);margin-top:.4rem;"><strong>Verb = action 🏃</strong></p>
+      </div>
+
+      <p><strong>Verbals</strong> are words that come from verbs, but they <strong>do not work as verbs</strong> in the sentence — they work as <strong>nouns</strong> (subjects or objects).</p>
+
+      <div class="example-box">
+        <strong>Verbals · Verbais (noun = substantivo):</strong>
+        <p>• <strong>Reading</strong> is fun. &nbsp;• <strong>Playing</strong> soccer is exciting.</p>
+        <p>• <strong>Writing</strong> is important. &nbsp;• <strong>Drawing</strong> is my favorite activity.</p>
+        <p>• Peter likes <strong>to help</strong> his mom.</p>
+        <p style="font-size:.85rem;color:#7c3500;margin-top:.5rem;">In these sentences, <strong>reading, playing, writing, drawing</strong> are <em>activities</em> — so they are <strong>nouns</strong>, not actions.</p>
+      </div>
+    </div>
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Key Words</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Verb<div class="vocab-tooltip">Palavra de ação. Ex: run, jump, write. / Action word.</div></div>
+        <div class="vocab-term">Verbal<div class="vocab-tooltip">Derivado de verbo, funciona como substantivo. / Verb-derived noun.</div></div>
+        <div class="vocab-term">Gerund (-ing)<div class="vocab-tooltip">Verbal: verbo + -ing como substantivo. Ex: Reading is fun.</div></div>
+        <div class="vocab-term">Infinitive (to+verb)<div class="vocab-tooltip">Verbal: to + verbo. Ex: Peter likes to help.</div></div>
+        <div class="vocab-term">Noun<div class="vocab-tooltip">Substantivo — pode ser sujeito ou objeto. / Subject or object word.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🧠</span><span class="quiz-title">Quiz — Verbos e Verbais</span><span class="quiz-lang-badge badge-pt">🇧🇷 Português</span></div>
+    <div id="quiz-s5-pt"></div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🌎</span><span class="quiz-title">Quiz — Verbs &amp; Verbals</span><span class="quiz-lang-badge badge-en">🇨🇦 English</span></div>
+    <div id="quiz-s5-en"></div>
+  </div>
+  <div class="section-complete" id="complete-s5"><h3>🎉 Seção concluída! · Section Complete!</h3><p>Verbs &amp; Verbals concluídos! · Verbs &amp; Verbals done!</p></div>
+  <button class="next-section-btn" id="next-s5" onclick="goToSection(6)">Próxima Seção ➜</button>
+</div>
+
+<!-- ==================== SEC 6 — ELA 7: TALES OF A FOURTH GRADE NOTHING ==================== -->
+<div class="lesson-section reveal" id="sec6" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">📕</div>
+      <div>
+        <div class="section-subtitle">ELA 7 · Seção 7 of 10</div>
+        <div class="section-title">Tales of a Fourth Grade Nothing</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="book-info">
+        <div class="book-emoji">📚</div>
+        <div class="book-details">
+          <h3>Tales of a Fourth Grade Nothing</h3>
+          <p>Author: Judy Blume</p>
+          <p>Unit 2 — Establishing the Writing Process</p>
+        </div>
+      </div>
+
+      <p>The story is about a boy named <strong>Peter Hatcher</strong> and his little brother <strong>Fudge</strong>. Peter is in fourth grade, and he feels <strong>frustrated</strong> because Fudge always causes problems and gets all the attention.</p>
+
+      <div class="key-phrase-en">Peter feels angry and ignored. He thinks life is not fair because his parents give a lot of attention to Fudge.</div>
+      <div class="key-phrase-pt">Peter se sente com raiva e ignorado. Ele acha que a vida não é justa porque seus pais dão muita atenção a Fudge.</div>
+
+      <p>Fudge is very <strong>naughty and funny</strong>. He makes many problems at home — like drawing on things, throwing tantrums, and even <strong>eating Peter's pet turtle, Dribble</strong>. This makes Peter very upset and angry.</p>
+
+      <p>Throughout the story, <strong>Peter learns to be more patient</strong> and to understand his brother better. At the end of the story, Peter's parents give him a dog to help him feel better after losing his turtle. Peter feels happier, and the family continues to deal with Fudge's funny and crazy behavior.</p>
+
+      <p><strong>Main Characters · Personagens Principais:</strong></p>
+      <div class="char-grid">
+        <div class="char-card">
+          <div class="char-name">👦 Peter Hatcher</div>
+          <div class="char-traits">responsible · patient · sometimes frustrated</div>
+        </div>
+        <div class="char-card">
+          <div class="char-name">😈 Fudge</div>
+          <div class="char-traits">naughty · funny · energetic</div>
+        </div>
+        <div class="char-card">
+          <div class="char-name">👨‍👩‍👦 Mom and Dad</div>
+          <div class="char-traits">patient · busy · caring</div>
+        </div>
+      </div>
+    </div>
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Key Words</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Frustrated<div class="vocab-tooltip">Frustrado — irritado por não conseguir o que quer.</div></div>
+        <div class="vocab-term">Naughty<div class="vocab-tooltip">Malcriado, travesso. / Badly behaved.</div></div>
+        <div class="vocab-term">Energetic<div class="vocab-tooltip">Cheio de energia. / Full of energy.</div></div>
+        <div class="vocab-term">Patient<div class="vocab-tooltip">Paciente — consegue esperar com calma.</div></div>
+        <div class="vocab-term">Responsible<div class="vocab-tooltip">Responsável — cumpre suas obrigações.</div></div>
+        <div class="vocab-term">Dribble<div class="vocab-tooltip">Nome da tartaruga de estimação de Peter.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🧠</span><span class="quiz-title">Quiz — Tales of a Fourth Grade Nothing</span><span class="quiz-lang-badge badge-pt">🇧🇷 Português</span></div>
+    <div id="quiz-s6-pt"></div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🌎</span><span class="quiz-title">Quiz — Tales of a Fourth Grade Nothing</span><span class="quiz-lang-badge badge-en">🇨🇦 English</span></div>
+    <div id="quiz-s6-en"></div>
+  </div>
+  <div class="section-complete" id="complete-s6"><h3>🎉 Seção concluída! · Section Complete!</h3><p>Peter e Fudge dominados! · Peter and Fudge mastered!</p></div>
+  <button class="next-section-btn" id="next-s6" onclick="goToSection(7)">Próxima Seção ➜</button>
+</div>
+
+<!-- ==================== UNIT 3 DIVIDER ==================== -->
+<div class="unit-divider reveal" id="ud2" style="display:none">
+  <div class="unit-label">
+    <span>📖 Unit 3: Reading Novels</span>
+    <small>Research Materials 8, 9 &amp; 10</small>
+  </div>
+</div>
+
+<!-- ==================== SEC 7 — ELA 8: ADJECTIVES & PERSONALITY TRAITS ==================== -->
+<div class="lesson-section reveal" id="sec7" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">🎨</div>
+      <div>
+        <div class="section-subtitle">ELA 8 · Seção 8 of 10</div>
+        <div class="section-title">Adjectives &amp; Personality Traits</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p><strong>Adjectives</strong> are words that <strong>describe nouns</strong> (people, places, animals, or things). They tell us what something is like.</p>
+
+      <div class="key-phrase-en">Adjectives describe what you CAN SEE — appearance, size, color, feelings, things. (tall, big, red, beautiful)</div>
+      <div class="key-phrase-pt">Adjetivos descrevem o que você PODE VER — aparência, tamanho, cor, sentimentos e coisas. (alto, grande, vermelho, bonito)</div>
+
+      <div class="example-box">
+        <strong>Adjectives can describe · Adjetivos podem descrever:</strong>
+        <div class="example-grid">
+          <span class="example-pair">👁️ appearance</span>
+          <span class="example-pair">📏 size</span>
+          <span class="example-pair">🎨 color</span>
+          <span class="example-pair">💛 feelings</span>
+          <span class="example-pair">🪑 things</span>
+        </div>
+        <p style="margin-top:.7rem;">E.g 1: The boy is <strong>tall</strong>. &nbsp; E.g 2: The car is <strong>fast</strong>. &nbsp; E.g 3: The flower is <strong>beautiful</strong>. &nbsp; E.g 4: She is <strong>happy</strong>.</p>
+      </div>
+
+      <p><strong>Personality Traits</strong> are words that describe <strong>how a person behaves or how a person is inside</strong>. They describe a person's character, not appearance.</p>
+
+      <div class="key-phrase-en">Personality Traits describe how a person BEHAVES — character and behavior. (kind, honest, helpful, funny)</div>
+      <div class="key-phrase-pt">Traços de personalidade descrevem como uma pessoa SE COMPORTA — caráter e comportamento. (gentil, honesto, prestativo, engraçado)</div>
+
+      <div class="example-box">
+        <strong>Personality Traits examples:</strong>
+        <p>E.g 5: She is <strong>kind</strong>. &nbsp; E.g 6: He is very <strong>helpful</strong>. &nbsp; E.g 7: My friend is <strong>funny</strong>. &nbsp; E.g 8: The student is <strong>responsible</strong>.</p>
+      </div>
+
+      <table class="grammar-table">
+        <tr><th>Adjectives</th><th>Personality Traits</th></tr>
+        <tr><td>Describe what you <strong>can see</strong></td><td>Describe how a person <strong>behaves</strong></td></tr>
+        <tr><td>Appearance, size, color</td><td>Character and behavior</td></tr>
+        <tr><td>tall, big, red</td><td>kind, honest, helpful</td></tr>
+      </table>
+    </div>
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Key Words</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Adjective<div class="vocab-tooltip">Adjetivo — descreve substantivos. / Describes nouns.</div></div>
+        <div class="vocab-term">Personality trait<div class="vocab-tooltip">Traço de personalidade — descreve caráter.</div></div>
+        <div class="vocab-term">kind<div class="vocab-tooltip">Gentil, bondoso. / Gentle and good-hearted.</div></div>
+        <div class="vocab-term">helpful<div class="vocab-tooltip">Prestativo, que ajuda os outros.</div></div>
+        <div class="vocab-term">responsible<div class="vocab-tooltip">Responsável — cumpre seus deveres.</div></div>
+        <div class="vocab-term">honest<div class="vocab-tooltip">Honesto — diz a verdade.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🧠</span><span class="quiz-title">Quiz — Adjetivos e Traços de Personalidade</span><span class="quiz-lang-badge badge-pt">🇧🇷 Português</span></div>
+    <div id="quiz-s7-pt"></div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🌎</span><span class="quiz-title">Quiz — Adjectives &amp; Personality Traits</span><span class="quiz-lang-badge badge-en">🇨🇦 English</span></div>
+    <div id="quiz-s7-en"></div>
+  </div>
+  <div class="section-complete" id="complete-s7"><h3>🎉 Seção concluída! · Section Complete!</h3><p>Adjectives e Personality Traits dominados! · Adjectives &amp; Personality Traits done!</p></div>
+  <button class="next-section-btn" id="next-s7" onclick="goToSection(8)">Próxima Seção ➜</button>
+</div>
+
+<!-- ==================== SEC 8 — ELA 9: COMPARATIVES & SUPERLATIVES ==================== -->
+<div class="lesson-section reveal" id="sec8" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">📊</div>
+      <div>
+        <div class="section-subtitle">ELA 9 · Seção 9 of 10</div>
+        <div class="section-title">Comparatives &amp; Superlatives</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p><strong>Comparatives</strong> are used to <strong>compare two things</strong>. We usually add <strong>-er + than</strong> or use <strong>more + adjective + than</strong>.</p>
+
+      <div class="key-phrase-en">Comparative = compare 2 things → add -er + than (shorter adjectives) OR more + adjective + than (longer adjectives).</div>
+      <div class="key-phrase-pt">Comparativo = comparar 2 coisas → adicionar -er + than (adjetivos curtos) OU more + adjetivo + than (adjetivos longos).</div>
+
+      <div class="example-box">
+        <strong>Comparative examples:</strong>
+        <p>E.g 1: Peter is <strong>taller than</strong> Fudge. &nbsp; E.g 2: This book is <strong>longer than</strong> that book.</p>
+        <p>E.g 3: This story is <strong>more interesting than</strong> the other story. &nbsp; E.g 4: Math is <strong>easier than</strong> science.</p>
+      </div>
+
+      <p><strong>Superlatives</strong> are used to compare <strong>three or more things</strong>. We usually add <strong>-est</strong> or use <strong>the most + adjective</strong>.</p>
+
+      <div class="key-phrase-en">Superlative = compare 3 or more things → add the -est (shorter adjectives) OR the most + adjective (longer adjectives).</div>
+      <div class="key-phrase-pt">Superlativo = comparar 3 ou mais coisas → adicionar the -est (adjetivos curtos) OU the most + adjetivo (adjetivos longos).</div>
+
+      <div class="example-box">
+        <strong>Superlative examples:</strong>
+        <p>E.g 5: Peter is <strong>the tallest</strong> boy in the class. &nbsp; E.g 6: This is <strong>the longest</strong> chapter.</p>
+        <p>E.g 7: This is <strong>the most interesting</strong> book. &nbsp; E.g 8: That was <strong>the easiest</strong> test.</p>
+      </div>
+
+      <table class="grammar-table">
+        <tr><th>Adjective</th><th>Comparative</th><th>Superlative</th></tr>
+        <tr><td>tall</td><td>taller</td><td>the tallest</td></tr>
+        <tr><td>small</td><td>smaller</td><td>the smallest</td></tr>
+        <tr><td>fast</td><td>faster</td><td>the fastest</td></tr>
+        <tr><td>happy</td><td>happier</td><td>the happiest</td></tr>
+        <tr><td>big</td><td>bigger</td><td>the biggest</td></tr>
+        <tr><td>interesting</td><td>more interesting</td><td>the most interesting</td></tr>
+        <tr><td>beautiful</td><td>more beautiful</td><td>the most beautiful</td></tr>
+      </table>
+    </div>
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Key Words</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Comparative<div class="vocab-tooltip">Comparativo — compara 2 coisas. Ex: taller than.</div></div>
+        <div class="vocab-term">Superlative<div class="vocab-tooltip">Superlativo — compara 3+ coisas. Ex: the tallest.</div></div>
+        <div class="vocab-term">-er + than<div class="vocab-tooltip">Regra para adjetivos curtos no comparativo.</div></div>
+        <div class="vocab-term">the -est<div class="vocab-tooltip">Regra para adjetivos curtos no superlativo.</div></div>
+        <div class="vocab-term">more + adjective<div class="vocab-tooltip">Regra para adjetivos longos no comparativo.</div></div>
+        <div class="vocab-term">the most + adjective<div class="vocab-tooltip">Regra para adjetivos longos no superlativo.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🧠</span><span class="quiz-title">Quiz — Comparativos e Superlativos</span><span class="quiz-lang-badge badge-pt">🇧🇷 Português</span></div>
+    <div id="quiz-s8-pt"></div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🌎</span><span class="quiz-title">Quiz — Comparatives &amp; Superlatives</span><span class="quiz-lang-badge badge-en">🇨🇦 English</span></div>
+    <div id="quiz-s8-en"></div>
+  </div>
+  <div class="section-complete" id="complete-s8"><h3>🎉 Seção concluída! · Section Complete!</h3><p>Comparatives &amp; Superlatives dominados! · Done!</p></div>
+  <button class="next-section-btn" id="next-s8" onclick="goToSection(9)">Próxima Seção ➜</button>
+</div>
+
+<!-- ==================== SEC 9 — ELA 10: ADVERBS OF MANNER ==================== -->
+<div class="lesson-section reveal" id="sec9" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">💨</div>
+      <div>
+        <div class="section-subtitle">ELA 10 · Seção 10 of 10</div>
+        <div class="section-title">Adverbs of Manner · Advérbios de Modo</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>Adverbs of manner tell us <strong>how an action happens</strong>. They describe how someone does something. They usually come <strong>after the verb</strong>.</p>
+
+      <div class="key-phrase-en">Adverbs of manner describe HOW an action happens. We usually add -ly to an adjective to form the adverb. (quick → quickly)</div>
+      <div class="key-phrase-pt">Advérbios de modo descrevem COMO uma ação acontece. Geralmente adicionamos -ly ao adjetivo. (rápido → rapidamente)</div>
+
+      <div class="example-box">
+        <strong>Examples · Exemplos (add -ly):</strong>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem .8rem;margin-top:.5rem;font-size:.9rem;">
+          <span>• He runs <strong>quickly</strong>.</span><span>• She speaks <strong>softly</strong>.</span>
+          <span>• They walk <strong>slowly</strong>.</span><span>• The student writes <strong>neatly</strong>.</span>
+          <span>• The teacher speaks <strong>clearly</strong>.</span><span>• He works <strong>carefully</strong>.</span>
+          <span>• She sings <strong>beautifully</strong>.</span><span>• The baby sleeps <strong>quietly</strong>.</span>
+        </div>
+      </div>
+
+      <p><strong>⚠️ Exceptions · Exceções:</strong> Some adverbs do NOT add -ly — the adjective and adverb have the same form:</p>
+
+      <table class="grammar-table">
+        <tr><th>Adjective · Adjetivo</th><th>Adverb · Advérbio</th><th>Example</th></tr>
+        <tr><td>good</td><td><strong>well</strong></td><td>She writes <strong>well</strong>.</td></tr>
+        <tr><td>fast</td><td><strong>fast</strong></td><td>He runs <strong>fast</strong>.</td></tr>
+        <tr><td>hard</td><td><strong>hard</strong></td><td>They work <strong>hard</strong>.</td></tr>
+        <tr><td>late</td><td><strong>late</strong></td><td>She arrived <strong>late</strong>.</td></tr>
+        <tr><td>early</td><td><strong>early</strong></td><td>He woke up <strong>early</strong>.</td></tr>
+      </table>
+    </div>
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Key Words</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Adverb of manner<div class="vocab-tooltip">Advérbio de modo — descreve como a ação ocorre.</div></div>
+        <div class="vocab-term">-ly suffix<div class="vocab-tooltip">Sufixo que forma advérbios. Ex: soft → softly.</div></div>
+        <div class="vocab-term">quickly<div class="vocab-tooltip">Rapidamente. Quick → quickly.</div></div>
+        <div class="vocab-term">carefully<div class="vocab-tooltip">Cuidadosamente. Careful → carefully.</div></div>
+        <div class="vocab-term">well<div class="vocab-tooltip">Bem — exceção: advérbio de "good".</div></div>
+        <div class="vocab-term">Exceptions<div class="vocab-tooltip">Exceções — fast, hard, late, early não mudam.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🧠</span><span class="quiz-title">Quiz — Advérbios de Modo</span><span class="quiz-lang-badge badge-pt">🇧🇷 Português</span></div>
+    <div id="quiz-s9-pt"></div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🌎</span><span class="quiz-title">Quiz — Adverbs of Manner</span><span class="quiz-lang-badge badge-en">🇨🇦 English</span></div>
+    <div id="quiz-s9-en"></div>
+  </div>
+  <div class="section-complete" id="complete-s9"><h3>🎉 Aula concluída! · Lesson Complete!</h3><p>Você terminou todo o ELA Y5! · You completed all ELA Y5!</p></div>
+  <button class="next-section-btn" id="next-s9" onclick="showTrophy()">Ver Resultado Final 🏆</button>
+</div>
+
+<!-- TROPHY -->
+<div class="final-trophy" id="finalTrophy">
+  <div class="trophy-card">
+    <span class="trophy-emoji">🏆</span>
+    <h2>You are amazing!<br><span style="font-size:.65em;color:var(--orange-500);">Você é incrível!</span></h2>
+    <div class="trophy-score"><span id="finalScore">0</span> pts!</div>
+    <p id="finalMsg">Keep studying and exploring ELA! · Continue estudando!</p>
+    <button onclick="location.reload()" style="margin-top:1.5rem;padding:.7rem 2rem;background:linear-gradient(135deg,var(--orange-400),var(--orange-600));color:white;border:none;border-radius:99px;font-family:'Baloo 2',cursive;font-weight:800;font-size:1rem;cursor:pointer;box-shadow:0 4px 16px rgba(234,88,12,.28);">Recomeçar · Restart 🔄</button>
+  </div>
+</div>
+<div style="height:3rem"></div>
+
+<script>
+// --- EXIBE O BOTÃO "PRÓXIMA SEÇÃO" EM TODAS AS SEÇÕES (EXCETO A ÚLTIMA) ---
+document.addEventListener('DOMContentLoaded', function() {
+  for (let i = 0; i < TOTAL_SECTIONS - 1; i++) {
+    const btn = document.getElementById(`next-s${i}`);
+    if (btn) btn.style.display = 'block';
+  }
+});
+const quizData = {
+  // ---- ELA 1: IRREGULAR VERBS ----
+  's0-pt': [
+    { q:'O que são verbos irregulares em inglês?', opts:['Verbos que sempre adicionam -ed no passado','Verbos que não seguem a regra regular ao mudar para o passado','Verbos usados apenas no presente','Verbos que terminam em -ing'], correct:1 },
+    { q:'Qual é a forma correta do Simple Past do verbo "go"?', opts:['goed','go','went','gone'], correct:2 },
+    { q:'Como os verbos REGULARES formam o passado simples?', opts:['Adicionando -ing','Adicionando -ed','Mudando completamente de forma','Adicionando -s'], correct:1 },
+    { q:'Qual é o Past Participle do verbo "break"?', opts:['breaked','broke','broken','breaking'], correct:2 },
+    { q:'Qual das opções abaixo é um verbo IRREGULAR?', opts:['walk','jump','play','buy'], correct:3 },
+  ],
+  's0-en': [
+    { q:'What is the simple past of "eat"?', opts:['eated','ate','eat','eaten'], correct:1 },
+    { q:'Which verb is irregular?', opts:['walk','jump','play','run'], correct:3 },
+    { q:'What is the past participle of "write"?', opts:['wrote','writed','written','write'], correct:2 },
+  ],
+
+  // ---- ELA 2: PAST PERFECT ----
+  's1-pt': [
+    { q:'O que o Past Perfect expressa em inglês?', opts:['Uma ação que está acontecendo agora','Uma ação que aconteceu ANTES de outra ação no passado','Uma ação que vai acontecer no futuro','Uma ação habitual no presente'], correct:1 },
+    { q:'Qual é a estrutura correta do Past Perfect?', opts:['Subject + will + verb','Subject + had + past participle','Subject + have + verb-ing','Subject + is + past participle'], correct:1 },
+    { q:'Na frase "She had finished the book before the test" — o que aconteceu PRIMEIRO?', opts:['O teste','She finished the book','She started studying after the test','The test was very easy'], correct:1 },
+    { q:'Qual das frases abaixo está no Past Perfect?', opts:['She is reading a book','She reads a book every day','She had read the book before class','She will read the book tomorrow'], correct:2 },
+    { q:'Qual verbo auxiliar é usado para formar o Past Perfect?', opts:['have','has','had','was'], correct:2 },
+  ],
+  's1-en': [
+    { q:'Which sentence uses the Past Perfect correctly?', opts:['She had eaten before school','She have eaten before school','She was eating before school','She eaten before school'], correct:0 },
+    { q:'In the Past Perfect, which action happened FIRST?', opts:['The second action in the sentence','The action using "had" + past participle','Both happened at the same time','It cannot be determined'], correct:1 },
+    { q:'Complete: "We _____ studied before the exam."', opts:['have','has','had','was'], correct:2 },
+  ],
+
+  // ---- ELA 3: PRESENT CONTINUOUS ----
+  's2-pt': [
+    { q:'Para que usamos o Present Continuous?', opts:['Para falar sobre hábitos diários','Para falar sobre ações acontecendo AGORA ou neste momento','Para falar sobre o passado','Para planejar ações futuras permanentes'], correct:1 },
+    { q:'Qual é a estrutura correta do Present Continuous?', opts:['Subject + had + verb-ing','Subject + will + verb','Subject + am/is/are + verb + ing','Subject + verb + -ed'], correct:2 },
+    { q:'Qual verbo auxiliar usamos com "He / She / It" no Present Continuous?', opts:['am','are','is','were'], correct:2 },
+    { q:'Qual das frases abaixo está no Present Continuous?', opts:['She played soccer yesterday','She plays soccer every day','She is playing soccer right now','She will play soccer tomorrow'], correct:2 },
+    { q:'Para qual uso o Present Continuous NÃO é adequado?', opts:['Ações acontecendo agora','Ações temporárias','Hábitos permanentes do dia a dia','Ações acontecendo neste momento'], correct:2 },
+  ],
+  's2-en': [
+    { q:'Which sentence is in the Present Continuous?', opts:['She reads every day','She is reading a book now','She read the book yesterday','She will read the book tomorrow'], correct:1 },
+    { q:'What is the Present Continuous form of "I + write"?', opts:['I writes','I writing','I am writing','I am write'], correct:2 },
+    { q:'We use the Present Continuous for:', opts:['Things that happened in the past','Things happening NOW or at this moment','Permanent habits and routines','Things that will definitely happen'], correct:1 },
+  ],
+
+  // ---- ELA 4: WRITING PROCESS ----
+  's3-pt': [
+    { q:'Quantas etapas tem o Writing Process (processo de escrita)?', opts:['3','4','5','6'], correct:2 },
+    { q:'Qual é a PRIMEIRA etapa do processo de escrita?', opts:['Drafting','Editing','Prewriting','Publishing'], correct:2 },
+    { q:'O que acontece na etapa de "Revising"?', opts:['Você escreve o primeiro rascunho','Você corrige erros de gramática','Você melhora e aperfeiçoa a sua escrita','Você compartilha o trabalho final'], correct:2 },
+    { q:'Na etapa de "Editing", o que o escritor faz?', opts:['Planeja e organiza as ideias','Escreve o primeiro rascunho','Corrige erros de ortografia, pontuação e gramática','Compartilha com os leitores'], correct:2 },
+    { q:'Qual é a ÚLTIMA etapa do processo de escrita?', opts:['Prewriting','Revising','Editing','Publishing'], correct:3 },
+  ],
+  's3-en': [
+    { q:'What is the FIRST step of the Writing Process?', opts:['Drafting','Editing','Revising','Prewriting'], correct:3 },
+    { q:'During the "Drafting" step, what should a writer do?', opts:['Fix all mistakes immediately','Write the first text without worrying too much about mistakes','Share work with the class','Plan and brainstorm ideas'], correct:1 },
+    { q:'What is the purpose of the "Editing" step?', opts:['To write the first draft','To plan and organize ideas','To fix mistakes in spelling, punctuation, and grammar','To share the final copy with others'], correct:2 },
+  ],
+
+  // ---- ELA 5: LINKING VERBS ----
+  's4-pt': [
+    { q:'O que são "linking verbs" (verbos de ligação)?', opts:['Verbos que mostram ações físicas','Verbos que conectam o sujeito a uma descrição ou estado','Verbos usados apenas no passado','Verbos irregulares'], correct:1 },
+    { q:'Qual das opções abaixo é um linking verb?', opts:['run','jump','seem','eat'], correct:2 },
+    { q:'Na frase "Peter is frustrated" — qual é o linking verb?', opts:['Peter','frustrated','is','feels'], correct:2 },
+    { q:'Qual grupo contém APENAS linking verbs?', opts:['run, jump, swim','am, is, are, was, were, seem, become','eat, play, write','go, come, bring'], correct:1 },
+    { q:'Para que usamos os linking verbs em ELA?', opts:['Para descrever ações físicas rápidas','Para descrever personagens, sentimentos e eventos','Para formar o passado perfeito','Para fazer perguntas'], correct:1 },
+  ],
+  's4-en': [
+    { q:'Which sentence uses a linking verb?', opts:['She runs quickly to school','He jumps very high','Fudge is funny and naughty','Peter plays soccer after school'], correct:2 },
+    { q:'Which of these is a linking verb?', opts:['run','write','become','jump'], correct:2 },
+    { q:'"The story _____ exciting." — Which linking verb completes the sentence?', opts:['runs','jumps','seems','writes'], correct:2 },
+  ],
+
+  // ---- ELA 6: VERBS & VERBALS ----
+  's5-pt': [
+    { q:'O que são verbos (verbs) em inglês?', opts:['Palavras que descrevem substantivos','Palavras de ação que mostram o que alguém faz','Palavras que conectam ideias','Palavras que modificam adjetivos'], correct:1 },
+    { q:'O que são verbals?', opts:['Verbos usados apenas no passado','Palavras que vêm de verbos mas funcionam como substantivos na frase','Verbos auxiliares do inglês','Verbos irregulares'], correct:1 },
+    { q:'Na frase "Reading is fun" — a palavra "Reading" funciona como:', opts:['Verbo de ação','Adjetivo','Substantivo (verbal — gerund)','Advérbio'], correct:2 },
+    { q:'Qual das frases abaixo contém um verbal (gerúndio usado como substantivo)?', opts:['She reads every day','Playing soccer is exciting','He jumped very high','They walked slowly'], correct:1 },
+    { q:'Qual é a diferença principal entre um "verb" e um "verbal"?', opts:['Os verbos são irregulares e os verbals são regulares','Os verbals vêm de verbos mas NÃO funcionam como ação na frase','Os verbals são sempre no passado perfeito','Não há diferença real entre eles'], correct:1 },
+  ],
+  's5-en': [
+    { q:'In the sentence "Writing is important" — what is the function of "Writing"?', opts:['It is a verb showing action','It is a verbal acting as a noun','It is an adjective describing the subject','It is an adverb'], correct:1 },
+    { q:'Which sentence contains a verbal?', opts:['She writes a story every day','Drawing is my favorite activity','He wrote his homework yesterday','They are playing in the yard'], correct:1 },
+    { q:'What is a verbal?', opts:['A verb in the simple past tense','A word that comes from a verb but does not work as a verb in the sentence','A linking verb connecting subject to description','An irregular verb with three forms'], correct:1 },
+  ],
+
+  // ---- ELA 7: TALES OF A FOURTH GRADE NOTHING ----
+  's6-pt': [
+    { q:'Qual é o nome do personagem principal de "Tales of a Fourth Grade Nothing"?', opts:['Fudge','Peter Hatcher','Dribble','Judy Blume'], correct:1 },
+    { q:'Por que Peter se sente frustrado na história?', opts:['Porque não tem amigos na escola','Porque Fudge sempre causa problemas e recebe toda a atenção','Porque perdeu seu cachorro','Porque não gosta da escola'], correct:1 },
+    { q:'Qual é a personalidade de Fudge?', opts:['Responsável e tranquilo','Tímido e quieto','Travesso, engraçado e cheio de energia','Triste e solitário'], correct:2 },
+    { q:'O que Fudge fez com o animal de estimação de Peter?', opts:['Jogou fora','Escondeu no quarto','Comeu a tartaruga Dribble','Deu para um amigo'], correct:2 },
+    { q:'O que os pais de Peter deram a ele no FINAL da história?', opts:['Um novo irmão','Uma tartaruga nova','Um cachorro','Um videogame'], correct:2 },
+  ],
+  's6-en': [
+    { q:'What is the relationship between Peter and Fudge?', opts:['They are friends at school','They are brothers','They are neighbors','They are classmates'], correct:1 },
+    { q:'How does Peter feel about Fudge during most of the story?', opts:['Happy and grateful','Angry and frustrated','Excited and proud','Bored and uninterested'], correct:1 },
+    { q:'What does Peter learn throughout the story?', opts:['How to cook for his family','How to be more patient and understand his brother better','How to play soccer professionally','How to read faster'], correct:1 },
+  ],
+
+  // ---- ELA 8: ADJECTIVES & PERSONALITY TRAITS ----
+  's7-pt': [
+    { q:'O que os adjetivos descrevem?', opts:['Ações de pessoas ou animais','Substantivos (pessoas, lugares, animais ou coisas)','Outros adjetivos','Verbos'], correct:1 },
+    { q:'Qual das opções abaixo é um adjetivo de aparência ou tamanho?', opts:['kind','honest','tall','helpful'], correct:2 },
+    { q:'O que são "personality traits" (traços de personalidade)?', opts:['Adjetivos que descrevem aparência física','Palavras que descrevem como uma pessoa se comporta ou como ela é por dentro','Verbos usados para descrever ações','Adjetivos de cor e tamanho'], correct:1 },
+    { q:'Qual das opções abaixo é um "personality trait"?', opts:['tall','big','red','kind'], correct:3 },
+    { q:'Qual é a diferença entre um adjetivo e um "personality trait"?', opts:['Adjetivos são sempre positivos; personality traits são negativos','Adjetivos descrevem o que você VÊ; personality traits descrevem caráter e comportamento','Adjetivos são para animais; personality traits são apenas para pessoas','Não há diferença real entre eles'], correct:1 },
+  ],
+  's7-en': [
+    { q:'Which word is an adjective?', opts:['quickly','run','beautiful','happily'], correct:2 },
+    { q:'Which word is a personality trait?', opts:['tall','big','red','honest'], correct:3 },
+    { q:'"The car is fast." — What does the adjective "fast" describe?', opts:['A verb','An adverb of manner','The noun "car"','Another adjective'], correct:2 },
+  ],
+
+  // ---- ELA 9: COMPARATIVES & SUPERLATIVES ----
+  's8-pt': [
+    { q:'Para que usamos comparativos em inglês?', opts:['Para comparar três ou mais coisas','Para comparar DUAS coisas','Para descrever uma única coisa','Para falar sobre ações passadas'], correct:1 },
+    { q:'Como geralmente formamos o comparativo de adjetivos CURTOS?', opts:['Adicionamos -est','Adicionamos -er + than','Usamos "the most"','Adicionamos -ing'], correct:1 },
+    { q:'Qual é o superlativo de "tall"?', opts:['taller','tallest','the tallest','most tall'], correct:2 },
+    { q:'Qual das frases abaixo usa um SUPERLATIVO corretamente?', opts:['Peter is taller than Fudge','This is the most exciting chapter','Math is easier than science','This book is longer than that one'], correct:1 },
+    { q:'Como formamos o comparativo de adjetivos LONGOS, como "interesting"?', opts:['interesting + -er','more interesting + than','the most interesting','interestingest'], correct:1 },
+  ],
+  's8-en': [
+    { q:'"Peter is _____ than Fudge." — Which word correctly completes the comparative?', opts:['tall','tallest','taller','most tall'], correct:2 },
+    { q:'Superlatives are used to compare:', opts:['Two things only','One thing with itself','Three or more things','Past and present actions'], correct:2 },
+    { q:'Which sentence uses a COMPARATIVE correctly?', opts:['This is the longest chapter','Peter is funnier than Fudge','That was the easiest test','This is the most interesting book'], correct:1 },
+  ],
+
+  // ---- ELA 10: ADVERBS OF MANNER ----
+  's9-pt': [
+    { q:'O que os advérbios de modo (adverbs of manner) descrevem?', opts:['Como um substantivo é','COMO uma ação acontece','Quando algo ocorre','Onde algo ocorre'], correct:1 },
+    { q:'Como geralmente formamos advérbios de modo em inglês?', opts:['Adicionando -er ao adjetivo','Adicionando -ly ao adjetivo','Adicionando -ing ao verbo','Adicionando -ed ao verbo'], correct:1 },
+    { q:'Qual é o advérbio de modo formado a partir do adjetivo "quick"?', opts:['quicker','quickest','quickly','quickful'], correct:2 },
+    { q:'Qual das opções é uma EXCEÇÃO — o adjetivo e o advérbio têm a mesma forma?', opts:['good','beautiful','happy','fast'], correct:3 },
+    { q:'Na frase "She speaks softly" — o que "softly" descreve?', opts:['O sujeito "she"','O substantivo da frase','COMO a ação de falar acontece','O tempo da ação'], correct:2 },
+  ],
+  's9-en': [
+    { q:'Which sentence uses an adverb of manner?', opts:['She is a fast runner','He runs quickly every morning','The teacher is very clear','She has a very soft voice'], correct:1 },
+    { q:'What is the adverb of manner for the adjective "good"?', opts:['goodly','gooder','well','goodest'], correct:2 },
+    { q:'Where do adverbs of manner usually appear in a sentence?', opts:['Before the subject','Before the noun they modify','After the verb','Always at the very beginning'], correct:2 },
+  ],
+};
+
+// ============================================================
+// STATE
+// ============================================================
+const TOTAL_SECTIONS = 10;
+let score = 0, totalQuestions = 0, answeredQuestions = 0;
+const sectionAnswered = {};
+const sectionTotal = {};
+for (let i = 0; i < TOTAL_SECTIONS; i++) {
+  sectionAnswered[i] = { pt: 0, en: 0 };
+  sectionTotal[i]    = { pt: 5, en: 3 };
+}
+Object.values(quizData).forEach(q => totalQuestions += q.length);
+
+// ============================================================
+// RENDER QUIZ
+// ============================================================
+function renderQuiz(containerId, key, sectionIdx, lang) {
+  const container = document.getElementById(containerId);
+  if (!container || !quizData[key]) return;
+  container.innerHTML = '';
+  quizData[key].forEach((q, qi) => {
+    const letters = ['A','B','C','D'];
+    const block = document.createElement('div');
+    block.className = 'question-block';
+    block.innerHTML = `
+      <div class="question-num">Pergunta ${qi+1} · Question ${qi+1}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options" id="opts-${containerId}-${qi}">
+        ${q.opts.map((o,oi)=>`
+          <button class="option-btn" onclick="checkAnswer(this,'${containerId}',${qi},${oi},${q.correct},${sectionIdx},'${lang}')">
+            <span class="option-letter">${letters[oi]}</span>${o}
+          </button>`).join('')}
+      </div>
+      <div class="feedback-msg" id="fb-${containerId}-${qi}"></div>`;
+    container.appendChild(block);
+  });
+}
+
+// ============================================================
+// CHECK ANSWER
+// ============================================================
+function checkAnswer(btn, containerId, qi, chosen, correct, sectionIdx, lang) {
+  const opts = document.querySelectorAll(`#opts-${containerId}-${qi} .option-btn`);
+  opts.forEach(b => b.disabled = true);
+  const fb = document.getElementById(`fb-${containerId}-${qi}`);
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    fb.className = 'feedback-msg correct';
+    fb.innerHTML = '✅ Correto! · Correct! 🎉';
+    fb.style.display = 'flex';
+    score += 10;
+    document.getElementById('scoreDisplay').textContent = score;
+    launchConfetti();
+  } else {
+    btn.classList.add('wrong');
+    opts[correct].classList.add('correct');
+    const correctText = quizData[`s${sectionIdx}-${lang}`][qi].opts[correct];
+    fb.className = 'feedback-msg wrong';
+    fb.innerHTML = `❌ Ops! A resposta certa é · The correct answer is: <strong>${correctText}</strong>`;
+    fb.style.display = 'flex';
+  }
+  answeredQuestions++;
+  sectionAnswered[sectionIdx][lang]++;
+  updateProgress();
+  checkSectionComplete(sectionIdx);
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function updateProgress() {
+  document.getElementById('progressFill').style.width = (answeredQuestions / totalQuestions * 100) + '%';
+}
+
+// ============================================================
+// SECTION COMPLETE
+// ============================================================
+function checkSectionComplete(idx) {
+  const a = sectionAnswered[idx], t = sectionTotal[idx];
+  if (a.pt >= t.pt && a.en >= t.en) {
+    document.getElementById(`complete-s${idx}`).classList.add('show');
+    document.getElementById(`next-s${idx}`).classList.add('show');
+    const dots = document.querySelectorAll('.nav-dot');
+    if (dots[idx]) { dots[idx].classList.remove('active'); dots[idx].classList.add('done'); }
+    if (idx < TOTAL_SECTIONS - 1 && dots[idx+1]) dots[idx+1].classList.add('active');
+  }
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function goToSection(idx) {
+  // show unit dividers
+  if (idx === 3) { const ud = document.getElementById('ud1'); if (ud) { ud.style.display=''; setTimeout(()=>ud.classList.add('visible'),50); } }
+  if (idx === 7) { const ud = document.getElementById('ud2'); if (ud) { ud.style.display=''; setTimeout(()=>ud.classList.add('visible'),50); } }
+  const secEl = document.getElementById(`sec${idx}`);
+  if (!secEl) return;
+  secEl.style.display = '';
+  secEl.classList.add('reveal');
+  setTimeout(() => secEl.classList.add('visible'), 50);
+  setTimeout(() => secEl.scrollIntoView({ behavior:'smooth', block:'start' }), 80);
+}
+
+// ============================================================
+// CONFETTI
+// ============================================================
+function launchConfetti() {
+  const container = document.getElementById('confettiContainer');
+  const colors = ['#f97316','#fb923c','#fbbf24','#f59e0b','#fdba74','#fed7aa','#fff'];
+  for (let i = 0; i < 22; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.cssText = `left:${Math.random()*100}vw;top:-10px;background:${colors[Math.floor(Math.random()*colors.length)]};width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${.7+Math.random()*.8}s;animation-delay:${Math.random()*.3}s`;
+    container.appendChild(piece);
+    setTimeout(() => piece.remove(), 1500);
+  }
+}
+
+// ============================================================
+// TROPHY
+// ============================================================
+function showTrophy() {
+  document.getElementById('finalScore').textContent = score;
+  const pct = Math.round(score / (totalQuestions * 10) * 100);
+  document.getElementById('finalMsg').textContent =
+    pct >= 90 ? '🌟 Exceptional performance! · Desempenho excepcional!' :
+    pct >= 70 ? '👏 Very well done! Keep it up! · Muito bem! Continue assim!' :
+                '📚 Keep studying! · Continue estudando!';
+  document.getElementById('finalTrophy').classList.add('show');
+  document.getElementById('finalTrophy').scrollIntoView({ behavior:'smooth' });
+  launchConfetti(); launchConfetti();
+}
+
+// ============================================================
+// SCROLL REVEAL
+// ============================================================
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ============================================================
+// DOT NAV
+// ============================================================
+document.querySelectorAll('.nav-dot').forEach(dot => {
+  dot.addEventListener('click', () => {
+    const idx = parseInt(dot.dataset.section);
+    const el = document.getElementById(`sec${idx}`);
+    if (el) { el.style.display = ''; el.scrollIntoView({ behavior:'smooth' }); }
+  });
+});
+
+// ============================================================
+// INIT
+// ============================================================
+for (let i = 0; i < TOTAL_SECTIONS; i++) {
+  renderQuiz(`quiz-s${i}-pt`, `s${i}-pt`, i, 'pt');
+  renderQuiz(`quiz-s${i}-en`, `s${i}-en`, i, 'en');
+}
+document.querySelector('#sec0').classList.add('visible');
+document.querySelector('#ud0').classList.add('visible');
+</script>
+</body>
+</html>

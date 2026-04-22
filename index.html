@@ -102,6 +102,10 @@
         flex-direction: column;
         gap: 0.1em;
       }
+      /* Remover sublinhado dos links */
+      a {
+        text-decoration: none;
+      }
       /* Grid of folders */
       .folders-grid {
         display: grid;
@@ -120,6 +124,13 @@
         .folders-grid { grid-template-columns: 1fr; gap: 1.2rem; }
         .header { padding: 0.6rem 1rem; }
         .logo-text { font-size: 1rem; }
+      }
+      @media (max-width: 600px) {
+        .header img[alt="Logo 2"] {
+          right: 1rem !important;
+          width: 32px !important;
+          height: 32px !important;
+        }
       }
       .folder-card {
         background: var(--glass-bg);
@@ -170,12 +181,15 @@
   <body>
     <div class="blob-top"></div>
     <div class="blob-bottom"></div>
-    <header class="header">
-      <div class="logo-icon">🍁</div>
-      <div class="header-titles">
+    <header class="header" style="position:relative;">
+      <a href="index.html" style="display:flex;gap:4px;padding:0;background:none;box-shadow:none;border-radius:0;align-items:center;cursor:pointer;text-decoration:none;">
+        <img src="logo1.png" alt="Logo 1" style="width:38px;height:38px;object-fit:contain;border-radius:8px;background:#fff;box-shadow:0 2px 8px rgba(249,115,22,0.10);">
+      </a>
+      <div class="header-titles" style="margin-left:10px;">
         <div class="logo-text">Aulas Master Educação</div>
         <div class="logo-sub">MapleBear</div>
       </div>
+      <img src="logo2.png" alt="Logo 2" style="position:absolute;right:2rem;top:50%;transform:translateY(-50%);width:38px;height:38px;object-fit:contain;border-radius:8px;background:#fff;box-shadow:0 2px 8px rgba(249,115,22,0.10);">
     </header>
     <main>
       <section class="folders-grid">
@@ -191,13 +205,14 @@
           </span>
           <span class="folder-title">História</span>
         </a>
-        <!-- Espaços reservados para futuras disciplinas -->
-        <div class="folder-card" style="opacity:0.45;pointer-events:none;">
+        <!-- Espaço para E.L.A -->
+        <a href="ela.html" class="folder-card" title="Ir para E.L.A">
           <span class="folder-icon">
             <span class="material-icons" style="font-size:2.1rem;">folder</span>
           </span>
-          <span class="folder-title">Em breve</span>
-        </div>
+          <span class="folder-title">E.L.A</span>
+        </a>
+        <!-- Próximas seções -->
         <div class="folder-card" style="opacity:0.45;pointer-events:none;">
           <span class="folder-icon">
             <span class="material-icons" style="font-size:2.1rem;">folder</span>
