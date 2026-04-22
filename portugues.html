@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Português Y5 · MapleBear</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange-50: #fff7ed;
+    --orange-100: #ffedd5;
+    --orange-200: #fed7aa;
+    --orange-300: #fdba74;
+    --orange-400: #fb923c;
+    --orange-500: #f97316;
+    --orange-600: #ea580c;
+    --orange-700: #c2410c;
+    --white: #ffffff;
+    --glass-bg: rgba(255,255,255,0.65);
+    --glass-border: rgba(249,115,22,0.18);
+    --shadow-soft: 0 8px 32px rgba(249,115,22,0.10);
+    --shadow-card: 0 4px 24px rgba(249,115,22,0.13);
+    --radius-xl: 2rem;
+    --radius-lg: 1.25rem;
+    --radius-md: 0.875rem;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 40%, #fff3e0 70%, #fde8d0 100%);
+    min-height: 100vh;
+    color: #3a1a00;
+  }
+
+  body::before {
+    content:'';
+    position: fixed;
+    top: -120px; right: -120px;
+    width: 520px; height: 520px;
+    background: radial-gradient(circle, rgba(251,146,60,0.18) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content:'';
+    position: fixed;
+    bottom: -100px; left: -100px;
+    width: 440px; height: 440px;
+    background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV / HEADER */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(18px) saturate(1.4);
+    background: rgba(255,255,255,0.72);
+    border-bottom: 1.5px solid rgba(249,115,22,0.15);
+    box-shadow: 0 2px 18px rgba(249,115,22,0.08);
+    padding: 0.7rem 2rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  }
+  .logo { display: flex; align-items: center; gap: 0.7rem; }
+  .logo-icon { width: 42px; height: 42px; background: linear-gradient(135deg, var(--orange-400), var(--orange-600)); border-radius: 12px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; box-shadow: 0 4px 12px rgba(234,88,12,0.25); }
+  .logo-text { font-family: 'Baloo 2', cursive; font-weight:800; font-size:1.2rem; color: var(--orange-600); }
+  .logo-sub { font-size:0.72rem; font-weight:600; color: var(--orange-400); letter-spacing:.04em; }
+
+  .progress-bar-wrap { flex:1; max-width:320px; }
+  .progress-label { font-size:0.7rem; font-weight:700; color:var(--orange-500); margin-bottom:4px; text-transform:uppercase; letter-spacing:.06em; }
+  .progress-track { height:8px; background:rgba(253,186,116,0.35); border-radius:99px; overflow:hidden; }
+  .progress-fill { height:100%; background: linear-gradient(90deg, var(--orange-400), var(--orange-600)); border-radius:99px; transition: width .6s cubic-bezier(.4,0,.2,1); width:0%; }
+
+  .score-badge { background: linear-gradient(135deg, var(--orange-400), var(--orange-600)); color:#fff; font-weight:800; font-size:0.95rem; padding:.38rem .9rem; border-radius:99px; box-shadow: 0 3px 12px rgba(234,88,12,0.28); display:flex; align-items:center; gap:.4rem; }
+
+  /* HERO */
+  .hero {
+    text-align:center; padding: 3.5rem 1.5rem 2.5rem;
+    position:relative; z-index:1;
+  }
+  .hero-badge {
+    display:inline-block; background: linear-gradient(90deg,#fb923c22,#f9731611); border:1.5px solid var(--orange-300); border-radius:99px; padding:.3rem 1rem; font-size:.78rem; font-weight:700; color:var(--orange-600); letter-spacing:.06em; text-transform:uppercase; margin-bottom:1.1rem;
+  }
+  .hero h1 { font-family:'Baloo 2',cursive; font-weight:800; font-size:clamp(2rem,5vw,3rem); color:var(--orange-700); line-height:1.15; margin-bottom:.6rem; }
+  .hero p { font-size:1.05rem; color:#a05022; max-width:580px; margin:0 auto; font-weight:500; }
+
+  /* SECTION NAV DOTS (igual historia.html) */
+  .section-nav {
+    display: flex;
+    justify-content: center;
+    gap: 1.1rem;
+    padding: 1rem 0 .5rem;
+    position: relative;
+    z-index: 1;
+    flex-wrap: wrap;
+  }
+  .nav-dot {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--orange-200);
+    border: 2.5px solid var(--orange-300);
+    cursor: pointer;
+    transition: all .25s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--orange-700);
+    box-shadow: 0 2px 8px rgba(249,115,22,0.10);
+    position: relative;
+  }
+  .nav-dot.active {
+    background: var(--orange-500);
+    border-color: var(--orange-600);
+    color: #fff;
+    transform: scale(1.18);
+    box-shadow: 0 4px 16px rgba(249,115,22,0.18);
+  }
+  .nav-dot.done {
+    background: var(--orange-400);
+    border-color: var(--orange-500);
+    color: #fff;
+  }
+
+  /* CONTENT SECTION */
+  .lesson-section {
+    max-width:860px; margin:2rem auto; padding:0 1rem;
+    position:relative; z-index:1;
+  }
+
+  .section-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(1.3);
+    border: 1.5px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-soft);
+    padding: 2rem 2.2rem 1.8rem;
+    margin-bottom: 1.5rem;
+    position:relative; overflow:hidden;
+    transition: transform .25s, box-shadow .25s;
+  }
+  .section-card:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(249,115,22,0.14); }
+  .section-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:4px;
+    background: linear-gradient(90deg, var(--orange-400), var(--orange-600), var(--orange-300));
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+
+  .section-header { display:flex; align-items:center; gap:.9rem; margin-bottom:1.5rem; }
+  .section-icon { width:52px; height:52px; background:linear-gradient(135deg,var(--orange-400),var(--orange-600)); border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center; font-size:1.6rem; box-shadow:0 4px 16px rgba(234,88,12,0.22); flex-shrink:0; }
+  .section-title { font-family:'Baloo 2',cursive; font-weight:800; font-size:1.5rem; color:var(--orange-700); }
+  .section-subtitle { font-size:.78rem; font-weight:700; color:var(--orange-400); text-transform:uppercase; letter-spacing:.07em; }
+
+  .section-body { font-size:1rem; line-height:1.75; color:#4a2000; }
+  .section-body p { margin-bottom:1rem; }
+
+  /* KEY PHRASES */
+  .key-phrase-pt {
+    background: linear-gradient(90deg, rgba(253,186,116,0.35), rgba(249,115,22,0.10));
+    border-left: 4px solid var(--orange-500);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: .7rem 1.1rem;
+    margin: 1.2rem 0;
+    font-weight:700; font-size:1.02rem; color:var(--orange-700);
+    position:relative;
+  }
+  .key-phrase-pt::before { content:'🔑 PT'; position:absolute; top:-.62rem; left:.8rem; font-size:.65rem; font-weight:800; background:var(--orange-500); color:#fff; padding:.15rem .45rem; border-radius:99px; letter-spacing:.04em; }
+
+  .key-phrase-en {
+    background: linear-gradient(90deg, rgba(251,191,36,0.18), rgba(245,158,11,0.08));
+    border-left: 4px solid #f59e0b;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: .7rem 1.1rem;
+    margin: 1.2rem 0;
+    font-weight:700; font-size:1.02rem; color:#92400e; font-style:italic;
+    position:relative;
+  }
+  .key-phrase-en::before { content:'🔑 EN'; position:absolute; top:-.62rem; left:.8rem; font-size:.65rem; font-weight:800; background:#f59e0b; color:#fff; padding:.15rem .45rem; border-radius:99px; letter-spacing:.04em; }
+
+  /* EXAMPLE BOXES */
+  .example-box {
+    background: rgba(255,247,237,0.85);
+    border: 1.5px solid rgba(253,186,116,0.45);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.3rem;
+    margin: 1rem 0;
+  }
+  .example-box strong { color: var(--orange-600); }
+  .example-grid { display:flex; flex-wrap:wrap; gap:.45rem .9rem; margin-top:.55rem; }
+  .example-pair {
+    background: white; border: 1.5px solid var(--orange-200); border-radius: 99px;
+    padding: .25rem .8rem; font-size:.88rem; font-weight:700; color: var(--orange-700);
+  }
+
+  /* VOCAB */
+  .vocab-box {
+    background: linear-gradient(135deg, rgba(255,237,213,0.8), rgba(255,247,237,0.9));
+    border: 1.5px solid rgba(253,186,116,0.5);
+    border-radius: var(--radius-lg);
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .vocab-title { font-family:'Baloo 2',cursive; font-weight:800; color:var(--orange-600); font-size:1rem; margin-bottom:.8rem; display:flex; align-items:center; gap:.4rem; }
+  .vocab-grid { display:flex; flex-wrap:wrap; gap:.5rem; }
+  .vocab-term {
+    background: white; border: 1.5px solid var(--orange-300); border-radius:99px;
+    padding:.28rem .85rem; font-size:.83rem; font-weight:700; color:var(--orange-700);
+    cursor:pointer; transition:all .2s; position:relative;
+  }
+  .vocab-term:hover { background:var(--orange-500); color:white; transform:translateY(-2px); box-shadow:0 4px 12px rgba(249,115,22,0.28); }
+  .vocab-tooltip {
+    display:none; position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%);
+    background:rgba(58,26,0,0.92); color:white; border-radius:var(--radius-md); padding:.5rem .85rem;
+    font-size:.78rem; font-weight:600; white-space:nowrap; z-index:200;
+    box-shadow:0 4px 16px rgba(0,0,0,0.18);
+  }
+  .vocab-tooltip::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:5px solid transparent; border-top-color:rgba(58,26,0,0.92); }
+  .vocab-term:hover .vocab-tooltip { display:block; animation: fadeInUp .2s ease; }
+
+  /* BOOK INFO */
+  .book-info {
+    display: flex; align-items: center; gap: 1.2rem;
+    background: linear-gradient(135deg, rgba(255,237,213,0.9), rgba(254,215,170,0.6));
+    border: 1.5px solid rgba(253,186,116,0.5);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.4rem;
+    margin-bottom: 1.5rem;
+  }
+  .book-emoji { font-size: 2.8rem; flex-shrink: 0; }
+  .book-details h3 { font-family:'Baloo 2',cursive; font-weight:800; color:var(--orange-700); font-size:1.1rem; }
+  .book-details p { font-size:.85rem; color:#7c3500; font-weight:600; margin-top:.15rem; }
+
+  /* PAGE RANGE CARDS */
+  .page-range {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(253,186,116,0.35);
+    border-radius: var(--radius-lg);
+    margin-bottom: 1.1rem;
+    overflow: hidden;
+  }
+  .page-range-header {
+    background: linear-gradient(90deg, var(--orange-400), var(--orange-500));
+    padding: .55rem 1.2rem;
+    display: flex; align-items: center; gap: .5rem;
+    cursor: pointer; user-select: none;
+  }
+  .page-range-header span { font-family:'Baloo 2',cursive; font-weight:800; color:white; font-size:.95rem; }
+  .page-range-header .toggle-icon { margin-left:auto; color:white; font-size:.9rem; transition: transform .3s; }
+  .page-range.open .toggle-icon { transform: rotate(180deg); }
+  .page-range-body {
+    padding: 1rem 1.3rem;
+    display: none;
+  }
+  .page-range.open .page-range-body { display: block; }
+  .observation-list { list-style: none; }
+  .observation-list li {
+    padding: .4rem 0 .4rem 1.3rem;
+    border-bottom: 1px solid rgba(253,186,116,0.2);
+    font-size:.93rem; color:#5c2800; line-height: 1.6;
+    position: relative;
+  }
+  .observation-list li:last-child { border-bottom: none; }
+  .observation-list li::before { content:'📌'; position:absolute; left:0; top:.4rem; font-size:.8rem; }
+
+  /* QUIZ SECTION */
+  .quiz-section {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(1.3);
+    border: 1.5px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+    padding: 1.8rem 2.2rem;
+    margin-bottom: 1.5rem;
+    position:relative; overflow:hidden;
+  }
+  .quiz-section::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:4px;
+    background: linear-gradient(90deg, #f59e0b, var(--orange-500), #f97316);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+
+  .quiz-header { display:flex; align-items:center; gap:.8rem; margin-bottom:1.5rem; }
+  .quiz-icon { font-size:1.4rem; }
+  .quiz-title { font-family:'Baloo 2',cursive; font-weight:800; font-size:1.15rem; color:var(--orange-700); }
+  .quiz-lang-badge { margin-left:auto; font-size:.7rem; font-weight:800; padding:.22rem .65rem; border-radius:99px; letter-spacing:.05em; text-transform:uppercase; }
+  .badge-pt { background:rgba(249,115,22,0.12); color:var(--orange-600); border:1.5px solid var(--orange-300); }
+  .badge-en { background:rgba(245,158,11,0.12); color:#b45309; border:1.5px solid #fbbf24; }
+
+  .question-block { margin-bottom:1.5rem; }
+  .question-num { font-size:.73rem; font-weight:800; color:var(--orange-400); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.35rem; }
+  .question-text { font-weight:700; font-size:1rem; color:#3a1a00; margin-bottom:.85rem; line-height:1.5; }
+
+  .options { display:flex; flex-direction:column; gap:.55rem; }
+  .option-btn {
+    background: rgba(255,255,255,0.8); border: 2px solid rgba(253,186,116,0.4);
+    border-radius: var(--radius-md); padding:.75rem 1.1rem;
+    font-family:'Nunito',sans-serif; font-size:.93rem; font-weight:600; color:#5c2800;
+    cursor:pointer; text-align:left; transition:all .2s; display:flex; align-items:center; gap:.7rem;
+  }
+  .option-btn:hover:not(:disabled) { background:rgba(255,237,213,0.95); border-color:var(--orange-400); transform:translateX(4px); }
+  .option-letter { width:28px; height:28px; background:linear-gradient(135deg,var(--orange-200),var(--orange-300)); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.82rem; color:var(--orange-700); flex-shrink:0; transition:all .2s; }
+  .option-btn.correct { background:rgba(187,247,208,0.7); border-color:#22c55e; color:#14532d; }
+  .option-btn.correct .option-letter { background:#22c55e; color:white; }
+  .option-btn.wrong { background:rgba(254,202,202,0.7); border-color:#ef4444; color:#7f1d1d; }
+  .option-btn.wrong .option-letter { background:#ef4444; color:white; }
+  .option-btn:disabled { cursor:default; }
+
+  .feedback-msg { border-radius:var(--radius-md); padding:.7rem 1rem; font-weight:700; font-size:.9rem; margin-top:.7rem; display:none; animation: slideIn .3s ease; }
+  .feedback-msg.correct { background:rgba(187,247,208,0.6); color:#15803d; border:1.5px solid #86efac; display:flex; gap:.5rem; align-items:center; }
+  .feedback-msg.wrong { background:rgba(254,202,202,0.6); color:#dc2626; border:1.5px solid #fca5a5; display:flex; gap:.5rem; align-items:center; }
+
+  /* CONFETTI */
+  .confetti-container { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
+  .confetti-piece {
+    position:absolute; width:10px; height:10px; border-radius:2px;
+    animation: confettiFall 1.2s ease-in forwards;
+  }
+
+  /* SECTION COMPLETE */
+  .section-complete {
+    display:none; text-align:center; padding:1.5rem; margin-top:1rem;
+    background:linear-gradient(135deg,rgba(187,247,208,0.4),rgba(134,239,172,0.2));
+    border:1.5px solid #86efac; border-radius:var(--radius-lg); animation: fadeInUp .4s ease;
+  }
+  .section-complete.show { display:block; }
+  .section-complete h3 { font-family:'Baloo 2',cursive; font-weight:800; color:#15803d; font-size:1.3rem; margin-bottom:.4rem; }
+  .section-complete p { color:#166534; font-size:.9rem; }
+
+  /* NEXT BTN */
+  .next-section-btn {
+    display:none; margin: 1rem auto 0; padding:.8rem 2rem;
+    background:linear-gradient(135deg,var(--orange-400),var(--orange-600));
+    color:white; border:none; border-radius:99px; font-family:'Baloo 2',cursive;
+    font-weight:800; font-size:1rem; cursor:pointer; box-shadow:0 4px 16px rgba(234,88,12,0.28);
+    transition:all .25s; text-transform:uppercase; letter-spacing:.05em;
+  }
+  .next-section-btn:hover { transform:translateY(-2px) scale(1.03); box-shadow:0 8px 24px rgba(234,88,12,0.35); }
+  .next-section-btn.show { display:block; animation: fadeInUp .4s ease; }
+
+  /* FINAL TROPHY */
+  .final-trophy { display:none; text-align:center; padding:3rem 2rem; position:relative; z-index:1; }
+  .final-trophy.show { display:block; animation: fadeInUp .6s ease; }
+  .trophy-card { background:var(--glass-bg); backdrop-filter:blur(20px); border:2px solid rgba(253,186,116,0.4); border-radius:var(--radius-xl); padding:3rem 2rem; max-width:540px; margin:0 auto; box-shadow:0 16px 48px rgba(249,115,22,0.15); }
+  .trophy-emoji { font-size:5rem; margin-bottom:1rem; display:block; animation: bounce 1s ease infinite; }
+  .trophy-card h2 { font-family:'Baloo 2',cursive; font-weight:800; font-size:2rem; color:var(--orange-700); margin-bottom:.7rem; }
+  .trophy-score { font-size:3rem; font-weight:900; color:var(--orange-600); font-family:'Baloo 2',cursive; }
+  .trophy-card p { color:#a05022; margin-top:.8rem; font-size:1rem; }
+
+  /* ANIMATIONS */
+  @keyframes fadeInUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes slideIn { from { opacity:0; transform:translateX(-10px); } to { opacity:1; transform:translateX(0); } }
+  @keyframes confettiFall { 0% { opacity:1; transform:translateY(0) rotate(0deg) scale(1); } 100% { opacity:0; transform:translateY(100vh) rotate(540deg) scale(.6); } }
+  @keyframes bounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-12px); } }
+
+  .fade-in { animation: fadeInUp .5s ease both; }
+
+  /* SCROLL REVEAL */
+  .reveal { opacity:0; transform:translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  /* RESPONSIVE */
+  @media(max-width:600px) {
+    .section-card, .quiz-section { padding:1.3rem 1.1rem; }
+    header { padding:.6rem 1rem; }
+    .logo-text { font-size:1rem; }
+    .progress-bar-wrap { max-width:160px; }
+    .book-info { flex-direction:column; text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="confetti-container" id="confettiContainer"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">🍁</div>
+    <div>
+      <div class="logo-text">MapleBear Y5</div>
+      <div class="logo-sub">Português · Portuguese</div>
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-label">Progresso · Progress</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+  <div class="score-badge">⭐ <span id="scoreDisplay">0</span> pts</div>
+</header>
+
+<!-- HERO -->
+<div class="hero fade-in">
+  <div class="hero-badge">Unidade 1 · Unit 1 · Year 5</div>
+  <h1>Entendendo as Diferenças<br><span style="font-size:.65em;color:var(--orange-500);">Understanding Differences</span></h1>
+  <p>Sinônimos, Antônimos &amp; Leitura — A Terra dos Meninos Pelados</p>
+</div>
+
+<!-- SECTION DOTS -->
+  <div class="section-nav" id="sectionNav">
+    <div class="nav-dot active" data-section="0" title="Sinônimos">1</div>
+    <div class="nav-dot" data-section="1" title="Antônimos">2</div>
+    <div class="nav-dot" data-section="2" title="A Terra dos Meninos Pelados">3</div>
+  </div>
+
+<!-- ============================= SEÇÃO 1: SINÔNIMOS ============================= -->
+<div class="lesson-section reveal" id="sec0">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">💬</div>
+      <div>
+        <div class="section-subtitle">Seção 1 · Section 1</div>
+        <div class="section-title">Sinônimos · Synonyms</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <p>Quando duas ou mais palavras apresentam <strong>sentido semelhante</strong>, dizemos que elas são <strong>sinônimas</strong>. O uso de sinônimos é muito importante porque evita a repetição de palavras e torna o texto mais rico e interessante.</p>
+
+      <div class="key-phrase-pt">Sinônimos são palavras com sentido semelhante que enriquecem a escrita e evitam repetições.</div>
+      <div class="key-phrase-en">Synonyms are words with similar meanings that enrich writing and avoid repetition.</div>
+
+      <p>Veja alguns exemplos de sinônimos no dia a dia:</p>
+
+      <div class="example-box">
+        <strong>Exemplos · Examples</strong>
+        <div class="example-grid">
+          <span class="example-pair">Feliz → alegre · contente · satisfeito</span>
+          <span class="example-pair">Bonito → belo · lindo · formoso</span>
+          <span class="example-pair">Rápido → veloz · ligeiro · ágil</span>
+          <span class="example-pair">Casa → lar · residência · moradia</span>
+        </div>
+      </div>
+
+      <p><strong>⚠️ ATENÇÃO: Sinônimos nem sempre são exatamente iguais!</strong></p>
+      <p>Na maioria das vezes, os sinônimos têm sentidos parecidos, mas não totalmente idênticos. O significado pode mudar dependendo do contexto da frase.</p>
+
+      <div class="key-phrase-pt">"Magro" e "esquelético" são parecidos, mas "esquelético" transmite uma ideia mais extrema. Por isso, é importante escolher o sinônimo adequado para cada situação.</div>
+      <div class="key-phrase-en">"Thin" and "skeletal" are similar, but "skeletal" conveys a more extreme idea. That is why choosing the right synonym for each situation matters.</div>
+
+      <p>Os sinônimos são importantes porque nos ajudam a:</p>
+      <div class="example-box">
+        <strong>Importância dos Sinônimos · Importance of Synonyms</strong>
+        <div style="margin-top:.6rem;">
+          <p>✅ Evitar repetição de palavras · <em>Avoid repeating words</em></p>
+          <p>✅ Melhorar a escrita e a leitura · <em>Improve writing and reading</em></p>
+          <p>✅ Enriquecer o vocabulário · <em>Enrich vocabulary</em></p>
+          <p>✅ Tornar o texto mais claro e interessante · <em>Make text clearer and more interesting</em></p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Vocabulary</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Sinônimo<div class="vocab-tooltip">Palavra de sentido semelhante. / Word with a similar meaning.</div></div>
+        <div class="vocab-term">Sentido semelhante<div class="vocab-tooltip">Significado parecido, próximo. / Close or similar meaning.</div></div>
+        <div class="vocab-term">Repetição<div class="vocab-tooltip">Usar a mesma palavra várias vezes. / Using the same word many times.</div></div>
+        <div class="vocab-term">Contexto<div class="vocab-tooltip">A situação em que a palavra é usada. / The situation in which a word is used.</div></div>
+        <div class="vocab-term">Vocabulário<div class="vocab-tooltip">Conjunto de palavras de um idioma. / Set of words in a language.</div></div>
+        <div class="vocab-term">Esquelético<div class="vocab-tooltip">Muito magro, extremamente fino. / Very thin, extremely lean.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ PT S0 -->
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🧠</span>
+      <span class="quiz-title">Quiz — Sinônimos</span>
+      <span class="quiz-lang-badge badge-pt">🇧🇷 Português</span>
+    </div>
+    <div id="quiz-s0-pt"></div>
+  </div>
+
+  <!-- QUIZ EN S0 -->
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🌎</span>
+      <span class="quiz-title">Quiz — Synonyms</span>
+      <span class="quiz-lang-badge badge-en">🇨🇦 English</span>
+    </div>
+    <div id="quiz-s0-en"></div>
+  </div>
+
+  <div class="section-complete" id="complete-s0">
+    <h3>🎉 Seção concluída! · Section Complete!</h3>
+    <p>Incrível! Você dominou os Sinônimos! · Amazing! You mastered Synonyms!</p>
+  </div>
+  <button class="next-section-btn" id="next-s0" onclick="goToSection(1)">Próxima Seção ➜</button>
+</div>
+
+<!-- ============================= SEÇÃO 2: ANTÔNIMOS ============================= -->
+<div class="lesson-section reveal" id="sec1" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">🔄</div>
+      <div>
+        <div class="section-subtitle">Seção 2 · Section 2</div>
+        <div class="section-title">Antônimos · Antonyms</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <p>Quando duas palavras apresentam <strong>sentidos opostos</strong>, dizemos que elas são <strong>antônimas</strong>. Os antônimos são muito usados para expressar contraste e diferença nos textos.</p>
+
+      <div class="key-phrase-pt">Antônimos são palavras com sentidos opostos que expressam contraste e enriquecem os textos.</div>
+      <div class="key-phrase-en">Antonyms are words with opposite meanings that express contrast and enrich texts.</div>
+
+      <div class="example-box">
+        <strong>Exemplos · Examples</strong>
+        <div class="example-grid">
+          <span class="example-pair">alto ↔ baixo</span>
+          <span class="example-pair">grande ↔ pequeno</span>
+          <span class="example-pair">claro ↔ escuro</span>
+          <span class="example-pair">rápido ↔ lento</span>
+          <span class="example-pair">feliz ↔ triste</span>
+        </div>
+      </div>
+
+      <p>Os antônimos podem ser classificados em <strong>quatro categorias</strong>, de acordo com o tipo de oposição que apresentam:</p>
+
+      <div class="example-box">
+        <strong>1. Oposição Escalar · Scalar Opposition</strong>
+        <p style="margin-top:.4rem;font-size:.9rem;">São palavras que indicam <strong>graus diferentes dentro de uma mesma ideia</strong>. Entre os extremos, podem existir graus intermediários (morno, médio, etc.).</p>
+        <div class="example-grid" style="margin-top:.5rem;">
+          <span class="example-pair">quente ↔ frio</span>
+          <span class="example-pair">alto ↔ baixo</span>
+          <span class="example-pair">forte ↔ fraco</span>
+          <span class="example-pair">grande ↔ pequeno</span>
+        </div>
+      </div>
+
+      <div class="key-phrase-en">In scalar opposition, intermediate degrees exist between the two extremes (e.g., warm is between hot and cold).</div>
+
+      <div class="example-box">
+        <strong>2. Complementaridade de Sentidos · Complementarity</strong>
+        <p style="margin-top:.4rem;font-size:.9rem;">Uma palavra exclui completamente a outra. Se algo é uma coisa, não pode ser a outra ao mesmo tempo.</p>
+        <div class="example-grid" style="margin-top:.5rem;">
+          <span class="example-pair">vivo ↔ morto</span>
+          <span class="example-pair">verdadeiro ↔ falso</span>
+          <span class="example-pair">presente ↔ ausente</span>
+          <span class="example-pair">cheio ↔ vazio</span>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <strong>3. Reciprocidade · Reciprocity</strong>
+        <p style="margin-top:.4rem;font-size:.9rem;">São palavras que indicam <strong>relações opostas entre duas pessoas ou elementos</strong>.</p>
+        <div class="example-grid" style="margin-top:.5rem;">
+          <span class="example-pair">comprar ↔ vender</span>
+          <span class="example-pair">dar ↔ receber</span>
+          <span class="example-pair">ensinar ↔ aprender</span>
+          <span class="example-pair">entrar ↔ sair</span>
+        </div>
+      </div>
+
+      <div class="key-phrase-pt">Na reciprocidade, a ação de um pressupõe a ação oposta do outro — não existe "comprar" sem alguém que "vende".</div>
+
+      <div class="example-box">
+        <strong>4. Exclusão · Exclusion</strong>
+        <p style="margin-top:.4rem;font-size:.9rem;">Ocorre quando uma palavra exclui várias outras possibilidades.</p>
+        <div class="example-grid" style="margin-top:.5rem;">
+          <span class="example-pair">masculino ↔ feminino</span>
+          <span class="example-pair">norte ↔ sul</span>
+          <span class="example-pair">dia ↔ noite</span>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <strong>Importância dos Antônimos · Importance of Antonyms</strong>
+        <div style="margin-top:.6rem;">
+          <p>✅ Compreender melhor o significado das palavras · <em>Better understand word meanings</em></p>
+          <p>✅ Ampliar o vocabulário · <em>Expand vocabulary</em></p>
+          <p>✅ Expressar contraste de ideias · <em>Express contrast of ideas</em></p>
+          <p>✅ Tornar os textos mais claros e completos · <em>Make texts clearer and more complete</em></p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Vocabulary</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Antônimo<div class="vocab-tooltip">Palavra de sentido oposto. / Word with opposite meaning.</div></div>
+        <div class="vocab-term">Oposição escalar<div class="vocab-tooltip">Graus de oposição com intermediários. / Degrees of opposition with in-betweens.</div></div>
+        <div class="vocab-term">Complementaridade<div class="vocab-tooltip">Uma palavra exclui completamente a outra. / One word fully excludes the other.</div></div>
+        <div class="vocab-term">Reciprocidade<div class="vocab-tooltip">Relação oposta entre dois elementos. / Opposite relation between two elements.</div></div>
+        <div class="vocab-term">Exclusão<div class="vocab-tooltip">Uma palavra exclui várias possibilidades. / One word excludes several possibilities.</div></div>
+        <div class="vocab-term">Contraste<div class="vocab-tooltip">Diferença marcante entre duas coisas. / Striking difference between two things.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ PT S1 -->
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🧠</span>
+      <span class="quiz-title">Quiz — Antônimos</span>
+      <span class="quiz-lang-badge badge-pt">🇧🇷 Português</span>
+    </div>
+    <div id="quiz-s1-pt"></div>
+  </div>
+
+  <!-- QUIZ EN S1 -->
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🌎</span>
+      <span class="quiz-title">Quiz — Antonyms</span>
+      <span class="quiz-lang-badge badge-en">🇨🇦 English</span>
+    </div>
+    <div id="quiz-s1-en"></div>
+  </div>
+
+  <div class="section-complete" id="complete-s1">
+    <h3>🎉 Seção concluída! · Section Complete!</h3>
+    <p>Parabéns! Você dominou os Antônimos! · Well done! You mastered Antonyms!</p>
+  </div>
+  <button class="next-section-btn" id="next-s1" onclick="goToSection(2)">Próxima Seção ➜</button>
+</div>
+
+<!-- ============================= SEÇÃO 3: LIVRO ============================= -->
+<div class="lesson-section reveal" id="sec2" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">📖</div>
+      <div>
+        <div class="section-subtitle">Seção 3 · Section 3</div>
+        <div class="section-title">Leitura e Interpretação · Reading &amp; Interpretation</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="book-info">
+        <div class="book-emoji">📚</div>
+        <div class="book-details">
+          <h3>A Terra dos Meninos Pelados</h3>
+          <p>Autor: Graciliano Ramos</p>
+          <p>Editora: Record · Galera Junior</p>
+        </div>
+      </div>
+
+      <div class="key-phrase-pt">Raimundo é um menino diferente — excluído do grupo por sua aparência. Sua jornada a Tapiriri é uma viagem de autodescoberta e amadurecimento.</div>
+      <div class="key-phrase-en">Raimundo is a different boy — excluded from his group because of his appearance. His journey to Tapiriri is a voyage of self-discovery and growing up.</div>
+
+      <p>Abaixo estão os <strong>pontos de observação</strong> do roteiro de leitura, organizados por faixas de páginas. Clique em cada faixa para expandir os pontos:</p>
+
+      <!-- PAGE RANGE 1 -->
+      <div class="page-range open" id="pr0">
+        <div class="page-range-header" onclick="toggleRange('pr0')">
+          <span>📄 Pontos de Observação — até a Página 23</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="page-range-body">
+          <ul class="observation-list">
+            <li>A narrativa sobre um menino diferente: Raimundo — excluído do grupo que vivia por ser diferente.</li>
+            <li>A partida de Raimundo para Tapiriri.</li>
+            <li>Encontro com um cachorro que tem olhos de gato em vez de lanternas, peixe e focinho que não atrapalha ninguém.</li>
+            <li>Encontro com cigarras.</li>
+            <li>A chegada ao rio das Sete Cabeças, onde os meninos pelados se encontram.</li>
+            <li>A diferença na vestimenta dos meninos pelados e de Raimundo.</li>
+            <li>A tristeza de Raimundo com a reação dos meninos pelados por eles não saberem o seu nome.</li>
+            <li>O uso de <strong>neologismos</strong> — criação de palavras que não existem.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PAGE RANGE 2 -->
+      <div class="page-range" id="pr1">
+        <div class="page-range-header" onclick="toggleRange('pr1')">
+          <span>📄 Pontos de Observação — Páginas 25 a 46</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="page-range-body">
+          <ul class="observation-list">
+            <li>A proposta de troca de roupa do Dr. Aranha, que estranhou as roupas de Raimundo.</li>
+            <li>Os meninos pelados procurando por Raimundo.</li>
+            <li>O rio passando, fazendo Raimundo acreditar que existia algum tipo de mecanismo.</li>
+            <li>O desaparecimento da lâmpada de Carará.</li>
+            <li>A tentativa de troca de nome de Raimundo, que não aceita a proposta.</li>
+            <li>A descoberta de que o Sol não se deita.</li>
+            <li>A descoberta de que em Tapiriri a chuva não chove e que não se dorme em casas.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PAGE RANGE 3 -->
+      <div class="page-range" id="pr2">
+        <div class="page-range-header" onclick="toggleRange('pr2')">
+          <span>📄 Pontos de Observação — Páginas 47 a 63</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="page-range-body">
+          <ul class="observation-list">
+            <li>A insistência do menino sargento no seu projeto para Raimundo.</li>
+            <li>Reflexão por que o menino sargento queria que todos tivessem sardinhas.</li>
+            <li>A cigana representando a indústria dos artistas.</li>
+            <li>Outras curiosidades de Tapiriri: os meninos não envelhecem e não sentem dor.</li>
+            <li>A reaparição de Carará-lâmpada.</li>
+            <li>A cobra que serve de enfete (bracelete).</li>
+            <li>O encontro e a conversa de Raimundo com Carará-lâmpada.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PAGE RANGE 4 -->
+      <div class="page-range" id="pr3">
+        <div class="page-range-header" onclick="toggleRange('pr3')">
+          <span>📄 Pontos de Observação — Páginas 63 a 84</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="page-range-body">
+          <ul class="observation-list">
+            <li>O encontro com a guariba pelada.</li>
+            <li>A história do mosquito que virou mosca.</li>
+            <li>A história de Carará-lâmpada quando ela estava perdida.</li>
+            <li>O consulte insistente para Raimundo ficar.</li>
+            <li>O desenvolvimento do significado de obrigação para Raimundo.</li>
+            <li>Reflexão de Raimundo, relembrando as características da terra visitada.</li>
+            <li>A intertextualidade com o livro <em>Alice no País das Maravilhas</em>, de Lewis Carroll — ambos os textos contam as aventuras de uma personagem em uma terra cheia de fantasias.</li>
+            <li>Refletindo como a decisão de Raimundo em voltar para a sua terra revela seu crescimento (maturidade): entendendo que as diferenças são importantes e reconhecendo suas obrigações.</li>
+            <li>Refletindo como Raimundo passa a aceitar como ele é: conhece melhor a si mesmo.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="key-phrase-pt">A decisão de Raimundo de voltar para casa mostra amadurecimento: ele aprende a aceitar as diferenças e a reconhecer suas responsabilidades.</div>
+      <div class="key-phrase-en">Raimundo's decision to return home shows maturity: he learns to accept differences and to recognize his own responsibilities.</div>
+
+    </div>
+
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Vocabulary</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Neologismo<div class="vocab-tooltip">Criação de palavras novas. / Creation of new, made-up words.</div></div>
+        <div class="vocab-term">Intertextualidade<div class="vocab-tooltip">Referência a outra obra literária. / Reference to another literary work.</div></div>
+        <div class="vocab-term">Maturidade<div class="vocab-tooltip">Crescimento, amadurecimento pessoal. / Personal growth and maturity.</div></div>
+        <div class="vocab-term">Narrativa<div class="vocab-tooltip">Texto que conta uma história. / Text that tells a story.</div></div>
+        <div class="vocab-term">Tapiriri<div class="vocab-tooltip">A terra fantástica do livro. / The fantasy land in the book.</div></div>
+        <div class="vocab-term">Excluído<div class="vocab-tooltip">Deixado de fora do grupo. / Left out of the group.</div></div>
+        <div class="vocab-term">Obrigação<div class="vocab-tooltip">Dever, responsabilidade. / Duty, responsibility.</div></div>
+        <div class="vocab-term">Autodescoberta<div class="vocab-tooltip">Processo de conhecer a si mesmo. / Process of knowing oneself.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ PT S2 -->
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🧠</span>
+      <span class="quiz-title">Quiz — A Terra dos Meninos Pelados</span>
+      <span class="quiz-lang-badge badge-pt">🇧🇷 Português</span>
+    </div>
+    <div id="quiz-s2-pt"></div>
+  </div>
+
+  <!-- QUIZ EN S2 -->
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🌎</span>
+      <span class="quiz-title">Quiz — The Land of the Bald Boys</span>
+      <span class="quiz-lang-badge badge-en">🇨🇦 English</span>
+    </div>
+    <div id="quiz-s2-en"></div>
+  </div>
+
+  <div class="section-complete" id="complete-s2">
+    <h3>🎉 Aula concluída! · Lesson Complete!</h3>
+    <p>Parabéns! Você terminou toda a aula de Português! · Congratulations! You finished the entire Portuguese lesson!</p>
+  </div>
+  <button class="next-section-btn" id="next-s2" onclick="showTrophy()">Ver Resultado Final 🏆</button>
+</div>
+
+<!-- TROPHY -->
+<div class="final-trophy" id="finalTrophy">
+  <div class="trophy-card">
+    <span class="trophy-emoji">🏆</span>
+    <h2>Você é incrível!<br><span style="font-size:.65em;color:var(--orange-500);">You are amazing!</span></h2>
+    <div class="trophy-score"><span id="finalScore">0</span> pontos!</div>
+    <p id="finalMsg">Continue estudando e explorando o Português! · Keep studying and exploring Portuguese!</p>
+    <button onclick="location.reload()" style="margin-top:1.5rem;padding:.7rem 2rem;background:linear-gradient(135deg,var(--orange-400),var(--orange-600));color:white;border:none;border-radius:99px;font-family:'Baloo 2',cursive;font-weight:800;font-size:1rem;cursor:pointer;box-shadow:0 4px 16px rgba(234,88,12,.28);">Recomeçar · Restart 🔄</button>
+  </div>
+</div>
+
+<div style="height:3rem"></div>
+
+<script>
+// ============================================================
+// QUIZ DATA
+// ============================================================
+const quizData = {
+  // ---- SEÇÃO 1: SINÔNIMOS ----
+  's0-pt': [
+    {
+      q: 'O que são sinônimos?',
+      opts: ['Palavras com sentidos opostos', 'Palavras com sentidos semelhantes', 'Palavras que rimam entre si', 'Palavras com mais de três sílabas'],
+      correct: 1
+    },
+    {
+      q: 'Qual das alternativas apresenta um grupo de sinônimos para a palavra "feliz"?',
+      opts: ['triste, chateado, frustrado', 'alegre, contente, satisfeito', 'bonito, formoso, lindo', 'rápido, veloz, ágil'],
+      correct: 1
+    },
+    {
+      q: 'Por que usar sinônimos em um texto é importante?',
+      opts: ['Para deixar o texto mais confuso', 'Para tornar o texto mais curto', 'Para evitar a repetição de palavras e enriquecer o texto', 'Para corrigir erros de ortografia'],
+      correct: 2
+    },
+    {
+      q: 'Por que sinônimos nem sempre são exatamente iguais?',
+      opts: ['Porque cada um tem uma sílaba diferente', 'Porque são palavras de idiomas diferentes', 'Porque um é substantivo e o outro é adjetivo', 'Porque o significado pode mudar dependendo do contexto da frase'],
+      correct: 3
+    },
+    {
+      q: 'Qual é a diferença entre "magro" e "esquelético"?',
+      opts: ['São exatamente a mesma coisa', 'Esquelético transmite uma ideia mais extrema do que magro', 'Magro é mais extremo que esquelético', 'Não são sinônimos em nenhum contexto'],
+      correct: 1
+    },
+  ],
+  's0-en': [
+    {
+      q: 'What are synonyms?',
+      opts: ['Words with opposite meanings', 'Words with similar meanings', 'Words that rhyme with each other', 'Words with the same number of syllables'],
+      correct: 1
+    },
+    {
+      q: 'Which group contains synonyms for the word "fast" (rápido)?',
+      opts: ['slow, lazy, tired', 'quick, swift, speedy', 'big, large, huge', 'sad, unhappy, upset'],
+      correct: 1
+    },
+    {
+      q: 'Why is it important to choose the right synonym for each situation?',
+      opts: ['Because some synonyms have slightly different shades of meaning depending on context', 'Because synonyms always mean exactly the same thing', 'Because synonyms should only be used in English texts', 'Because synonyms are only found in poetry'],
+      correct: 0
+    },
+  ],
+
+  // ---- SEÇÃO 2: ANTÔNIMOS ----
+  's1-pt': [
+    {
+      q: 'O que são antônimos?',
+      opts: ['Palavras com sentidos semelhantes', 'Palavras com sentidos opostos', 'Palavras que rimam', 'Palavras estrangeiras'],
+      correct: 1
+    },
+    {
+      q: 'Qual das opções abaixo é um par de antônimos?',
+      opts: ['bonito e formoso', 'feliz e alegre', 'comprar e vender', 'rápido e veloz'],
+      correct: 2
+    },
+    {
+      q: 'Na categoria "Complementaridade de sentidos", uma palavra exclui completamente a outra. Qual par representa essa categoria?',
+      opts: ['alto ↔ baixo', 'vivo ↔ morto', 'comprar ↔ vender', 'forte ↔ fraco'],
+      correct: 1
+    },
+    {
+      q: 'Qual categoria de antônimos indica relações opostas entre duas pessoas ou elementos?',
+      opts: ['Oposição escalar', 'Complementaridade de sentidos', 'Reciprocidade', 'Exclusão'],
+      correct: 2
+    },
+    {
+      q: 'No par "masculino ↔ feminino", qual tipo de antônimo está sendo usado?',
+      opts: ['Reciprocidade', 'Oposição escalar', 'Complementaridade', 'Exclusão'],
+      correct: 3
+    },
+  ],
+  's1-en': [
+    {
+      q: 'What are antonyms?',
+      opts: ['Words with similar meanings', 'Words that sound alike', 'Words with opposite meanings', 'Words that do not make sense'],
+      correct: 2
+    },
+    {
+      q: 'Which of the following is a pair of antonyms?',
+      opts: ['happy and joyful', 'buy and sell', 'fast and quick', 'large and big'],
+      correct: 1
+    },
+    {
+      q: 'In "scalar opposition," what can exist between the two extreme opposites?',
+      opts: ['Nothing — only the two extremes exist', 'Intermediate degrees (for example, "warm" is between "hot" and "cold")', 'Only one other synonym', 'A completely unrelated word'],
+      correct: 1
+    },
+  ],
+
+  // ---- SEÇÃO 3: LIVRO ----
+  's2-pt': [
+    {
+      q: 'Quem é o personagem principal do livro "A Terra dos Meninos Pelados"?',
+      opts: ['Carará-lâmpada', 'Dr. Aranha', 'Raimundo', 'O menino sargento'],
+      correct: 2
+    },
+    {
+      q: 'Por que Raimundo se sentia diferente no início do livro?',
+      opts: ['Porque era muito alto e forte', 'Porque era excluído do grupo por sua aparência diferente', 'Porque não sabia falar com as pessoas', 'Porque tinha muito mais dinheiro que os outros'],
+      correct: 1
+    },
+    {
+      q: 'O que é um neologismo, conforme abordado no livro?',
+      opts: ['Um tipo de música regional', 'A criação de palavras novas que não existem', 'Um lugar mágico na história', 'Um personagem secundário do livro'],
+      correct: 1
+    },
+    {
+      q: 'O que a decisão de Raimundo de voltar para a sua terra revela sobre ele?',
+      opts: ['Que ele não gostava de nenhum personagem de Tapiriri', 'Que ele tinha medo dos meninos pelados', 'Que ele estava crescendo e reconhecendo suas responsabilidades', 'Que ele queria se tornar um guerreiro'],
+      correct: 2
+    },
+    {
+      q: 'Com qual outra obra literária o livro "A Terra dos Meninos Pelados" se relaciona por intertextualidade?',
+      opts: ['Dom Casmurro, de Machado de Assis', 'O Pequeno Príncipe, de Antoine de Saint-Exupéry', 'Alice no País das Maravilhas, de Lewis Carroll', 'A Moreninha, de Joaquim Manuel de Macedo'],
+      correct: 2
+    },
+  ],
+  's2-en': [
+    {
+      q: 'What is the name of the fantasy land that Raimundo travels to?',
+      opts: ['Wonderland', 'Narnia', 'Tapiriri', 'Carará'],
+      correct: 2
+    },
+    {
+      q: 'What does Raimundo\'s decision to return home teach us about growing up?',
+      opts: ['That home is always boring compared to fantasy', 'That maturity means recognizing your responsibilities and embracing differences', 'That fantasy worlds are always better than real life', 'That friends are not important in life'],
+      correct: 1
+    },
+    {
+      q: 'What literary device does the author use when creating new, made-up words in the story?',
+      opts: ['Metaphor', 'Neologism', 'Rhyme', 'Alliteration'],
+      correct: 1
+    },
+  ],
+};
+
+// ============================================================
+// STATE
+// ============================================================
+let score = 0;
+let totalQuestions = 0;
+let answeredQuestions = 0;
+const sectionAnswered = {
+  0: { pt: 0, en: 0 },
+  1: { pt: 0, en: 0 },
+  2: { pt: 0, en: 0 }
+};
+const sectionTotal = {
+  0: { pt: 5, en: 3 },
+  1: { pt: 5, en: 3 },
+  2: { pt: 5, en: 3 }
+};
+
+Object.values(quizData).forEach(q => totalQuestions += q.length);
+
+// ============================================================
+// RENDER QUIZZES
+// ============================================================
+function renderQuiz(containerId, key, sectionIdx, lang) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const questions = quizData[key];
+  container.innerHTML = '';
+  questions.forEach((q, qi) => {
+    const letters = ['A', 'B', 'C', 'D'];
+    const block = document.createElement('div');
+    block.className = 'question-block';
+    block.innerHTML = `
+      <div class="question-num">Pergunta ${qi + 1} · Question ${qi + 1}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options" id="opts-${containerId}-${qi}">
+        ${q.opts.map((o, oi) => `
+          <button class="option-btn" onclick="checkAnswer(this,'${containerId}',${qi},${oi},${q.correct},${sectionIdx},'${lang}')">
+            <span class="option-letter">${letters[oi]}</span>${o}
+          </button>`).join('')}
+      </div>
+      <div class="feedback-msg" id="fb-${containerId}-${qi}"></div>
+    `;
+    container.appendChild(block);
+  });
+}
+
+// ============================================================
+// CHECK ANSWER
+// ============================================================
+function checkAnswer(btn, containerId, qi, chosen, correct, sectionIdx, lang) {
+  const opts = document.querySelectorAll(`#opts-${containerId}-${qi} .option-btn`);
+  opts.forEach(b => b.disabled = true);
+  const fb = document.getElementById(`fb-${containerId}-${qi}`);
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    fb.className = 'feedback-msg correct';
+    fb.innerHTML = '✅ Correto! · Correct! 🎉';
+    fb.style.display = 'flex';
+    score += 10;
+    document.getElementById('scoreDisplay').textContent = score;
+    launchConfetti();
+  } else {
+    btn.classList.add('wrong');
+    opts[correct].classList.add('correct');
+    const correctText = quizData[`s${sectionIdx}-${lang}`][qi].opts[correct];
+    fb.className = 'feedback-msg wrong';
+    fb.innerHTML = `❌ Ops! A resposta certa é · The correct answer is: <strong>${correctText}</strong>`;
+    fb.style.display = 'flex';
+  }
+  answeredQuestions++;
+  sectionAnswered[sectionIdx][lang]++;
+  updateProgress();
+  checkSectionComplete(sectionIdx);
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function updateProgress() {
+  const pct = (answeredQuestions / totalQuestions) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// ============================================================
+// SECTION COMPLETE CHECK
+// ============================================================
+function checkSectionComplete(idx) {
+  const a = sectionAnswered[idx];
+  const t = sectionTotal[idx];
+  if (a.pt >= t.pt && a.en >= t.en) {
+    document.getElementById(`complete-s${idx}`).classList.add('show');
+    document.getElementById(`next-s${idx}`).classList.add('show');
+    const dots = document.querySelectorAll('.nav-dot');
+    dots[idx].classList.remove('active');
+    dots[idx].classList.add('done');
+    if (idx < 2) dots[idx + 1].classList.add('active');
+  }
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function goToSection(idx) {
+  const secEl = document.getElementById(`sec${idx}`);
+  secEl.style.display = '';
+  secEl.classList.add('reveal');
+  setTimeout(() => secEl.classList.add('visible'), 50);
+  secEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ============================================================
+// PAGE RANGE TOGGLE
+// ============================================================
+function toggleRange(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+
+// ============================================================
+// CONFETTI
+// ============================================================
+function launchConfetti() {
+  const container = document.getElementById('confettiContainer');
+  const colors = ['#f97316', '#fb923c', '#fbbf24', '#f59e0b', '#fdba74', '#fed7aa', '#fff'];
+  for (let i = 0; i < 22; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.top = '-10px';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.width = (6 + Math.random() * 8) + 'px';
+    piece.style.height = (6 + Math.random() * 8) + 'px';
+    piece.style.borderRadius = Math.random() > .5 ? '50%' : '2px';
+    piece.style.animationDuration = (.7 + Math.random() * .8) + 's';
+    piece.style.animationDelay = (Math.random() * .3) + 's';
+    container.appendChild(piece);
+    setTimeout(() => piece.remove(), 1500);
+  }
+}
+
+// ============================================================
+// TROPHY
+// ============================================================
+function showTrophy() {
+  document.getElementById('finalScore').textContent = score;
+  const pct = Math.round((score / (totalQuestions * 10)) * 100);
+  let msg = '';
+  if (pct >= 90) msg = '🌟 Desempenho excepcional! · Exceptional performance!';
+  else if (pct >= 70) msg = '👏 Muito bem! Continue assim! · Very well done! Keep it up!';
+  else msg = '📚 Continue estudando! · Keep on studying!';
+  document.getElementById('finalMsg').textContent = msg;
+  document.getElementById('finalTrophy').classList.add('show');
+  document.getElementById('finalTrophy').scrollIntoView({ behavior: 'smooth' });
+  launchConfetti();
+  launchConfetti();
+}
+
+// ============================================================
+// SCROLL REVEAL
+// ============================================================
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ============================================================
+// DOT NAV
+// ============================================================
+document.querySelectorAll('.nav-dot').forEach(dot => {
+  dot.addEventListener('click', () => {
+    const idx = parseInt(dot.dataset.section);
+    const el = document.getElementById(`sec${idx}`);
+    if (el) { el.style.display = ''; el.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+
+// ============================================================
+// INIT — render all quizzes
+// ============================================================
+for (let i = 0; i < 3; i++) {
+  renderQuiz(`quiz-s${i}-pt`, `s${i}-pt`, i, 'pt');
+  renderQuiz(`quiz-s${i}-en`, `s${i}-en`, i, 'en');
+}
+
+// Reveal section 0 immediately
+document.querySelector('#sec0').classList.add('visible');
+</script>
+</body>
+</html>
