@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>História Y5 · MapleBear</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange-50: #fff7ed;
+    --orange-100: #ffedd5;
+    --orange-200: #fed7aa;
+    --orange-300: #fdba74;
+    --orange-400: #fb923c;
+    --orange-500: #f97316;
+    --orange-600: #ea580c;
+    --orange-700: #c2410c;
+    --white: #ffffff;
+    --glass-bg: rgba(255,255,255,0.65);
+    --glass-border: rgba(249,115,22,0.18);
+    --shadow-soft: 0 8px 32px rgba(249,115,22,0.10);
+    --shadow-card: 0 4px 24px rgba(249,115,22,0.13);
+    --radius-xl: 2rem;
+    --radius-lg: 1.25rem;
+    --radius-md: 0.875rem;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 40%, #fff3e0 70%, #fde8d0 100%);
+    min-height: 100vh;
+    color: #3a1a00;
+  }
+
+  /* BACKGROUND BLOBS */
+  body::before {
+    content:'';
+    position: fixed;
+    top: -120px; right: -120px;
+    width: 520px; height: 520px;
+    background: radial-gradient(circle, rgba(251,146,60,0.18) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content:'';
+    position: fixed;
+    bottom: -100px; left: -100px;
+    width: 440px; height: 440px;
+    background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV / HEADER */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(18px) saturate(1.4);
+    background: rgba(255,255,255,0.72);
+    border-bottom: 1.5px solid rgba(249,115,22,0.15);
+    box-shadow: 0 2px 18px rgba(249,115,22,0.08);
+    padding: 0.7rem 2rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  }
+  .logo { display: flex; align-items: center; gap: 0.7rem; }
+  .logo-icon { width: 42px; height: 42px; background: linear-gradient(135deg, var(--orange-400), var(--orange-600)); border-radius: 12px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; box-shadow: 0 4px 12px rgba(234,88,12,0.25); }
+  .logo-text { font-family: 'Baloo 2', cursive; font-weight:800; font-size:1.2rem; color: var(--orange-600); }
+  .logo-sub { font-size:0.72rem; font-weight:600; color: var(--orange-400); letter-spacing:.04em; }
+
+  .progress-bar-wrap { flex:1; max-width:320px; }
+  .progress-label { font-size:0.7rem; font-weight:700; color:var(--orange-500); margin-bottom:4px; text-transform:uppercase; letter-spacing:.06em; }
+  .progress-track { height:8px; background:rgba(253,186,116,0.35); border-radius:99px; overflow:hidden; }
+  .progress-fill { height:100%; background: linear-gradient(90deg, var(--orange-400), var(--orange-600)); border-radius:99px; transition: width .6s cubic-bezier(.4,0,.2,1); width:0%; }
+
+  .score-badge { background: linear-gradient(135deg, var(--orange-400), var(--orange-600)); color:#fff; font-weight:800; font-size:0.95rem; padding:.38rem .9rem; border-radius:99px; box-shadow: 0 3px 12px rgba(234,88,12,0.28); display:flex; align-items:center; gap:.4rem; }
+
+  /* HERO */
+  .hero {
+    text-align:center; padding: 3.5rem 1.5rem 2.5rem;
+    position:relative; z-index:1;
+  }
+  .hero-badge {
+    display:inline-block; background: linear-gradient(90deg,#fb923c22,#f9731611); border:1.5px solid var(--orange-300); border-radius:99px; padding:.3rem 1rem; font-size:.78rem; font-weight:700; color:var(--orange-600); letter-spacing:.06em; text-transform:uppercase; margin-bottom:1.1rem;
+  }
+  .hero h1 { font-family:'Baloo 2',cursive; font-weight:800; font-size:clamp(2rem,5vw,3rem); color:var(--orange-700); line-height:1.15; margin-bottom:.6rem; }
+  .hero p { font-size:1.05rem; color:#a05022; max-width:580px; margin:0 auto; font-weight:500; }
+
+  /* SECTION NAV DOTS */
+  .section-nav { display:flex; justify-content:center; gap:1.1rem; padding:1rem 0 .5rem; position:relative; z-index:1; flex-wrap:wrap; }
+  .nav-dot {
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:var(--orange-200);
+    border:2.5px solid var(--orange-300);
+    cursor:pointer;
+    transition:all .25s;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.25rem;
+    font-weight:800;
+    color:var(--orange-700);
+    box-shadow:0 2px 8px rgba(249,115,22,0.10);
+    position:relative;
+  }
+  .nav-dot.active {
+    background:var(--orange-500);
+    border-color:var(--orange-600);
+    color:#fff;
+    transform:scale(1.18);
+    box-shadow:0 4px 16px rgba(249,115,22,0.18);
+  }
+  .nav-dot.done {
+    background:var(--orange-400);
+    border-color:var(--orange-500);
+    color:#fff;
+  }
+
+  /* CONTENT SECTION */
+  .lesson-section {
+    max-width:860px; margin:2rem auto; padding:0 1rem;
+    position:relative; z-index:1;
+  }
+
+  .section-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(1.3);
+    border: 1.5px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-soft);
+    padding: 2rem 2.2rem 1.8rem;
+    margin-bottom: 1.5rem;
+    position:relative; overflow:hidden;
+    transition: transform .25s, box-shadow .25s;
+  }
+  .section-card:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(249,115,22,0.14); }
+  .section-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:4px;
+    background: linear-gradient(90deg, var(--orange-400), var(--orange-600), var(--orange-300));
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+
+  .section-header { display:flex; align-items:center; gap:.9rem; margin-bottom:1.5rem; }
+  .section-icon { width:52px; height:52px; background:linear-gradient(135deg,var(--orange-400),var(--orange-600)); border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center; font-size:1.6rem; box-shadow:0 4px 16px rgba(234,88,12,0.22); flex-shrink:0; }
+  .section-title { font-family:'Baloo 2',cursive; font-weight:800; font-size:1.5rem; color:var(--orange-700); }
+  .section-subtitle { font-size:.78rem; font-weight:700; color:var(--orange-400); text-transform:uppercase; letter-spacing:.07em; }
+
+  .section-body { font-size:1rem; line-height:1.75; color:#4a2000; }
+  .section-body p { margin-bottom:1rem; }
+
+  /* KEY PHRASES */
+  .key-phrase-pt {
+    background: linear-gradient(90deg, rgba(253,186,116,0.35), rgba(249,115,22,0.10));
+    border-left: 4px solid var(--orange-500);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: .7rem 1.1rem;
+    margin: 1.2rem 0;
+    font-weight:700; font-size:1.02rem; color:var(--orange-700);
+    position:relative;
+  }
+  .key-phrase-pt::before { content:'🔑 PT'; position:absolute; top:-.62rem; left:.8rem; font-size:.65rem; font-weight:800; background:var(--orange-500); color:#fff; padding:.15rem .45rem; border-radius:99px; letter-spacing:.04em; }
+
+  .key-phrase-en {
+    background: linear-gradient(90deg, rgba(251,191,36,0.18), rgba(245,158,11,0.08));
+    border-left: 4px solid #f59e0b;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: .7rem 1.1rem;
+    margin: 1.2rem 0;
+    font-weight:700; font-size:1.02rem; color:#92400e; font-style:italic;
+    position:relative;
+  }
+  .key-phrase-en::before { content:'🔑 EN'; position:absolute; top:-.62rem; left:.8rem; font-size:.65rem; font-weight:800; background:#f59e0b; color:#fff; padding:.15rem .45rem; border-radius:99px; letter-spacing:.04em; }
+
+  /* VOCABULARY */
+  .vocab-box {
+    background: linear-gradient(135deg, rgba(255,237,213,0.8), rgba(255,247,237,0.9));
+    border: 1.5px solid rgba(253,186,116,0.5);
+    border-radius: var(--radius-lg);
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .vocab-title { font-family:'Baloo 2',cursive; font-weight:800; color:var(--orange-600); font-size:1rem; margin-bottom:.8rem; display:flex; align-items:center; gap:.4rem; }
+  .vocab-grid { display:flex; flex-wrap:wrap; gap:.5rem; }
+  .vocab-term {
+    background: white; border: 1.5px solid var(--orange-300); border-radius:99px;
+    padding:.28rem .85rem; font-size:.83rem; font-weight:700; color:var(--orange-700);
+    cursor:pointer; transition:all .2s; position:relative;
+  }
+  .vocab-term:hover { background:var(--orange-500); color:white; transform:translateY(-2px); box-shadow:0 4px 12px rgba(249,115,22,0.28); }
+  .vocab-tooltip {
+    display:none; position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%);
+    background:rgba(58,26,0,0.92); color:white; border-radius:var(--radius-md); padding:.5rem .85rem;
+    font-size:.78rem; font-weight:600; white-space:nowrap; z-index:200;
+    box-shadow:0 4px 16px rgba(0,0,0,0.18);
+  }
+  .vocab-tooltip::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:5px solid transparent; border-top-color:rgba(58,26,0,0.92); }
+  .vocab-term:hover .vocab-tooltip { display:block; animation: fadeInUp .2s ease; }
+
+  /* QUIZ SECTION */
+  .quiz-section {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(1.3);
+    border: 1.5px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+    padding: 1.8rem 2.2rem;
+    margin-bottom: 2.5rem;
+    position:relative; overflow:hidden;
+  }
+  .quiz-section::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:4px;
+    background: linear-gradient(90deg, #f59e0b, var(--orange-500), #f97316);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+
+  .quiz-header { display:flex; align-items:center; gap:.8rem; margin-bottom:1.5rem; }
+  .quiz-icon { font-size:1.4rem; }
+  .quiz-title { font-family:'Baloo 2',cursive; font-weight:800; font-size:1.15rem; color:var(--orange-700); }
+  .quiz-lang-badge { margin-left:auto; font-size:.7rem; font-weight:800; padding:.22rem .65rem; border-radius:99px; letter-spacing:.05em; text-transform:uppercase; }
+  .badge-pt { background:rgba(249,115,22,0.12); color:var(--orange-600); border:1.5px solid var(--orange-300); }
+  .badge-en { background:rgba(245,158,11,0.12); color:#b45309; border:1.5px solid #fbbf24; }
+
+  .question-block { margin-bottom:1.5rem; }
+  .question-num { font-size:.73rem; font-weight:800; color:var(--orange-400); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.35rem; }
+  .question-text { font-weight:700; font-size:1rem; color:#3a1a00; margin-bottom:.85rem; line-height:1.5; }
+
+  .options { display:flex; flex-direction:column; gap:.55rem; }
+  .option-btn {
+    background: rgba(255,255,255,0.8); border: 2px solid rgba(253,186,116,0.4);
+    border-radius: var(--radius-md); padding:.75rem 1.1rem;
+    font-family:'Nunito',sans-serif; font-size:.93rem; font-weight:600; color:#5c2800;
+    cursor:pointer; text-align:left; transition:all .2s; display:flex; align-items:center; gap:.7rem;
+  }
+  .option-btn:hover:not(:disabled) { background:rgba(255,237,213,0.95); border-color:var(--orange-400); transform:translateX(4px); }
+  .option-letter { width:28px; height:28px; background:linear-gradient(135deg,var(--orange-200),var(--orange-300)); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.82rem; color:var(--orange-700); flex-shrink:0; transition:all .2s; }
+  .option-btn.correct { background:rgba(187,247,208,0.7); border-color:#22c55e; color:#14532d; }
+  .option-btn.correct .option-letter { background:#22c55e; color:white; }
+  .option-btn.wrong { background:rgba(254,202,202,0.7); border-color:#ef4444; color:#7f1d1d; }
+  .option-btn.wrong .option-letter { background:#ef4444; color:white; }
+  .option-btn:disabled { cursor:default; }
+
+  .feedback-msg { border-radius:var(--radius-md); padding:.7rem 1rem; font-weight:700; font-size:.9rem; margin-top:.7rem; display:none; animation: slideIn .3s ease; }
+  .feedback-msg.correct { background:rgba(187,247,208,0.6); color:#15803d; border:1.5px solid #86efac; display:flex; gap:.5rem; align-items:center; }
+  .feedback-msg.wrong { background:rgba(254,202,202,0.6); color:#dc2626; border:1.5px solid #fca5a5; display:flex; gap:.5rem; align-items:center; }
+
+  /* CONFETTI */
+  .confetti-container { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
+  .confetti-piece {
+    position:absolute; width:10px; height:10px; border-radius:2px;
+    animation: confettiFall 1.2s ease-in forwards;
+  }
+
+  /* SECTION COMPLETE */
+  .section-complete {
+    display:none; text-align:center; padding:1.5rem; margin-top:1rem;
+    background:linear-gradient(135deg,rgba(187,247,208,0.4),rgba(134,239,172,0.2));
+    border:1.5px solid #86efac; border-radius:var(--radius-lg); animation: fadeInUp .4s ease;
+  }
+  .section-complete.show { display:block; }
+  .section-complete h3 { font-family:'Baloo 2',cursive; font-weight:800; color:#15803d; font-size:1.3rem; margin-bottom:.4rem; }
+  .section-complete p { color:#166534; font-size:.9rem; }
+
+  /* NEXT BTN */
+  .next-section-btn {
+    display:none; margin: 1rem auto 0; padding:.8rem 2rem;
+    background:linear-gradient(135deg,var(--orange-400),var(--orange-600));
+    color:white; border:none; border-radius:99px; font-family:'Baloo 2',cursive;
+    font-weight:800; font-size:1rem; cursor:pointer; box-shadow:0 4px 16px rgba(234,88,12,0.28);
+    transition:all .25s; text-transform:uppercase; letter-spacing:.05em;
+  }
+  .next-section-btn:hover { transform:translateY(-2px) scale(1.03); box-shadow:0 8px 24px rgba(234,88,12,0.35); }
+  .next-section-btn.show { display:block; animation: fadeInUp .4s ease; }
+
+  /* FINAL TROPHY */
+  .final-trophy { display:none; text-align:center; padding:3rem 2rem; position:relative; z-index:1; }
+  .final-trophy.show { display:block; animation: fadeInUp .6s ease; }
+  .trophy-card { background:var(--glass-bg); backdrop-filter:blur(20px); border:2px solid rgba(253,186,116,0.4); border-radius:var(--radius-xl); padding:3rem 2rem; max-width:540px; margin:0 auto; box-shadow:0 16px 48px rgba(249,115,22,0.15); }
+  .trophy-emoji { font-size:5rem; margin-bottom:1rem; display:block; animation: bounce 1s ease infinite; }
+  .trophy-card h2 { font-family:'Baloo 2',cursive; font-weight:800; font-size:2rem; color:var(--orange-700); margin-bottom:.7rem; }
+  .trophy-score { font-size:3rem; font-weight:900; color:var(--orange-600); font-family:'Baloo 2',cursive; }
+  .trophy-card p { color:#a05022; margin-top:.8rem; font-size:1rem; }
+
+  /* ANIMATIONS */
+  @keyframes fadeInUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes slideIn { from { opacity:0; transform:translateX(-10px); } to { opacity:1; transform:translateX(0); } }
+  @keyframes confettiFall { 0% { opacity:1; transform:translateY(0) rotate(0deg) scale(1); } 100% { opacity:0; transform:translateY(100vh) rotate(540deg) scale(.6); } }
+  @keyframes bounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-12px); } }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.7; } }
+
+  .fade-in { animation: fadeInUp .5s ease both; }
+
+  /* SCROLL REVEAL */
+  .reveal { opacity:0; transform:translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  /* RESPONSIVE */
+  @media(max-width:600px) {
+    .section-card, .quiz-section { padding:1.3rem 1.1rem; }
+    header { padding:.6rem 1rem; }
+    .logo-text { font-size:1rem; }
+    .progress-bar-wrap { max-width:160px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="confetti-container" id="confettiContainer"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">🍁</div>
+    <div>
+      <div class="logo-text">MapleBear Y5</div>
+      <div class="logo-sub">História · History</div>
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-label">Progresso · Progress</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+  <div class="score-badge">⭐ <span id="scoreDisplay">0</span> pts</div>
+</header>
+
+<!-- HERO -->
+<div class="hero fade-in">
+  <div class="hero-badge">Unidade 1 · Unit 1 · Year 5</div>
+  <h1>A Formação dos Diferentes Povos<br><span style="font-size:.65em;color:var(--orange-500);">The Formation of Different Peoples</span></h1>
+  <p>Aula 13 · Material 2 — Período Paleolítico, Neolítico e as Primeiras Civilizações</p>
+</div>
+
+<!-- SECTION DOTS -->
+<div class="section-nav" id="sectionNav">
+  <div class="nav-dot active" data-section="0" title="Período Paleolítico">1</div>
+  <div class="nav-dot" data-section="1" title="Período Neolítico">2</div>
+  <div class="nav-dot" data-section="2" title="Leitos dos Rios">3</div>
+  <div class="nav-dot" data-section="3" title="Mesopotâmia">4</div>
+  <div class="nav-dot" data-section="4" title="Egito">5</div>
+</div>
+
+<!-- ============================= SECTION 1 ============================= -->
+<div class="lesson-section reveal" id="sec0">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">🦴</div>
+      <div>
+        <div class="section-subtitle">Seção 1 · Section 1</div>
+        <div class="section-title">Período Paleolítico · Paleolithic Period</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>A história do surgimento do <strong>Homo sapiens</strong> está em constante reconstrução. Em 1967, fósseis humanos muito antigos foram encontrados na Etiópia, de um Homo sapiens que teria vivido há cerca de <strong>200 mil anos</strong>. Em 2017, descobertas no sítio arqueológico de Jebel Irhoud, no Marrocos, revelaram que nossa espécie pode ter surgido há cerca de <strong>300 mil anos</strong>. A África é o berço da humanidade!</p>
+
+      <div class="key-phrase-pt">O Homo sapiens surgiu na África há aproximadamente 300 mil anos e se espalhou por todo o mundo.</div>
+      <div class="key-phrase-en">Homo sapiens emerged in Africa approximately 300,000 years ago and spread across the entire world.</div>
+
+      <p>Os seres humanos do período paleolítico viviam de forma <strong>nômade</strong>: caçavam, pescavam e coletavam frutos. Como precisavam seguir os alimentos, não tinham moradia fixa. Nas regiões frias, transformavam peles de animais em vestimentas e ossos em adornos. Suas principais ferramentas eram feitas de <strong>pedra lascada</strong>.</p>
+
+      <div class="key-phrase-pt">O nomadismo era o modo de vida dos caçadores-coletores, que se moviam em busca de alimento.</div>
+      <div class="key-phrase-en">Nomadism was the way of life for hunter-gatherers, who moved in search of food.</div>
+
+      <p>As <strong>fontes históricas</strong> desse período são os vestígios materiais e as <strong>pinturas rupestres</strong> — representações visuais feitas nas rochas que mostram cenas de caça e organização social, evidenciando que mesmo em pequenos bandos havia vida coletiva organizada.</p>
+    </div>
+
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Vocabulary</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Homo sapiens<div class="vocab-tooltip">Nossa espécie. / Our species.</div></div>
+        <div class="vocab-term">Fósseis<div class="vocab-tooltip">Vestígios preservados em rocha. / Remains preserved in rock.</div></div>
+        <div class="vocab-term">Paleontólogo<div class="vocab-tooltip">Profissional que estuda fósseis. / Fossil scientist.</div></div>
+        <div class="vocab-term">Sítio arqueológico<div class="vocab-tooltip">Local com vestígios históricos. / Site with historical remains.</div></div>
+        <div class="vocab-term">Nomadismo<div class="vocab-tooltip">Viver sem moradia fixa. / Living without a fixed home.</div></div>
+        <div class="vocab-term">Pinturas rupestres<div class="vocab-tooltip">Pinturas em rochas/cavernas. / Rock/cave paintings.</div></div>
+        <div class="vocab-term">Período Paleolítico<div class="vocab-tooltip">Pedra lascada, 2,5 milhões de anos. / Chipped stone era.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ PT S1 -->
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🧠</span>
+      <span class="quiz-title">Quiz — Período Paleolítico</span>
+      <span class="quiz-lang-badge badge-pt">🇧🇷 Português</span>
+    </div>
+    <div id="quiz-s0-pt"></div>
+  </div>
+
+  <!-- QUIZ EN S1 -->
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🌎</span>
+      <span class="quiz-title">Quiz — Paleolithic Period</span>
+      <span class="quiz-lang-badge badge-en">🇨🇦 English</span>
+    </div>
+    <div id="quiz-s0-en"></div>
+  </div>
+
+  <div class="section-complete" id="complete-s0">
+    <h3>🎉 Seção concluída! · Section Complete!</h3>
+    <p>Parabéns! Você terminou o Período Paleolítico. · Great job! You finished the Paleolithic Period.</p>
+  </div>
+  <button class="next-section-btn" id="next-s0" onclick="goToSection(1)">Próxima Seção ➜</button>
+</div>
+
+<!-- ============================= SECTION 2 ============================= -->
+<div class="lesson-section reveal" id="sec1" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">🌾</div>
+      <div>
+        <div class="section-subtitle">Seção 2 · Section 2</div>
+        <div class="section-title">Período Neolítico · Neolithic Period</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>Há cerca de <strong>12 mil anos</strong>, o mundo passou por uma importante mudança climática chamada <strong>aquecimento pós-glaciário</strong>. Esse aquecimento alterou a paisagem, proporcionando abundância de vegetais e animais de pequeno porte, como coelhos. Animais de caça tradicionais, como as renas, migraram para regiões mais frias.</p>
+
+      <div class="key-phrase-pt">A mudança climática pós-glaciária permitiu que os seres humanos parassem de ser nômades e se tornassem sedentários.</div>
+      <div class="key-phrase-en">Post-glacial climate change allowed humans to stop being nomads and become sedentary people.</div>
+
+      <p>Sem precisar migrar constantemente, as pessoas passaram a construir <strong>habitats artificiais</strong> de madeira, terra e pedra, formando as <strong>aldeias neolíticas</strong>. Essa estabilidade permitiu a criação de animais e o cultivo de vegetais — o início da <strong>Revolução Neolítica</strong> (também chamada Revolução Agrícola).</p>
+
+      <p>O trigo foi domesticado há cerca de <strong>9,5 mil anos</strong> no Oriente Médio. Os primeiros cultivos provavelmente aconteceram de forma acidental: grãos caídos perto das casas davam origem a novas plantas. As novas ferramentas eram feitas de <strong>pedra polida</strong> — daí o nome Neolítico.</p>
+
+      <div class="key-phrase-pt">A Revolução Neolítica transformou caçadores-coletores em agricultores e criadores de animais.</div>
+      <div class="key-phrase-en">The Neolithic Revolution transformed hunter-gatherers into farmers and animal breeders.</div>
+
+      <p>Os <strong>monumentos megalíticos</strong>, como Stonehenge (Reino Unido, ~3100 a.C.), são as primeiras grandes construções humanas, feitas de enormes blocos de pedra. Seu alinhamento com o sol em certas épocas do ano mostra que os humanos pré-históricos já compreendiam as <strong>estações do ano</strong> — essencial para a agricultura.</p>
+    </div>
+
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Vocabulary</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Revolução Neolítica<div class="vocab-tooltip">Transição para a agricultura. / Transition to farming.</div></div>
+        <div class="vocab-term">Sedentarismo<div class="vocab-tooltip">Vida com moradia fixa. / Life with a fixed home.</div></div>
+        <div class="vocab-term">Aldeia Neolítica<div class="vocab-tooltip">Conjunto de habitações fixas. / Set of permanent dwellings.</div></div>
+        <div class="vocab-term">Habitat Artificial<div class="vocab-tooltip">Habitação construída pelos humanos. / Man-made dwelling.</div></div>
+        <div class="vocab-term">Monumentos megalíticos<div class="vocab-tooltip">Construções de grandes pedras. / Large stone structures.</div></div>
+        <div class="vocab-term">Domesticação<div class="vocab-tooltip">Cultivar/criar intencionalmente. / Intentional farming/raising.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🧠</span>
+      <span class="quiz-title">Quiz — Período Neolítico</span>
+      <span class="quiz-lang-badge badge-pt">🇧🇷 Português</span>
+    </div>
+    <div id="quiz-s1-pt"></div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🌎</span>
+      <span class="quiz-title">Quiz — Neolithic Period</span>
+      <span class="quiz-lang-badge badge-en">🇨🇦 English</span>
+    </div>
+    <div id="quiz-s1-en"></div>
+  </div>
+
+  <div class="section-complete" id="complete-s1">
+    <h3>🎉 Seção concluída! · Section Complete!</h3>
+    <p>Incrível! Você dominou o Período Neolítico! · Amazing! You mastered the Neolithic Period!</p>
+  </div>
+  <button class="next-section-btn" id="next-s1" onclick="goToSection(2)">Próxima Seção ➜</button>
+</div>
+
+<!-- ============================= SECTION 3 ============================= -->
+<div class="lesson-section reveal" id="sec2" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">🏞️</div>
+      <div>
+        <div class="section-subtitle">Seção 3 · Section 3</div>
+        <div class="section-title">Ocupação dos Leitos dos Rios · Settlement Along River Valleys</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>Em busca de solo <strong>fértil</strong> em regiões secas e desérticas, muitos povos se assentaram nas margens dos rios Nilo, Tigre e Eufrates. Apesar da abundância de água, realizar cultivos nessas regiões exigia grande esforço de <strong>manejo hidráulico</strong>: construir obras que levassem a água do rio para áreas mais distantes do <strong>leito</strong>.</p>
+
+      <div class="key-phrase-pt">Os povos se assentaram às margens dos rios porque o solo fértil das várzeas permitia a agricultura.</div>
+      <div class="key-phrase-en">People settled along riverbanks because the fertile soil in floodplains allowed farming.</div>
+
+      <p>Para construir essas grandes obras de irrigação, parte da população precisava se dedicar exclusivamente às construções — o que significava não realizar trabalhos agrícolas. Surgiu então uma <strong>organização complexa</strong> com divisão clara de trabalho, que deu origem às <strong>primeiras grandes civilizações</strong>: a da Mesopotâmia e a do Egito.</p>
+
+      <div class="key-phrase-pt">A organização complexa do trabalho e o manejo hidráulico foram a base para o surgimento das primeiras civilizações.</div>
+      <div class="key-phrase-en">Complex work organization and water management were the foundation for the rise of the first civilizations.</div>
+    </div>
+
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Vocabulary</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Assentar<div class="vocab-tooltip">Permanecer de maneira estável. / To settle permanently.</div></div>
+        <div class="vocab-term">Fértil<div class="vocab-tooltip">Que produz em muita quantidade. / Very productive soil.</div></div>
+        <div class="vocab-term">Leito<div class="vocab-tooltip">Borda do rio, onde o rio corre. / The riverbank/riverbed.</div></div>
+        <div class="vocab-term">Manejo hidráulico<div class="vocab-tooltip">Mudar o curso da água. / Water course management.</div></div>
+        <div class="vocab-term">Organização complexa<div class="vocab-tooltip">Que não é simples. / Not simple; organized.</div></div>
+        <div class="vocab-term">Mesopotâmia<div class="vocab-tooltip">Entre Tigre e Eufrates (atual Iraque/Kuwait). / Between Tigris and Euphrates rivers.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🧠</span>
+      <span class="quiz-title">Quiz — Ocupação dos Rios</span>
+      <span class="quiz-lang-badge badge-pt">🇧🇷 Português</span>
+    </div>
+    <div id="quiz-s2-pt"></div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🌎</span>
+      <span class="quiz-title">Quiz — River Settlements</span>
+      <span class="quiz-lang-badge badge-en">🇨🇦 English</span>
+    </div>
+    <div id="quiz-s2-en"></div>
+  </div>
+
+  <div class="section-complete" id="complete-s2">
+    <h3>🎉 Seção concluída! · Section Complete!</h3>
+    <p>Muito bem! Próxima parada: Mesopotâmia! · Well done! Next stop: Mesopotamia!</p>
+  </div>
+  <button class="next-section-btn" id="next-s2" onclick="goToSection(3)">Próxima Seção ➜</button>
+</div>
+
+<!-- ============================= SECTION 4 ============================= -->
+<div class="lesson-section reveal" id="sec3" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">🏛️</div>
+      <div>
+        <div class="section-subtitle">Seção 4 · Section 4</div>
+        <div class="section-title">Mesopotâmia · Mesopotamia</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>A <strong>Mesopotâmia</strong> é a região entre os Rios Tigre e Eufrates — nome que vem do grego e significa "terra entre rios". Por se localizar entre dois rios, era muito fértil, por isso povos de diferentes culturas buscavam se assentar na região. Atualmente corresponde a partes do <strong>Iraque, Kuwait, Síria, Turquia e Irã</strong>.</p>
+
+      <div class="key-phrase-pt">Mesopotâmia significa "terra entre rios" — era fértil por estar entre o Rio Tigre e o Rio Eufrates.</div>
+      <div class="key-phrase-en">Mesopotamia means "land between rivers" — it was fertile because it lay between the Tigris and Euphrates rivers.</div>
+
+      <p>Os pequenos vilarejos eram formados por membros de uma mesma família, realizando atividades de <strong>subsistência</strong>. Com o tempo, esses vilarejos cresceram e deram origem às <strong>primeiras cidades</strong>. Para alimentar a todos os habitantes, foi necessária uma <strong>organização complexa</strong>: diferentes pessoas realizavam diferentes tarefas.</p>
+
+      <p>Surgiram novas funções: <strong>funcionários do governo</strong> (responsáveis por administrar e comandar), <strong>soldados</strong> (para proteger e garantir as leis), e <strong>comerciantes</strong> (que vendiam e compravam produtos entre cidades). Para <strong>irrigar</strong> os solos, foram construídas obras especiais.</p>
+
+      <div class="key-phrase-pt">A organização complexa das cidades mesopotâmicas criou as primeiras divisões de trabalho da história.</div>
+      <div class="key-phrase-en">The complex organization of Mesopotamian cities created the first divisions of labor in history.</div>
+    </div>
+
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Vocabulary</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Administrar<div class="vocab-tooltip">Organizar e conduzir. / To organize and manage.</div></div>
+        <div class="vocab-term">Assentar<div class="vocab-tooltip">Permanecer de maneira estável. / To settle permanently.</div></div>
+        <div class="vocab-term">Irrigar<div class="vocab-tooltip">Regar a terra para plantação. / To water land for crops.</div></div>
+        <div class="vocab-term">Subsistência<div class="vocab-tooltip">Essencial para garantir a vida. / Essential for survival.</div></div>
+        <div class="vocab-term">Organização complexa<div class="vocab-tooltip">Que não é simples. / Not simple; multi-layered.</div></div>
+        <div class="vocab-term">Fértil<div class="vocab-tooltip">Que produz em muita quantidade. / Very productive.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🧠</span>
+      <span class="quiz-title">Quiz — Mesopotâmia</span>
+      <span class="quiz-lang-badge badge-pt">🇧🇷 Português</span>
+    </div>
+    <div id="quiz-s3-pt"></div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🌎</span>
+      <span class="quiz-title">Quiz — Mesopotamia</span>
+      <span class="quiz-lang-badge badge-en">🇨🇦 English</span>
+    </div>
+    <div id="quiz-s3-en"></div>
+  </div>
+
+  <div class="section-complete" id="complete-s3">
+    <h3>🎉 Seção concluída! · Section Complete!</h3>
+    <p>Excelente! Agora vamos para o Egito! · Excellent! Now let's go to Egypt!</p>
+  </div>
+  <button class="next-section-btn" id="next-s3" onclick="goToSection(4)">Próxima Seção ➜</button>
+</div>
+
+<!-- ============================= SECTION 5 ============================= -->
+<div class="lesson-section reveal" id="sec4" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">🔺</div>
+      <div>
+        <div class="section-subtitle">Seção 5 · Section 5</div>
+        <div class="section-title">Egito · Egypt</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>Apesar de o Egito estar em uma região <strong>árida</strong> (sem umidade, seca), é atravessado por um dos mais importantes rios do mundo: o <strong>Rio Nilo</strong>. O Nilo possibilitou o <strong>desenvolvimento</strong> da civilização egípcia. Entre junho e outubro, o rio transbordava por conta das chuvas na nascente (a quilômetros de distância do Egito). Quando a cheia passava, o solo inundado se tornava <strong>fértil</strong>.</p>
+
+      <div class="key-phrase-pt">O Rio Nilo transformava o solo árido do Egito em terra fértil através das suas cheias anuais.</div>
+      <div class="key-phrase-en">The Nile River transformed Egypt's dry, arid soil into fertile land through its annual floods.</div>
+
+      <p>A população aprendeu a utilizar as margens do Nilo para plantação. Era preciso <strong>drenar</strong> os terrenos depois da cheia, construir <strong>canais</strong> para levar a água para lugares mais distantes e criar <strong>barragens</strong> para evitar os alagamentos.</p>
+
+      <p>Todo esse conhecimento gerou um <strong>excedente agrícola</strong> (mais alimentos do que o necessário), permitindo que os vilarejos se tornassem cidades maiores e mais <strong>complexas</strong>, governadas pelos <strong>faraós</strong> e conhecidas pelas imensas construções: as <strong>pirâmides</strong>.</p>
+
+      <div class="key-phrase-pt">O excedente agrícola gerado pelo Nilo permitiu o crescimento das cidades e a construção das pirâmides pelos faraós.</div>
+      <div class="key-phrase-en">The agricultural surplus generated by the Nile allowed cities to grow and pharaohs to build the pyramids.</div>
+    </div>
+
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Vocabulary</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Árido<div class="vocab-tooltip">Sem umidade, seco. / Dry, without moisture.</div></div>
+        <div class="vocab-term">Complexo<div class="vocab-tooltip">Que não é simples. / Not simple.</div></div>
+        <div class="vocab-term">Desenvolvimento<div class="vocab-tooltip">Surgimento, crescimento. / Growth, emergence.</div></div>
+        <div class="vocab-term">Drenar<div class="vocab-tooltip">Enxugar o terreno. / To drain the land.</div></div>
+        <div class="vocab-term">Fértil<div class="vocab-tooltip">Que produz em muita quantidade. / Very productive.</div></div>
+        <div class="vocab-term">Excedente agrícola<div class="vocab-tooltip">Mais alimentos do que o necessário. / More food than needed.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🧠</span>
+      <span class="quiz-title">Quiz — Egito</span>
+      <span class="quiz-lang-badge badge-pt">🇧🇷 Português</span>
+    </div>
+    <div id="quiz-s4-pt"></div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🌎</span>
+      <span class="quiz-title">Quiz — Egypt</span>
+      <span class="quiz-lang-badge badge-en">🇨🇦 English</span>
+    </div>
+    <div id="quiz-s4-en"></div>
+  </div>
+
+  <div class="section-complete" id="complete-s4">
+    <h3>🎉 Parabéns! · Congratulations!</h3>
+    <p>Você completou todas as seções! · You completed all sections!</p>
+  </div>
+  <button class="next-section-btn" id="next-s4" onclick="showTrophy()">Ver Resultado Final 🏆</button>
+</div>
+
+<!-- TROPHY -->
+<div class="final-trophy" id="finalTrophy">
+  <div class="trophy-card">
+    <span class="trophy-emoji">🏆</span>
+    <h2>Você é incrível!<br><span style="font-size:.65em;color:var(--orange-500);">You are amazing!</span></h2>
+    <div class="trophy-score"><span id="finalScore">0</span> pontos!</div>
+    <p id="finalMsg">Continue estudando e explorando a história! · Keep studying and exploring history!</p>
+    <button onclick="location.reload()" style="margin-top:1.5rem;padding:.7rem 2rem;background:linear-gradient(135deg,var(--orange-400),var(--orange-600));color:white;border:none;border-radius:99px;font-family:'Baloo 2',cursive;font-weight:800;font-size:1rem;cursor:pointer;box-shadow:0 4px 16px rgba(234,88,12,.28);">Recomeçar · Restart 🔄</button>
+  </div>
+</div>
+
+<div style="height:3rem"></div>
+
+<script>
+// ============================================================
+// QUIZ DATA
+// ============================================================
+const quizData = {
+  's0-pt': [
+    { q:'Em que continente surgiu o Homo sapiens?', opts:['Europa','Ásia','África','América'], correct:2 },
+    { q:'Como era chamado o modo de vida dos primeiros seres humanos, que não tinham moradia fixa?', opts:['Sedentarismo','Nomadismo','Feudalismo','Imperialismo'], correct:1 },
+    { q:'Quais eram as principais ferramentas do período Paleolítico?', opts:['Instrumentos de metal','Pedra polida','Pedra lascada','Cerâmica'], correct:2 },
+    { q:'O que são pinturas rupestres?', opts:['Pinturas feitas em telas','Representações em rochas ou cavernas','Esculturas de pedra','Livros ilustrados'], correct:1 },
+    { q:'O fóssil Omo Kibish, encontrado na Etiópia, tinha aproximadamente quantos anos?', opts:['50 mil anos','100 mil anos','200 mil anos','1 milhão de anos'], correct:2 },
+  ],
+  's0-en': [
+    { q:'What is the name of our human species?', opts:['Homo erectus','Homo sapiens','Homo neanderthalensis','Homo habilis'], correct:1 },
+    { q:'What are cave paintings?', opts:['Paintings made on canvas','Images printed in books','Visual records made on rocks by early humans','Sculptures carved from stone'], correct:2 },
+    { q:'Africa is known as what in human history?', opts:['The youngest continent','The cradle of humanity','The last continent to be discovered','The continent of pyramids'], correct:1 },
+  ],
+  's1-pt': [
+    { q:'Qual foi a mudança climática que ocorreu há cerca de 12 mil anos e transformou o modo de vida humano?', opts:['Glaciação','Aquecimento pós-glaciário','Tempestade tropical','Era do gelo'], correct:1 },
+    { q:'O que é a Revolução Neolítica?', opts:['A invenção da escrita','A transição do nomadismo para o sedentarismo e a agricultura','A construção das pirâmides','O surgimento das cidades gregas'], correct:1 },
+    { q:'O que significa "Neolítico"?', opts:['Pedra antiga','Pedra lascada','Pedra polida','Pedra molhada'], correct:2 },
+    { q:'Qual cereal foi um dos primeiros a ser domesticado, há cerca de 9,5 mil anos?', opts:['Milho','Arroz','Trigo','Soja'], correct:2 },
+    { q:'Para que serviam os monumentos megalíticos como Stonehenge?', opts:['Armazenar grãos','Rituais funerários e estudo do sol/estações','Proteger aldeias de inimigos','Guardar animais'], correct:1 },
+  ],
+  's1-en': [
+    { q:'What does "Neolithic" mean?', opts:['New stone (polished stone)','Old stone','Big rock','River stone'], correct:0 },
+    { q:'What was the Neolithic Revolution?', opts:['A war between villages','The change from nomadic hunter-gatherers to farming settlers','The invention of the wheel','The building of Stonehenge'], correct:1 },
+    { q:'Why is Stonehenge significant for the study of early humans?', opts:['It shows humans knew how to write','Its alignment with the sun proves early understanding of seasons','It was the largest city in the world','It was the first place humans lived'], correct:1 },
+  ],
+  's2-pt': [
+    { q:'Por que os povos antigos se assentavam às margens dos rios?', opts:['Porque o solo perto dos rios era fértil','Porque os rios tinham peixes grandes','Porque os rios eram fronteiras entre países','Porque o clima era mais frio perto dos rios'], correct:0 },
+    { q:'O que é "manejo hidráulico"?', opts:['Construir pontes sobre os rios','Fazer alguma mudança no curso da água para irrigação','Poluir rios com resíduos','Pescar nos rios'], correct:1 },
+    { q:'Quais foram as primeiras grandes civilizações surgidas às margens dos rios?', opts:['Grécia e Roma','China e Índia','Mesopotâmia e Egito','Azteca e Inca'], correct:2 },
+    { q:'Por que parte da população tinha que se dedicar às obras de irrigação, e não à agricultura?', opts:['Porque tinham medo de trabalhar na lavoura','Porque as obras eram muito grandes e exigiam muitas pessoas','Porque o governo proibia trabalho agrícola','Porque a terra não era boa para plantar'], correct:1 },
+    { q:'O que o leito do rio representa?', opts:['Uma ponte sobre o rio','A profundidade da água','A borda do rio, onde o rio corre','O nome científico do rio'], correct:2 },
+  ],
+  's2-en': [
+    { q:'Why did ancient peoples settle along river valleys?', opts:['Rivers provided fertile soil for farming','Rivers were easier to cross','Rivers had gold at the bottom','Rivers protected them from the sun'], correct:0 },
+    { q:'What is "hydraulic management"?', opts:['Swimming in rivers','Managing and redirecting water for irrigation','Building boats','Drinking river water'], correct:1 },
+    { q:'Which two civilizations arose in the river valleys covered in this lesson?', opts:['Greece and Rome','China and Japan','Mesopotamia and Egypt','Persia and India'], correct:2 },
+  ],
+  's3-pt': [
+    { q:'O que significa "Mesopotâmia"?', opts:['Terra dos faraós','Terra entre rios','Terra do sol','Terra das pirâmides'], correct:1 },
+    { q:'Entre quais rios ficava a Mesopotâmia?', opts:['Nilo e Amazonas','Tigre e Eufrates','Mississippi e Missouri','Ganges e Indo'], correct:1 },
+    { q:'O que eram os vilarejos mesopotâmicos formados por membros de uma mesma família?', opts:['Vilas de subsistência','Impérios','Cidades-estado','Colônias'], correct:0 },
+    { q:'Qual nova função surgiu nas cidades para proteger a população e garantir as leis?', opts:['Agricultores','Sacerdotes','Soldados','Artesãos'], correct:2 },
+    { q:'O que é "irrigar" os solos?', opts:['Enxugar o terreno','Regar a terra para plantação','Construir muros de pedra','Queimar a terra para limpá-la'], correct:1 },
+  ],
+  's3-en': [
+    { q:'Between which two rivers was Mesopotamia located?', opts:['Nile and Amazon','Mississippi and Missouri','Tigris and Euphrates','Ganges and Indus'], correct:2 },
+    { q:'What does "Mesopotamia" mean in Greek?', opts:['Land of the pharaohs','Land between rivers','Land of the gods','Land of the desert'], correct:1 },
+    { q:'Which of the following was a new job/role that appeared in Mesopotamian cities?', opts:['Nomadic hunter','Cave painter','Government official','Fisherman'], correct:2 },
+  ],
+  's4-pt': [
+    { q:'Qual rio foi fundamental para o desenvolvimento da civilização egípcia?', opts:['Rio Tigre','Rio Eufrates','Rio Nilo','Rio Amazonas'], correct:2 },
+    { q:'Por que o Egito conseguia desenvolver agricultura apesar de ser uma região árida?', opts:['Porque tinha muita chuva no inverno','Porque o Rio Nilo transbordava e deixava o solo fértil','Porque usavam tecnologia avançada de irrigação','Porque importavam terra fértil de outros países'], correct:1 },
+    { q:'O que é "drenar" um terreno?', opts:['Adicionar água ao terreno','Enxugar o terreno, retirar a água','Plantar sementes no terreno','Construir muros no terreno'], correct:1 },
+    { q:'O que é "excedente agrícola"?', opts:['Falta de alimentos','Alimentos estragados','Mais alimentos do que o necessário','Alimentos importados'], correct:2 },
+    { q:'Quem governava as grandes cidades do Egito Antigo?', opts:['Presidentes','Reis europeus','Faraós','Senadores'], correct:2 },
+  ],
+  's4-en': [
+    { q:'Which river made agriculture possible in ancient Egypt?', opts:['The Tigris','The Amazon','The Nile','The Euphrates'], correct:2 },
+    { q:'What is an "agricultural surplus"?', opts:['Not having enough food','Having more food than needed','Spoiled crops','Imported food'], correct:1 },
+    { q:'What were the famous large stone structures built by the pharaohs in Egypt?', opts:['Coliseums','Ziggurats','Temples','Pyramids'], correct:3 },
+  ],
+};
+
+// ============================================================
+// STATE
+// ============================================================
+let score = 0;
+let totalQuestions = 0;
+let answeredQuestions = 0;
+const sectionAnswered = { 0: { pt:0, en:0 }, 1:{ pt:0, en:0 }, 2:{ pt:0, en:0 }, 3:{ pt:0, en:0 }, 4:{ pt:0, en:0 } };
+const sectionTotal   = { 0: { pt:5, en:3 }, 1:{ pt:5, en:3 }, 2:{ pt:5, en:3 }, 3:{ pt:5, en:3 }, 4:{ pt:5, en:3 } };
+
+// count total
+Object.values(quizData).forEach(q => totalQuestions += q.length);
+
+// ============================================================
+// RENDER QUIZZES
+// ============================================================
+function renderQuiz(containerId, key, sectionIdx, lang) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const questions = quizData[key];
+  container.innerHTML = '';
+  questions.forEach((q, qi) => {
+    const letters = ['A','B','C','D'];
+    const block = document.createElement('div');
+    block.className = 'question-block';
+    block.innerHTML = `
+      <div class="question-num">Pergunta ${qi+1} / Question ${qi+1}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options" id="opts-${containerId}-${qi}">
+        ${q.opts.map((o,oi) => `
+          <button class="option-btn" onclick="checkAnswer(this,'${containerId}',${qi},${oi},${q.correct},${sectionIdx},'${lang}')">
+            <span class="option-letter">${letters[oi]}</span>${o}
+          </button>`).join('')}
+      </div>
+      <div class="feedback-msg" id="fb-${containerId}-${qi}"></div>
+    `;
+    container.appendChild(block);
+  });
+}
+
+// ============================================================
+// CHECK ANSWER
+// ============================================================
+function checkAnswer(btn, containerId, qi, chosen, correct, sectionIdx, lang) {
+  const opts = document.querySelectorAll(`#opts-${containerId}-${qi} .option-btn`);
+  opts.forEach(b => b.disabled = true);
+  const fb = document.getElementById(`fb-${containerId}-${qi}`);
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    fb.className = 'feedback-msg correct';
+    fb.innerHTML = '✅ Correto! · Correct!';
+    fb.style.display = 'flex';
+    score += 10;
+    document.getElementById('scoreDisplay').textContent = score;
+    launchConfetti();
+  } else {
+    btn.classList.add('wrong');
+    opts[correct].classList.add('correct');
+    const correctText = quizData[`s${sectionIdx}-${lang}`][qi].opts[correct];
+    fb.className = 'feedback-msg wrong';
+    fb.innerHTML = `❌ Ops! A resposta certa é: <strong>${correctText}</strong> · The correct answer is: <strong>${correctText}</strong>`;
+    fb.style.display = 'flex';
+  }
+  answeredQuestions++;
+  sectionAnswered[sectionIdx][lang]++;
+  updateProgress();
+  checkSectionComplete(sectionIdx);
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function updateProgress() {
+  const pct = (answeredQuestions / totalQuestions) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// ============================================================
+// SECTION COMPLETE CHECK
+// ============================================================
+function checkSectionComplete(idx) {
+  const a = sectionAnswered[idx];
+  const t = sectionTotal[idx];
+  if (a.pt >= t.pt && a.en >= t.en) {
+    document.getElementById(`complete-s${idx}`).classList.add('show');
+    document.getElementById(`next-s${idx}`).classList.add('show');
+    // mark dot
+    const dots = document.querySelectorAll('.nav-dot');
+    dots[idx].classList.remove('active');
+    dots[idx].classList.add('done');
+    if (idx < 4) dots[idx+1].classList.add('active');
+  }
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function goToSection(idx) {
+  const secEl = document.getElementById(`sec${idx}`);
+  secEl.style.display = '';
+  secEl.classList.add('reveal');
+  setTimeout(() => secEl.classList.add('visible'), 50);
+  secEl.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+// ============================================================
+// CONFETTI
+// ============================================================
+function launchConfetti() {
+  const container = document.getElementById('confettiContainer');
+  const colors = ['#f97316','#fb923c','#fbbf24','#f59e0b','#fdba74','#fed7aa','#fff'];
+  for (let i=0;i<22;i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random()*100 + 'vw';
+    piece.style.top = '-10px';
+    piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+    piece.style.width = (6+Math.random()*8) + 'px';
+    piece.style.height = (6+Math.random()*8) + 'px';
+    piece.style.borderRadius = Math.random()>.5?'50%':'2px';
+    piece.style.animationDuration = (.7+Math.random()*.8) + 's';
+    piece.style.animationDelay = (Math.random()*.3) + 's';
+    container.appendChild(piece);
+    setTimeout(()=>piece.remove(), 1500);
+  }
+}
+
+// ============================================================
+// TROPHY
+// ============================================================
+function showTrophy() {
+  document.getElementById('finalScore').textContent = score;
+  const pct = Math.round((score/(totalQuestions*10))*100);
+  let msg = '';
+  if (pct >= 90) msg = '🌟 Desempenho excepcional! · Exceptional performance!';
+  else if (pct >= 70) msg = '👏 Muito bem! Continue assim! · Very well done! Keep it up!';
+  else msg = '📚 Continue estudando! · Keep on studying!';
+  document.getElementById('finalMsg').textContent = msg;
+  document.getElementById('finalTrophy').classList.add('show');
+  document.getElementById('finalTrophy').scrollIntoView({ behavior:'smooth' });
+  launchConfetti(); launchConfetti();
+}
+
+// ============================================================
+// SCROLL REVEAL
+// ============================================================
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ============================================================
+// DOT NAV
+// ============================================================
+document.querySelectorAll('.nav-dot').forEach(dot => {
+  dot.addEventListener('click', () => {
+    const idx = parseInt(dot.dataset.section);
+    const el = document.getElementById(`sec${idx}`);
+    if (el) { el.style.display=''; el.scrollIntoView({behavior:'smooth'}); }
+  });
+});
+
+// ============================================================
+// INIT — render all quizzes
+// ============================================================
+for (let i=0;i<5;i++) {
+  renderQuiz(`quiz-s${i}-pt`, `s${i}-pt`, i, 'pt');
+  renderQuiz(`quiz-s${i}-en`, `s${i}-en`, i, 'en');
+}
+
+// Reveal section 0 immediately
+document.querySelector('#sec0').classList.add('visible');
+</script>
+</body>
+</html>
