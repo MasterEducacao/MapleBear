@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geografia Y5 · MapleBear</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange-50: #fff7ed; --orange-100: #ffedd5; --orange-200: #fed7aa;
+    --orange-300: #fdba74; --orange-400: #fb923c; --orange-500: #f97316;
+    --orange-600: #ea580c; --orange-700: #c2410c; --white: #ffffff;
+    --glass-bg: rgba(255,255,255,0.65); --glass-border: rgba(249,115,22,0.18);
+    --shadow-soft: 0 8px 32px rgba(249,115,22,0.10); --shadow-card: 0 4px 24px rgba(249,115,22,0.13);
+    --radius-xl: 2rem; --radius-lg: 1.25rem; --radius-md: 0.875rem;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 40%, #fff3e0 70%, #fde8d0 100%); min-height: 100vh; color: #3a1a00; }
+  body::before { content:''; position:fixed; top:-120px; right:-120px; width:520px; height:520px; background:radial-gradient(circle, rgba(251,146,60,0.18) 0%, transparent 70%); border-radius:50%; pointer-events:none; z-index:0; }
+  body::after { content:''; position:fixed; bottom:-100px; left:-100px; width:440px; height:440px; background:radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%); border-radius:50%; pointer-events:none; z-index:0; }
+  header { position:sticky; top:0; z-index:100; backdrop-filter:blur(18px) saturate(1.4); background:rgba(255,255,255,0.72); border-bottom:1.5px solid rgba(249,115,22,0.15); box-shadow:0 2px 18px rgba(249,115,22,0.08); padding:0.7rem 2rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+  .logo { display:flex; align-items:center; gap:0.7rem; }
+  .logo-text { font-family:'Baloo 2',cursive; font-weight:800; font-size:1.2rem; color:var(--orange-600); }
+  .logo-sub { font-size:0.72rem; font-weight:600; color:var(--orange-400); letter-spacing:.04em; }
+  .progress-bar-wrap { flex:1; max-width:320px; }
+  .progress-label { font-size:0.7rem; font-weight:700; color:var(--orange-500); margin-bottom:4px; text-transform:uppercase; letter-spacing:.06em; }
+  .progress-track { height:8px; background:rgba(253,186,116,0.35); border-radius:99px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg, var(--orange-400), var(--orange-600)); border-radius:99px; transition:width .6s cubic-bezier(.4,0,.2,1); width:0%; }
+  .score-badge { background:linear-gradient(135deg, var(--orange-400), var(--orange-600)); color:#fff; font-weight:800; font-size:0.95rem; padding:.38rem .9rem; border-radius:99px; box-shadow:0 3px 12px rgba(234,88,12,0.28); display:flex; align-items:center; gap:.4rem; }
+  .hero { text-align:center; padding:3.5rem 1.5rem 2rem; position:relative; z-index:1; }
+  .hero-badge { display:inline-block; background:linear-gradient(90deg,#fb923c22,#f9731611); border:1.5px solid var(--orange-300); border-radius:99px; padding:.3rem 1rem; font-size:.78rem; font-weight:700; color:var(--orange-600); letter-spacing:.06em; text-transform:uppercase; margin-bottom:1.1rem; }
+  .hero h1 { font-family:'Baloo 2',cursive; font-weight:800; font-size:clamp(2rem,5vw,3rem); color:var(--orange-700); line-height:1.15; margin-bottom:.6rem; }
+  .hero p { font-size:1.05rem; color:#a05022; max-width:580px; margin:0 auto; font-weight:500; }
+  .study-guide { max-width:860px; margin:1.2rem auto 0; padding:0 1rem; position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  @media(max-width:600px){ .study-guide { grid-template-columns:1fr; } }
+  .study-card { background:var(--glass-bg); backdrop-filter:blur(20px) saturate(1.3); border:1.5px solid var(--glass-border); border-radius:var(--radius-lg); padding:1.1rem 1.4rem; box-shadow:var(--shadow-card); }
+  .study-card-title { font-family:'Baloo 2',cursive; font-weight:800; color:var(--orange-600); font-size:.92rem; margin-bottom:.6rem; }
+  .study-card ul { list-style:none; padding:0; }
+  .study-card ul li { font-size:.86rem; font-weight:600; color:#5c2800; padding:.22rem 0; border-bottom:1px solid rgba(253,186,116,0.3); display:flex; align-items:flex-start; gap:.45rem; }
+  .study-card ul li:last-child { border-bottom:none; }
+  .study-card ul li::before { content:'▸'; color:var(--orange-400); flex-shrink:0; }
+  .section-nav { display:flex; justify-content:center; gap:1.1rem; padding:1rem 0 .5rem; position:relative; z-index:1; flex-wrap:wrap; }
+  .nav-dot { width:38px; height:38px; border-radius:50%; background:var(--orange-200); border:2.5px solid var(--orange-300); cursor:pointer; transition:all .25s; display:flex; align-items:center; justify-content:center; font-size:1.25rem; font-weight:800; color:var(--orange-700); box-shadow:0 2px 8px rgba(249,115,22,0.10); }
+  .nav-dot.active { background:var(--orange-500); border-color:var(--orange-600); color:#fff; transform:scale(1.18); box-shadow:0 4px 16px rgba(249,115,22,0.18); }
+  .nav-dot.done { background:var(--orange-400); border-color:var(--orange-500); color:#fff; }
+  .lesson-section { max-width:860px; margin:2rem auto; padding:0 1rem; position:relative; z-index:1; }
+  .section-card { background:var(--glass-bg); backdrop-filter:blur(20px) saturate(1.3); border:1.5px solid var(--glass-border); border-radius:var(--radius-xl); box-shadow:var(--shadow-soft); padding:2rem 2.2rem 1.8rem; margin-bottom:1.5rem; position:relative; overflow:hidden; transition:transform .25s, box-shadow .25s; }
+  .section-card:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(249,115,22,0.14); }
+  .section-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg, var(--orange-400), var(--orange-600), var(--orange-300)); border-radius:var(--radius-xl) var(--radius-xl) 0 0; }
+  .section-header { display:flex; align-items:center; gap:.9rem; margin-bottom:1.5rem; }
+  .section-icon { width:52px; height:52px; background:linear-gradient(135deg,var(--orange-400),var(--orange-600)); border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center; font-size:1.6rem; box-shadow:0 4px 16px rgba(234,88,12,0.22); flex-shrink:0; }
+  .section-title { font-family:'Baloo 2',cursive; font-weight:800; font-size:1.5rem; color:var(--orange-700); }
+  .section-subtitle { font-size:.78rem; font-weight:700; color:var(--orange-400); text-transform:uppercase; letter-spacing:.07em; }
+  .section-body { font-size:1rem; line-height:1.75; color:#4a2000; }
+  .section-body p { margin-bottom:1rem; }
+  .section-body ul { padding-left:1.5rem; margin:.6rem 0 1rem; }
+  .section-body ul li { font-weight:600; margin-bottom:.35rem; }
+  .key-phrase-pt { background:linear-gradient(90deg, rgba(253,186,116,0.35), rgba(249,115,22,0.10)); border-left:4px solid var(--orange-500); border-radius:0 var(--radius-md) var(--radius-md) 0; padding:.7rem 1.1rem; margin:1.2rem 0; font-weight:700; font-size:1.02rem; color:var(--orange-700); position:relative; }
+  .key-phrase-pt::before { content:'🔑 PT'; position:absolute; top:-.62rem; left:.8rem; font-size:.65rem; font-weight:800; background:var(--orange-500); color:#fff; padding:.15rem .45rem; border-radius:99px; letter-spacing:.04em; }
+  .key-phrase-en { background:linear-gradient(90deg, rgba(251,191,36,0.18), rgba(245,158,11,0.08)); border-left:4px solid #f59e0b; border-radius:0 var(--radius-md) var(--radius-md) 0; padding:.7rem 1.1rem; margin:1.2rem 0; font-weight:700; font-size:1.02rem; color:#92400e; font-style:italic; position:relative; }
+  .key-phrase-en::before { content:'🔑 EN'; position:absolute; top:-.62rem; left:.8rem; font-size:.65rem; font-weight:800; background:#f59e0b; color:#fff; padding:.15rem .45rem; border-radius:99px; letter-spacing:.04em; }
+  .impact-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.2rem 0; }
+  @media(max-width:620px){ .impact-grid { grid-template-columns:1fr; } }
+  .impact-card { border-radius:var(--radius-md); padding:1rem 1.1rem; }
+  .impact-card.negative { background:rgba(254,202,202,0.35); border:1.5px solid #fca5a5; }
+  .impact-card.positive { background:rgba(187,247,208,0.35); border:1.5px solid #86efac; }
+  .impact-card-title { font-family:'Baloo 2',cursive; font-weight:800; font-size:.95rem; margin-bottom:.6rem; }
+  .impact-card.negative .impact-card-title { color:#dc2626; }
+  .impact-card.positive .impact-card-title { color:#15803d; }
+  .impact-card ul { list-style:none; padding:0; }
+  .impact-card ul li { font-size:.85rem; font-weight:600; color:#4a2000; padding:.18rem 0; display:flex; align-items:flex-start; gap:.4rem; }
+  .impact-card ul li::before { flex-shrink:0; font-size:.75rem; }
+  .impact-card.negative ul li::before { content:'⚠️'; }
+  .impact-card.positive ul li::before { content:'✅'; }
+  .info-box { background:linear-gradient(135deg, rgba(253,186,116,0.3), rgba(249,115,22,0.1)); border:1.5px solid var(--orange-300); border-radius:var(--radius-md); padding:1rem 1.2rem; margin:1.2rem 0; font-size:.92rem; font-weight:600; color:var(--orange-700); line-height:1.65; }
+  .formula-box { background:linear-gradient(135deg, rgba(255,237,213,0.95), rgba(255,247,237,1)); border:2px solid var(--orange-400); border-radius:var(--radius-md); padding:1rem 1.4rem; margin:1.2rem 0; text-align:center; }
+  .formula-label { font-size:.72rem; font-weight:800; color:var(--orange-500); text-transform:uppercase; letter-spacing:.06em; margin-bottom:.4rem; }
+  .formula-text { font-family:'Baloo 2',cursive; font-weight:800; font-size:1.05rem; color:var(--orange-700); line-height:1.5; }
+  .vocab-box { background:linear-gradient(135deg, rgba(255,237,213,0.8), rgba(255,247,237,0.9)); border:1.5px solid rgba(253,186,116,0.5); border-radius:var(--radius-lg); padding:1.2rem 1.5rem; margin:1.5rem 0; }
+  .vocab-title { font-family:'Baloo 2',cursive; font-weight:800; color:var(--orange-600); font-size:1rem; margin-bottom:.8rem; display:flex; align-items:center; gap:.4rem; }
+  .vocab-grid { display:flex; flex-wrap:wrap; gap:.5rem; }
+  .vocab-term { background:white; border:1.5px solid var(--orange-300); border-radius:99px; padding:.28rem .85rem; font-size:.83rem; font-weight:700; color:var(--orange-700); cursor:pointer; transition:all .2s; position:relative; }
+  .vocab-term:hover { background:var(--orange-500); color:white; transform:translateY(-2px); box-shadow:0 4px 12px rgba(249,115,22,0.28); }
+  .vocab-tooltip { display:none; position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); background:rgba(58,26,0,0.92); color:white; border-radius:var(--radius-md); padding:.5rem .85rem; font-size:.78rem; font-weight:600; white-space:nowrap; z-index:200; box-shadow:0 4px 16px rgba(0,0,0,0.18); }
+  .vocab-tooltip::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:5px solid transparent; border-top-color:rgba(58,26,0,0.92); }
+  .vocab-term:hover .vocab-tooltip { display:block; animation:fadeInUp .2s ease; }
+  .quiz-section { background:var(--glass-bg); backdrop-filter:blur(20px) saturate(1.3); border:1.5px solid var(--glass-border); border-radius:var(--radius-xl); box-shadow:var(--shadow-card); padding:1.8rem 2.2rem; margin-bottom:2.5rem; position:relative; overflow:hidden; }
+  .quiz-section::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg, #f59e0b, var(--orange-500), #f97316); border-radius:var(--radius-xl) var(--radius-xl) 0 0; }
+  .quiz-header { display:flex; align-items:center; gap:.8rem; margin-bottom:1.5rem; }
+  .quiz-icon { font-size:1.4rem; }
+  .quiz-title { font-family:'Baloo 2',cursive; font-weight:800; font-size:1.15rem; color:var(--orange-700); }
+  .quiz-lang-badge { margin-left:auto; font-size:.7rem; font-weight:800; padding:.22rem .65rem; border-radius:99px; letter-spacing:.05em; text-transform:uppercase; }
+  .badge-pt { background:rgba(249,115,22,0.12); color:var(--orange-600); border:1.5px solid var(--orange-300); }
+  .badge-en { background:rgba(245,158,11,0.12); color:#b45309; border:1.5px solid #fbbf24; }
+  .question-block { margin-bottom:1.5rem; }
+  .question-num { font-size:.73rem; font-weight:800; color:var(--orange-400); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.35rem; }
+  .question-text { font-weight:700; font-size:1rem; color:#3a1a00; margin-bottom:.85rem; line-height:1.55; }
+  .options { display:flex; flex-direction:column; gap:.55rem; }
+  .option-btn { background:rgba(255,255,255,0.8); border:2px solid rgba(253,186,116,0.4); border-radius:var(--radius-md); padding:.75rem 1.1rem; font-family:'Nunito',sans-serif; font-size:.93rem; font-weight:600; color:#5c2800; cursor:pointer; text-align:left; transition:all .2s; display:flex; align-items:center; gap:.7rem; }
+  .option-btn:hover:not(:disabled) { background:rgba(255,237,213,0.95); border-color:var(--orange-400); transform:translateX(4px); }
+  .option-letter { width:28px; height:28px; background:linear-gradient(135deg,var(--orange-200),var(--orange-300)); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.82rem; color:var(--orange-700); flex-shrink:0; transition:all .2s; }
+  .option-btn.correct { background:rgba(187,247,208,0.7); border-color:#22c55e; color:#14532d; }
+  .option-btn.correct .option-letter { background:#22c55e; color:white; }
+  .option-btn.wrong { background:rgba(254,202,202,0.7); border-color:#ef4444; color:#7f1d1d; }
+  .option-btn.wrong .option-letter { background:#ef4444; color:white; }
+  .option-btn:disabled { cursor:default; }
+  .feedback-msg { border-radius:var(--radius-md); padding:.7rem 1rem; font-weight:700; font-size:.9rem; margin-top:.7rem; display:none; animation:slideIn .3s ease; }
+  .feedback-msg.correct { background:rgba(187,247,208,0.6); color:#15803d; border:1.5px solid #86efac; display:flex; gap:.5rem; align-items:center; }
+  .feedback-msg.wrong { background:rgba(254,202,202,0.6); color:#dc2626; border:1.5px solid #fca5a5; display:flex; gap:.5rem; align-items:center; }
+  .confetti-container { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
+  .confetti-piece { position:absolute; width:10px; height:10px; border-radius:2px; animation:confettiFall 1.2s ease-in forwards; }
+  .section-complete { display:none; text-align:center; padding:1.5rem; margin-top:1rem; background:linear-gradient(135deg,rgba(187,247,208,0.4),rgba(134,239,172,0.2)); border:1.5px solid #86efac; border-radius:var(--radius-lg); }
+  .section-complete.show { display:block; animation:fadeInUp .4s ease; }
+  .section-complete h3 { font-family:'Baloo 2',cursive; font-weight:800; color:#15803d; font-size:1.3rem; margin-bottom:.4rem; }
+  .section-complete p { color:#166534; font-size:.9rem; }
+  .next-section-btn { display:none; margin:1rem auto 0; padding:.8rem 2rem; background:linear-gradient(135deg,var(--orange-400),var(--orange-600)); color:white; border:none; border-radius:99px; font-family:'Baloo 2',cursive; font-weight:800; font-size:1rem; cursor:pointer; box-shadow:0 4px 16px rgba(234,88,12,0.28); transition:all .25s; text-transform:uppercase; letter-spacing:.05em; }
+  .next-section-btn:hover { transform:translateY(-2px) scale(1.03); box-shadow:0 8px 24px rgba(234,88,12,0.35); }
+  .next-section-btn.show { display:block; animation:fadeInUp .4s ease; }
+  .final-trophy { display:none; text-align:center; padding:3rem 2rem; position:relative; z-index:1; }
+  .final-trophy.show { display:block; animation:fadeInUp .6s ease; }
+  .trophy-card { background:var(--glass-bg); backdrop-filter:blur(20px); border:2px solid rgba(253,186,116,0.4); border-radius:var(--radius-xl); padding:3rem 2rem; max-width:540px; margin:0 auto; box-shadow:0 16px 48px rgba(249,115,22,0.15); }
+  .trophy-emoji { font-size:5rem; margin-bottom:1rem; display:block; animation:bounce 1s ease infinite; }
+  .trophy-card h2 { font-family:'Baloo 2',cursive; font-weight:800; font-size:2rem; color:var(--orange-700); margin-bottom:.7rem; }
+  .trophy-score { font-size:3rem; font-weight:900; color:var(--orange-600); font-family:'Baloo 2',cursive; }
+  .trophy-card p { color:#a05022; margin-top:.8rem; font-size:1rem; }
+  @keyframes fadeInUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes slideIn { from { opacity:0; transform:translateX(-10px); } to { opacity:1; transform:translateX(0); } }
+  @keyframes confettiFall { 0% { opacity:1; transform:translateY(0) rotate(0deg) scale(1); } 100% { opacity:0; transform:translateY(100vh) rotate(540deg) scale(.6); } }
+  @keyframes bounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-12px); } }
+  .fade-in { animation:fadeInUp .5s ease both; }
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  @media(max-width:600px){ .section-card,.quiz-section{padding:1.3rem 1.1rem;} header{padding:.6rem 1rem;} .logo-text{font-size:1rem;} .progress-bar-wrap{max-width:160px;} }
+</style>
+</head>
+
+<body>
+<div class="confetti-container" id="confettiContainer"></div>
+
+<!-- HEADER -->
+<header style="position:relative;">
+  <div class="logo">
+    <a href="index.html" style="display:flex;gap:4px;padding:0;background:none;box-shadow:none;border-radius:0;align-items:center;cursor:pointer;text-decoration:none;">
+      <img src="logo1.png" alt="Logo 1" style="width:38px;height:38px;object-fit:contain;border-radius:8px;background:#fff;box-shadow:0 2px 8px rgba(249,115,22,0.10);">
+    </a>
+    <div style="margin-left:10px;">
+      <div class="logo-text">MapleBear Y5</div>
+      <div class="logo-sub">Geografia · Geography</div>
+    </div>
+  </div>
+  <img src="logo2.png" alt="Logo 2" style="position:absolute;right:2rem;top:50%;transform:translateY(-50%);width:38px;height:38px;object-fit:contain;border-radius:8px;background:#fff;box-shadow:0 2px 8px rgba(249,115,22,0.10);">
+  <div class="progress-bar-wrap">
+    <div class="progress-label">Progresso · Progress</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+  <div class="score-badge">⭐ <span id="scoreDisplay">0</span> pts</div>
+</header>
+
+<!-- HERO -->
+<div class="hero fade-in">
+  <div class="hero-badge">Unidade 1 · Unit 1 · Year 5</div>
+  <h1>O Trabalho que Transforma<br><span style="font-size:.65em;color:var(--orange-500);">The Work that Transforms</span></h1>
+  <p>Ações e relações entre o ser humano e a natureza · Actions and relationships between humans and nature</p>
+</div>
+
+<!-- STUDY GUIDE -->
+<div class="study-guide fade-in">
+  <div class="study-card">
+    <div class="study-card-title">📚 Como Estudar · How to Study</div>
+    <ul>
+      <li>Defina uma rotina diária de estudos para a prova</li>
+      <li>Realize leituras dos textos enviados</li>
+      <li>Faça resumos dos conteúdos</li>
+      <li>Tire dúvidas com os professores</li>
+    </ul>
+  </div>
+  <div class="study-card">
+    <div class="study-card-title">📖 Onde Estudar · Where to Study</div>
+    <ul>
+      <li>Texto: Relação do ser humano com a natureza: Passado e presente</li>
+      <li>Texto: Processo de urbanização: Por que as pessoas vivem onde vivem?</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECTION DOTS -->
+<div class="section-nav" id="sectionNav">
+  <div class="nav-dot active" data-section="0" title="Relação Humano-Natureza">1</div>
+  <div class="nav-dot" data-section="1" title="Impactos Ambientais">2</div>
+  <div class="nav-dot" data-section="2" title="Urbanização">3</div>
+  <div class="nav-dot" data-section="3" title="Índices Populacionais">4</div>
+  <div class="nav-dot" data-section="4" title="Crescimento Populacional">5</div>
+</div>
+
+<!-- ═══════════════════════ SEÇÃO 1 ═══════════════════════ -->
+<div class="lesson-section reveal" id="sec0">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">🌿</div>
+      <div>
+        <div class="section-subtitle">Seção 1 · Section 1</div>
+        <div class="section-title">Relação Humano-Natureza · Human-Nature Relationship</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>Desde o início da humanidade, os seres humanos dependem da natureza para sobreviver. Dessa relação, retiramos <strong>água, alimentos, plantas, animais e materiais diversos</strong> que usamos no nosso dia a dia.</p>
+
+      <div class="key-phrase-pt">Desde sempre, os seres humanos dependem da natureza para viver, retirando dela água, alimentos, plantas, animais e materiais.</div>
+      <div class="key-phrase-en">Since the beginning, human beings have depended on nature to survive, taking from it water, food, plants, animals and various materials.</div>
+
+      <p>No <strong>passado</strong>, os seres humanos dependiam diretamente da natureza de uma forma mais limitada. As atividades essenciais eram a <strong>caça, a pesca e a coleta</strong> de frutos e plantas. Para trabalhar na agricultura, usavam ferramentas simples como <strong>enxadas, arados manuais e instrumentos de madeira ou metal</strong>, movidos pela força humana ou de animais.</p>
+
+      <div class="key-phrase-pt">No passado, as atividades essenciais eram a caça, a pesca e a coleta. As ferramentas agrícolas eram simples: enxadas, arados e instrumentos de madeira ou metal.</div>
+      <div class="key-phrase-en">In the past, the essential activities were hunting, fishing and gathering. Agricultural tools were simple: hoes, plows and wooden or metal instruments.</div>
+
+      <p>Com o passar do tempo, as formas de trabalho e as tecnologias foram mudando, <strong>transformando as paisagens das cidades e do campo</strong>. No <strong>presente</strong>, com o avanço da tecnologia, novas máquinas e equipamentos foram criados, transformando especialmente o <strong>agropecuário, a indústria, o comércio e os serviços</strong>.</p>
+    </div>
+
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Vocabulary</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Natureza<div class="vocab-tooltip">Conjunto de elementos naturais: água, plantas, animais. / Set of natural elements.</div></div>
+        <div class="vocab-term">Caça<div class="vocab-tooltip">Capturar animais para se alimentar. / Capturing animals for food.</div></div>
+        <div class="vocab-term">Coleta<div class="vocab-tooltip">Recolher frutos e plantas da natureza. / Gathering fruits and plants.</div></div>
+        <div class="vocab-term">Arado<div class="vocab-tooltip">Ferramenta para preparar a terra. / Tool to prepare the land for planting.</div></div>
+        <div class="vocab-term">Agropecuário<div class="vocab-tooltip">Relacionado à agricultura e pecuária. / Related to farming and livestock.</div></div>
+        <div class="vocab-term">Tecnologia<div class="vocab-tooltip">Ferramentas e conhecimentos criados pelo ser humano. / Tools and knowledge created by humans.</div></div>
+        <div class="vocab-term">Paisagem<div class="vocab-tooltip">Tudo o que podemos ver ao redor. / Everything we can see around us.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🧠</span>
+      <span class="quiz-title">Quiz — Relação Humano-Natureza</span>
+      <span class="quiz-lang-badge badge-pt">🇧🇷 Português</span>
+    </div>
+    <div id="quiz-s0-pt"></div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🌎</span>
+      <span class="quiz-title">Quiz — Human-Nature Relationship</span>
+      <span class="quiz-lang-badge badge-en">🇨🇦 English</span>
+    </div>
+    <div id="quiz-s0-en"></div>
+  </div>
+
+  <div class="section-complete" id="complete-s0">
+    <h3>🎉 Seção concluída! · Section Complete!</h3>
+    <p>Parabéns! Você entendeu como o ser humano se relaciona com a natureza! · Great job! You understood how humans relate to nature!</p>
+  </div>
+  <button class="next-section-btn" id="next-s0" onclick="goToSection(1)">Próxima Seção ➜</button>
+</div>
+
+<!-- ═══════════════════════ SEÇÃO 2 ═══════════════════════ -->
+<div class="lesson-section reveal" id="sec1" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">⚖️</div>
+      <div>
+        <div class="section-subtitle">Seção 2 · Section 2</div>
+        <div class="section-title">Impactos da Relação · Impacts of the Relationship</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>Desde os primeiros grupos nômades até a sociedade atual, o ser humano utiliza os recursos naturais para viver. Porém, <strong>essa relação pode gerar consequências</strong> — tanto negativas quanto positivas — para o meio ambiente e para a sociedade.</p>
+
+      <div class="key-phrase-pt">A relação do ser humano com a natureza traz impactos negativos e positivos para o meio ambiente e para a sociedade.</div>
+      <div class="key-phrase-en">The human relationship with nature brings both negative and positive impacts to the environment and to society.</div>
+
+      <div class="impact-grid">
+        <div class="impact-card negative">
+          <div class="impact-card-title">⚠️ Impactos Negativos · Negative Impacts</div>
+          <ul>
+            <li>Desmatamento, poluição e mudanças no clima</li>
+            <li>Desigualdade e falta de acesso a recursos</li>
+            <li>Perda de biodiversidade — espécies desaparecem antes de serem estudadas</li>
+            <li>Crise de resíduos — lixo sintético polui oceanos e cadeias alimentares</li>
+          </ul>
+        </div>
+        <div class="impact-card positive">
+          <div class="impact-card-title">✅ Impactos Positivos · Positive Impacts</div>
+          <ul>
+            <li>Reciclagem — diminui lixo e poluição</li>
+            <li>Parques ambientais — protegem a natureza</li>
+            <li>Reflorestamento — recupera áreas desmatadas</li>
+            <li>Energia solar e eólica — poluem menos</li>
+            <li>Avanços da medicina e tecnologia melhoram a vida</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="key-phrase-pt">A reciclagem, o reflorestamento e a energia renovável são exemplos de ações positivas que ajudam a preservar a natureza.</div>
+      <div class="key-phrase-en">Recycling, reforestation and renewable energy are examples of positive actions that help preserve nature.</div>
+
+      <p>A <strong>perda de biodiversidade</strong> é um dos problemas mais sérios: espécies de animais e plantas desaparecem antes mesmo de serem estudadas pelos cientistas. Já a <strong>crise de resíduos</strong> acontece porque materiais sintéticos (como plásticos) criam lixo que a natureza não consegue decompor, poluindo oceanos e cadeias alimentares.</p>
+    </div>
+
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Vocabulary</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Impacto<div class="vocab-tooltip">Consequência ou efeito de uma ação. / Effect or consequence of an action.</div></div>
+        <div class="vocab-term">Biodiversidade<div class="vocab-tooltip">Variedade de espécies de seres vivos. / Variety of living species.</div></div>
+        <div class="vocab-term">Desmatamento<div class="vocab-tooltip">Retirada das árvores de uma floresta. / Removal of trees from a forest.</div></div>
+        <div class="vocab-term">Reciclagem<div class="vocab-tooltip">Transformar o lixo em novos materiais. / Transforming waste into new materials.</div></div>
+        <div class="vocab-term">Reflorestamento<div class="vocab-tooltip">Plantar árvores em áreas desmatadas. / Planting trees in deforested areas.</div></div>
+        <div class="vocab-term">Energia eólica<div class="vocab-tooltip">Energia produzida pelo vento. / Energy produced by the wind.</div></div>
+        <div class="vocab-term">Resíduos<div class="vocab-tooltip">Lixo e materiais descartados. / Waste and discarded materials.</div></div>
+        <div class="vocab-term">Sintético<div class="vocab-tooltip">Fabricado pelo ser humano, não natural. / Man-made, not natural.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🧠</span>
+      <span class="quiz-title">Quiz — Impactos da Relação</span>
+      <span class="quiz-lang-badge badge-pt">🇧🇷 Português</span>
+    </div>
+    <div id="quiz-s1-pt"></div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🌎</span>
+      <span class="quiz-title">Quiz — Impacts of the Relationship</span>
+      <span class="quiz-lang-badge badge-en">🇨🇦 English</span>
+    </div>
+    <div id="quiz-s1-en"></div>
+  </div>
+
+  <div class="section-complete" id="complete-s1">
+    <h3>🎉 Seção concluída! · Section Complete!</h3>
+    <p>Muito bem! Você conhece os impactos da relação humano-natureza! · Well done! You know the impacts of the human-nature relationship!</p>
+  </div>
+  <button class="next-section-btn" id="next-s1" onclick="goToSection(2)">Próxima Seção ➜</button>
+</div>
+
+<!-- ═══════════════════════ SEÇÃO 3 ═══════════════════════ -->
+<div class="lesson-section reveal" id="sec2" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">🏙️</div>
+      <div>
+        <div class="section-subtitle">Seção 3 · Section 3</div>
+        <div class="section-title">Processo de Urbanização · The Urbanization Process</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>O <strong>crescimento populacional</strong> acontece quando cada vez mais pessoas passam a viver em um mesmo país, cidade ou região. Com isso, aumentam as necessidades de <strong>moradia, alimentos, transporte, escolas, hospitais e outros serviços</strong>.</p>
+
+      <div class="key-phrase-pt">Crescimento populacional é o aumento do número de pessoas em um lugar, gerando mais necessidades de moradia, serviços e infraestrutura.</div>
+      <div class="key-phrase-en">Population growth is the increase in the number of people living in the same place, creating greater needs for housing, services and infrastructure.</div>
+
+      <p>A <strong>urbanização</strong> é o processo ligado ao crescimento das cidades e de suas populações, provocado por intervenções humanas no espaço — como construções de casas, praças e ruas. Com a urbanização acontecem mudanças importantes:</p>
+
+      <ul>
+        <li>Aumenta o número de casas e prédios</li>
+        <li>Surgem mais escolas, hospitais e comércios</li>
+        <li>Há mais ruas, carros e transporte público</li>
+        <li>Mais empregos ligados ao comércio, indústria e serviços</li>
+      </ul>
+
+      <div class="key-phrase-pt">Por que as pessoas migram para as cidades? Em busca de emprego, melhor acesso à educação e saúde, e mais oportunidades de estudo e trabalho.</div>
+      <div class="key-phrase-en">Why do people move to cities? In search of jobs, better access to education and healthcare, and more opportunities for study and work.</div>
+
+      <p>A <strong>expansão urbana</strong> é o processo de crescimento físico das cidades: bairros novos surgem, estradas são construídas e espaços naturais ou rurais passam a ser ocupados. Sem <strong>planejamento</strong>, esse crescimento causa problemas sérios.</p>
+
+      <div class="impact-grid">
+        <div class="impact-card negative">
+          <div class="impact-card-title">⚠️ Sem planejamento · Without planning</div>
+          <ul>
+            <li>Desmatamento de áreas naturais</li>
+            <li>Aumento da poluição</li>
+            <li>Trânsito intenso e falta de transporte</li>
+            <li>Falta de áreas verdes na cidade</li>
+          </ul>
+        </div>
+        <div class="impact-card positive">
+          <div class="impact-card-title">✅ Urbanização sustentável · Sustainable</div>
+          <ul>
+            <li>Democratizar o acesso à moradia</li>
+            <li>Investir em transporte coletivo de qualidade</li>
+            <li>Reintegrar áreas verdes ao cenário urbano</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="info-box">
+        🇧🇷 <strong>Brasil em foco:</strong> A urbanização brasileira foi extremamente rápida! Entre <strong>1940 e 1980</strong>, o Brasil passou de uma população majoritariamente rural para mais de <strong>80% urbana</strong> — em menos de 50 anos!
+      </div>
+    </div>
+
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Vocabulary</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Urbanização<div class="vocab-tooltip">Processo de crescimento das cidades. / Process of city growth.</div></div>
+        <div class="vocab-term">Crescimento pop.<div class="vocab-tooltip">Aumento do número de pessoas em um lugar. / Increase in number of people in a place.</div></div>
+        <div class="vocab-term">Expansão urbana<div class="vocab-tooltip">Crescimento físico das cidades para novas áreas. / Physical city growth into new areas.</div></div>
+        <div class="vocab-term">Infraestrutura<div class="vocab-tooltip">Estruturas básicas: ruas, escolas, hospitais. / Basic structures: roads, schools, hospitals.</div></div>
+        <div class="vocab-term">Migração<div class="vocab-tooltip">Mudança de um lugar para outro para morar. / Moving from one place to another to live.</div></div>
+        <div class="vocab-term">Planejamento urbano<div class="vocab-tooltip">Organização do crescimento das cidades. / Organization of city growth.</div></div>
+        <div class="vocab-term">Sustentável<div class="vocab-tooltip">Que preserva recursos para o futuro. / That preserves resources for the future.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🧠</span>
+      <span class="quiz-title">Quiz — Processo de Urbanização</span>
+      <span class="quiz-lang-badge badge-pt">🇧🇷 Português</span>
+    </div>
+    <div id="quiz-s2-pt"></div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🌎</span>
+      <span class="quiz-title">Quiz — The Urbanization Process</span>
+      <span class="quiz-lang-badge badge-en">🇨🇦 English</span>
+    </div>
+    <div id="quiz-s2-en"></div>
+  </div>
+
+  <div class="section-complete" id="complete-s2">
+    <h3>🎉 Seção concluída! · Section Complete!</h3>
+    <p>Incrível! Você entendeu o processo de urbanização! · Amazing! You understood the urbanization process!</p>
+  </div>
+  <button class="next-section-btn" id="next-s2" onclick="goToSection(3)">Próxima Seção ➜</button>
+</div>
+
+<!-- ═══════════════════════ SEÇÃO 4 ═══════════════════════ -->
+<div class="lesson-section reveal" id="sec3" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">📊</div>
+      <div>
+        <div class="section-subtitle">Seção 4 · Section 4</div>
+        <div class="section-title">Índices Populacionais · Population Indices</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>A <strong>população</strong> é o conjunto de pessoas que vivem em um determinado lugar — seja uma cidade, estado, país ou o planeta inteiro. Para estudar e comparar populações, usamos conceitos importantes:</p>
+
+      <div class="key-phrase-pt"><strong>População absoluta:</strong> é o total de habitantes de determinado lugar.<br>Exemplo: O Brasil tem aproximadamente <strong>215,2 milhões</strong> de habitantes.</div>
+      <div class="key-phrase-en"><strong>Absolute population:</strong> is the total number of inhabitants of a place.<br>Example: Brazil has approximately <strong>215.2 million</strong> inhabitants.</div>
+
+      <p>A <strong>população relativa</strong> (também chamada de <strong>densidade demográfica</strong>) é a <em>média de habitantes por quilômetro quadrado</em> em um território. Ela nos ajuda a entender como a população está distribuída pelo espaço geográfico.</p>
+
+      <div class="formula-box">
+        <div class="formula-label">📐 Fórmula da Pop. Relativa · Relative Population Formula</div>
+        <div class="formula-text">Número de habitantes ÷ Área do território (km²) = hab/km²</div>
+      </div>
+
+      <div class="key-phrase-pt">Brasil: 215,2 milhões de hab. ÷ 8.510.345,5 km² = <strong>25,2 hab/km²</strong> — essa é a densidade demográfica média do Brasil.</div>
+      <div class="key-phrase-en">Brazil: 215.2 million inhabitants ÷ 8,510,345.5 km² = <strong>25.2 inhabitants/km²</strong> — this is Brazil's average population density.</div>
+
+      <p>A distribuição da população pelo território é estudada pela <strong>demografia</strong>. Um lugar pode ter <strong>alta densidade demográfica</strong> (muitas pessoas por km²) ou <strong>baixa densidade demográfica</strong> (poucas pessoas por km²), dependendo do número de habitantes em relação à extensão do território.</p>
+
+      <div class="key-phrase-pt">Alta densidade = muitas pessoas em uma área pequena. Baixa densidade = poucas pessoas em uma área grande.</div>
+      <div class="key-phrase-en">High density = many people in a small area. Low density = few people in a large area.</div>
+    </div>
+
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Vocabulary</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">População<div class="vocab-tooltip">Conjunto de pessoas que vivem em um lugar. / Set of people living in a place.</div></div>
+        <div class="vocab-term">Pop. absoluta<div class="vocab-tooltip">Total de habitantes de um lugar. / Total inhabitants of a place.</div></div>
+        <div class="vocab-term">Pop. relativa<div class="vocab-tooltip">Média de habitantes por km². / Average inhabitants per km².</div></div>
+        <div class="vocab-term">Densidade demog.<div class="vocab-tooltip">Distribuição da pop. pelo território. / Population distribution across territory.</div></div>
+        <div class="vocab-term">Demografia<div class="vocab-tooltip">Ciência que estuda a população. / Science that studies population.</div></div>
+        <div class="vocab-term">Território<div class="vocab-tooltip">Extensão de terra de um lugar. / Land area of a place.</div></div>
+        <div class="vocab-term">hab/km²<div class="vocab-tooltip">Habitantes por quilômetro quadrado. / Inhabitants per square kilometer.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🧠</span>
+      <span class="quiz-title">Quiz — Índices Populacionais</span>
+      <span class="quiz-lang-badge badge-pt">🇧🇷 Português</span>
+    </div>
+    <div id="quiz-s3-pt"></div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🌎</span>
+      <span class="quiz-title">Quiz — Population Indices</span>
+      <span class="quiz-lang-badge badge-en">🇨🇦 English</span>
+    </div>
+    <div id="quiz-s3-en"></div>
+  </div>
+
+  <div class="section-complete" id="complete-s3">
+    <h3>🎉 Seção concluída! · Section Complete!</h3>
+    <p>Excelente! Você dominou os índices populacionais! · Excellent! You mastered population indices!</p>
+  </div>
+  <button class="next-section-btn" id="next-s3" onclick="goToSection(4)">Próxima Seção ➜</button>
+</div>
+
+<!-- ═══════════════════════ SEÇÃO 5 ═══════════════════════ -->
+<div class="lesson-section reveal" id="sec4" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">📈</div>
+      <div>
+        <div class="section-subtitle">Seção 5 · Section 5</div>
+        <div class="section-title">Crescimento Populacional · Population Growth</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>O <strong>crescimento populacional</strong> (ou aumento demográfico) é o aumento da quantidade de pessoas em um lugar ao longo do tempo. Vários fatores influenciam esse crescimento:</p>
+
+      <ul>
+        <li>Melhoria na qualidade de vida → aumento da <strong>expectativa de vida</strong></li>
+        <li>Avanços nas áreas de <strong>medicina e tecnologia</strong></li>
+        <li>Aumento da <strong>taxa de natalidade</strong> — número de crianças nascidas vivas por mil habitantes ao ano</li>
+        <li>Diminuição dos índices de <strong>mortalidade infantil</strong></li>
+      </ul>
+
+      <div class="key-phrase-pt">Expectativa de vida: número aproximado de anos que um grupo de pessoas nascidas no mesmo lugar irá viver.</div>
+      <div class="key-phrase-en">Life expectancy: the approximate number of years that a group of individuals born in the same place will live.</div>
+
+      <p>Para medir o crescimento de uma população, usamos duas fórmulas principais:</p>
+
+      <div class="formula-box">
+        <div class="formula-label">🌱 Crescimento Vegetativo · Vegetative (Natural) Growth</div>
+        <div class="formula-text">Taxa de Natalidade (TN) − Taxa de Mortalidade (TM) = % de crescimento</div>
+      </div>
+
+      <div class="key-phrase-pt">O crescimento vegetativo é a diferença entre a taxa de natalidade e a taxa de mortalidade. Se nascem mais do que morrem, a população cresce.</div>
+      <div class="key-phrase-en">Vegetative growth is the difference between the birth rate and the death rate. If more people are born than die, the population grows.</div>
+
+      <div class="formula-box">
+        <div class="formula-label">🌍 Crescimento Absoluto · Absolute Growth</div>
+        <div class="formula-text">(Nascimentos − Mortes + Saldo Migratório) × 100 ÷ População total = %</div>
+      </div>
+
+      <p>O <strong>saldo migratório</strong> é a diferença entre as pessoas que chegam a um lugar (<em>imigrantes</em>) e as que saem (<em>emigrantes</em>). O crescimento absoluto considera nascimentos, mortes E o saldo migratório para calcular a variação real da população.</p>
+
+      <div class="key-phrase-pt">O crescimento absoluto leva em conta nascimentos, mortes e o saldo migratório — a diferença entre quem chega e quem sai de um lugar.</div>
+      <div class="key-phrase-en">Absolute growth takes into account births, deaths and migratory balance — the difference between people arriving and people leaving a place.</div>
+    </div>
+
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulário · Vocabulary</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Taxa de natalidade<div class="vocab-tooltip">Crianças nascidas vivas por 1.000 hab/ano. / Live births per 1,000 inhabitants/year.</div></div>
+        <div class="vocab-term">Taxa de mortalidade<div class="vocab-tooltip">Número de mortes por 1.000 hab/ano. / Deaths per 1,000 inhabitants/year.</div></div>
+        <div class="vocab-term">Expectativa de vida<div class="vocab-tooltip">Média de anos que uma pessoa irá viver. / Average years a person will live.</div></div>
+        <div class="vocab-term">Cresc. vegetativo<div class="vocab-tooltip">Natalidade menos mortalidade. / Birth rate minus death rate.</div></div>
+        <div class="vocab-term">Saldo migratório<div class="vocab-tooltip">Chegadas menos saídas de pessoas. / Arrivals minus departures.</div></div>
+        <div class="vocab-term">Imigrante<div class="vocab-tooltip">Pessoa que chega a um novo lugar. / Person who arrives in a new place.</div></div>
+        <div class="vocab-term">Emigrante<div class="vocab-tooltip">Pessoa que sai do seu lugar de origem. / Person who leaves their place of origin.</div></div>
+        <div class="vocab-term">Mortalidade infantil<div class="vocab-tooltip">Morte de crianças com menos de 1 ano. / Death of children under 1 year old.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🧠</span>
+      <span class="quiz-title">Quiz — Crescimento Populacional</span>
+      <span class="quiz-lang-badge badge-pt">🇧🇷 Português</span>
+    </div>
+    <div id="quiz-s4-pt"></div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🌎</span>
+      <span class="quiz-title">Quiz — Population Growth</span>
+      <span class="quiz-lang-badge badge-en">🇨🇦 English</span>
+    </div>
+    <div id="quiz-s4-en"></div>
+  </div>
+
+  <div class="section-complete" id="complete-s4">
+    <h3>🎉 Parabéns! · Congratulations!</h3>
+    <p>Você completou todas as seções de Geografia! · You completed all Geography sections!</p>
+  </div>
+  <button class="next-section-btn" id="next-s4" onclick="showTrophy()">Ver Resultado Final 🏆</button>
+</div>
+
+<!-- TROPHY -->
+<div class="final-trophy" id="finalTrophy">
+  <div class="trophy-card">
+    <span class="trophy-emoji">🏆</span>
+    <h2>Você é incrível!<br><span style="font-size:.65em;color:var(--orange-500);">You are amazing!</span></h2>
+    <div class="trophy-score"><span id="finalScore">0</span> pontos!</div>
+    <p id="finalMsg">Continue estudando e explorando a Geografia!</p>
+    <button onclick="location.reload()" style="margin-top:1.5rem;padding:.7rem 2rem;background:linear-gradient(135deg,var(--orange-400),var(--orange-600));color:white;border:none;border-radius:99px;font-family:'Baloo 2',cursive;font-weight:800;font-size:1rem;cursor:pointer;box-shadow:0 4px 16px rgba(234,88,12,.28);">Recomeçar · Restart 🔄</button>
+  </div>
+</div>
+
+<div style="height:3rem"></div>
+
+<script>
+// ═══════════════════════════════════════════════
+// QUIZ DATA
+// ═══════════════════════════════════════════════
+const quizData = {
+
+  // ── SEÇÃO 1 — Relação Humano-Natureza ──────────────────────
+  // Respostas corretas PT: B, C, B, C, A  (nunca a mesma letra consecutiva)
+  // Respostas corretas EN: C, A, D
+  's0-pt': [
+    {
+      q: 'Desde o início da humanidade, o que os seres humanos retiram da natureza para sobreviver?',
+      opts: ['Somente água e ar', 'Água, alimentos, plantas, animais e materiais diversos', 'Apenas minerais e metais', 'Somente animais para caça'],
+      correct: 1
+    },
+    {
+      q: 'No passado, quais eram as atividades essenciais dos seres humanos para obter alimento?',
+      opts: ['Comércio, indústria e serviços', 'Agricultura moderna com máquinas', 'Caça, pesca e coleta', 'Culinária e armazenamento'],
+      correct: 2
+    },
+    {
+      q: 'Quais ferramentas os agricultores usavam no passado para trabalhar a terra?',
+      opts: ['Tratores e colheitadeiras modernas', 'Enxadas, arados manuais e instrumentos de madeira ou metal', 'Computadores e drones agrícolas', 'Apenas a força das mãos'],
+      correct: 1
+    },
+    {
+      q: 'O que aconteceu com as paisagens das cidades e do campo com o passar do tempo?',
+      opts: ['Permaneceram exatamente iguais ao passado', 'Ficaram menos complexas e mais simples', 'Foram transformadas pelas novas formas de trabalho e tecnologias', 'Desapareceram completamente'],
+      correct: 2
+    },
+    {
+      q: 'No presente, qual área foi especialmente transformada pelo avanço da tecnologia?',
+      opts: ['Agropecuário, indústria, comércio e serviços', 'Somente a educação e as artes', 'Apenas a medicina e a saúde', 'Somente o transporte aéreo'],
+      correct: 0
+    },
+  ],
+  's0-en': [
+    {
+      q: 'What do human beings take from nature to survive?',
+      opts: ['Only water and air', 'Only minerals and metals', 'Water, food, plants, animals and various materials', 'Only animals for hunting'],
+      correct: 2
+    },
+    {
+      q: 'In the past, which activities did humans mainly use to get their food?',
+      opts: ['Hunting, fishing and gathering', 'Commerce and industry', 'Farming with modern machines', 'Technology and medicine'],
+      correct: 0
+    },
+    {
+      q: 'How did technology change the way people work and live over time?',
+      opts: ['It made everything simpler', 'It had no effect on human life', 'It only changed medicine', 'It transformed farming, industry, commerce and services'],
+      correct: 3
+    },
+  ],
+
+  // ── SEÇÃO 2 — Impactos ─────────────────────────────────────
+  // Respostas corretas PT: A, B, D, C, A  (nunca a mesma letra consecutiva)
+  // Respostas corretas EN: B, D, C
+  's1-pt': [
+    {
+      q: 'Qual dos itens a seguir é um exemplo de IMPACTO NEGATIVO da relação do ser humano com a natureza?',
+      opts: ['Desmatamento, poluição e mudanças no clima', 'Reciclagem de materiais', 'Reflorestamento de florestas', 'Uso de energia solar e eólica'],
+      correct: 0
+    },
+    {
+      q: 'A reciclagem é considerada um impacto POSITIVO porque:',
+      opts: ['Aumenta a quantidade de lixo produzido', 'Diminui o lixo e a poluição, além de reduzir o uso de recursos naturais', 'Polui os oceanos com plástico', 'Causa o desaparecimento de espécies'],
+      correct: 1
+    },
+    {
+      q: 'O que são parques ambientais e qual é o seu principal papel?',
+      opts: ['Locais de entretenimento sem preocupação ambiental', 'Fábricas de energia elétrica renovável', 'Zonas industriais afastadas das cidades', 'Áreas que protegem a natureza e ajudam na preservação de animais e plantas'],
+      correct: 3
+    },
+    {
+      q: 'Leia o trecho: "Materiais sintéticos criam lixo que a natureza não consegue decompor, poluindo oceanos e cadeias alimentares." Qual problema ambiental esse texto descreve?',
+      opts: ['O processo de reflorestamento de áreas desmatadas', 'O benefício da energia solar para o ambiente', 'A crise de resíduos causada por materiais sintéticos como o plástico', 'O processo de reciclagem de metais'],
+      correct: 2
+    },
+    {
+      q: 'O reflorestamento contribui para o meio ambiente porque:',
+      opts: ['Recupera áreas desmatadas e melhora o equilíbrio do ambiente', 'Aumenta a produção de lixo sintético no planeta', 'Reduz a variedade de espécies de animais e plantas', 'Polui os rios e oceanos com substâncias químicas'],
+      correct: 0
+    },
+  ],
+  's1-en': [
+    {
+      q: 'Which of the following is a NEGATIVE impact of human activity on nature?',
+      opts: ['Recycling materials', 'Deforestation, pollution and climate change', 'Reforestation of forests', 'Solar and wind energy'],
+      correct: 1
+    },
+    {
+      q: 'Read: "Species disappear before even being studied by scientists." What environmental problem does this sentence describe?',
+      opts: ['The benefits of environmental parks', 'The growth of cities', 'The effects of recycling programs', 'The loss of biodiversity'],
+      correct: 3
+    },
+    {
+      q: 'Why is recycling considered a POSITIVE impact on the environment?',
+      opts: ['It creates more waste', 'It pollutes the oceans with plastic', 'It reduces waste, pollution and the use of natural resources', 'It causes deforestation'],
+      correct: 2
+    },
+  ],
+
+  // ── SEÇÃO 3 — Urbanização ──────────────────────────────────
+  // Respostas corretas PT: C, A, D, B, C  (nunca a mesma letra consecutiva)
+  // Respostas corretas EN: A, D, B, C
+  's2-pt': [
+    {
+      q: 'O que é urbanização?',
+      opts: ['O processo de desmatamento de florestas', 'O aumento da temperatura global', 'O processo de crescimento das cidades e de suas populações', 'A construção de fazendas no campo'],
+      correct: 2
+    },
+    {
+      q: 'Por que as pessoas migram do campo para as cidades?',
+      opts: ['Em busca de emprego, educação, saúde e melhores oportunidades', 'Porque o campo é muito perigoso', 'Porque preferem o clima mais frio das cidades', 'Para fugir de enchentes e secas'],
+      correct: 0
+    },
+    {
+      q: 'Quando o crescimento populacional aumenta, o que acontece com as necessidades da cidade?',
+      opts: ['Menos hospitais e escolas são necessários', 'Menos transporte público é utilizado', 'Menos moradia precisa ser construída', 'Mais moradia, alimentos, transporte, escolas e hospitais são necessários'],
+      correct: 3
+    },
+    {
+      q: 'Leia: "No Brasil, o processo de urbanização foi extremamente rápido, saltando de uma população majoritariamente rural para mais de 80% urbana em menos de 50 anos." Entre quais anos esse processo aconteceu?',
+      opts: ['Entre 1900 e 1950', 'Entre 1940 e 1980', 'Entre 1980 e 2020', 'Entre 2000 e 2020'],
+      correct: 1
+    },
+    {
+      q: 'Quando a expansão urbana acontece SEM planejamento, quais problemas podem surgir?',
+      opts: ['Mais áreas verdes e melhor qualidade de vida para todos', 'Melhor transporte público e menos poluição', 'Desmatamento, poluição, trânsito intenso e falta de áreas verdes', 'Construção de mais parques e jardins na cidade'],
+      correct: 2
+    },
+  ],
+  's2-en': [
+    {
+      q: 'What is urbanization?',
+      opts: ['The process of city growth and increase in urban population', 'The process of deforestation', 'The increase in global temperature', 'The construction of farms in rural areas'],
+      correct: 0
+    },
+    {
+      q: 'What are some consequences of population growth for a city?',
+      opts: ['Fewer schools and hospitals are needed', 'Less public transport is required', 'Less housing needs to be built', 'More housing, food, transport, schools and hospitals are needed'],
+      correct: 3
+    },
+    {
+      q: 'What happens when urban expansion occurs WITHOUT planning?',
+      opts: ['More green areas and a better quality of life', 'Deforestation, pollution, traffic and lack of green areas', 'Better public transport for everyone', 'Construction of more parks and gardens'],
+      correct: 1
+    },
+    {
+      q: 'What is the goal of sustainable urbanization?',
+      opts: ['Build as many buildings as possible without rules', 'Remove all green areas from cities', 'Ensure access to housing, quality public transport and green areas', 'Stop all construction in cities'],
+      correct: 2
+    },
+  ],
+
+  // ── SEÇÃO 4 — Índices Populacionais ───────────────────────
+  // Respostas corretas PT: B, D, A, C, B  (nunca a mesma letra consecutiva)
+  // Respostas corretas EN: C, A, D, B
+  's3-pt': [
+    {
+      q: 'O que é a POPULAÇÃO ABSOLUTA de um lugar?',
+      opts: ['A média de habitantes por quilômetro quadrado', 'O total de habitantes de determinado lugar', 'O número de nascimentos registrados por ano', 'A distribuição da população pelo território'],
+      correct: 1
+    },
+    {
+      q: 'O que é DENSIDADE DEMOGRÁFICA?',
+      opts: ['O total de habitantes de um país inteiro', 'O número de nascimentos por ano naquele lugar', 'A taxa de mortalidade de uma população', 'A distribuição da população pelo território, medida em hab/km²'],
+      correct: 3
+    },
+    {
+      q: 'Como se calcula a POPULAÇÃO RELATIVA de um lugar?',
+      opts: ['Dividindo o número de habitantes pela extensão do território em km²', 'Somando o número de nascimentos e o número de mortes', 'Multiplicando a população total pela área do território', 'Subtraindo a taxa de mortalidade da taxa de natalidade'],
+      correct: 0
+    },
+    {
+      q: 'Leia: "O Brasil tem 215,2 milhões de habitantes e área de 8.510.345,5 km², resultando em média de 25,2 hab/km²." O que representa o valor 25,2 hab/km²?',
+      opts: ['A população absoluta do Brasil', 'A extensão total do território brasileiro', 'A população relativa (densidade demográfica) do Brasil', 'O número de estados do Brasil'],
+      correct: 2
+    },
+    {
+      q: 'Qual é o nome da ciência que estuda a distribuição e as mudanças da população pelo território?',
+      opts: ['Geologia', 'Demografia', 'Meteorologia', 'Arqueologia'],
+      correct: 1
+    },
+  ],
+  's3-en': [
+    {
+      q: 'What is "absolute population"?',
+      opts: ['The average number of people per km²', 'The birth rate of a country per year', 'The total number of inhabitants of a given place', 'The distribution of population across a territory'],
+      correct: 2
+    },
+    {
+      q: 'How is "relative population" (population density) calculated?',
+      opts: ['By dividing the number of inhabitants by the territory area in km²', 'By adding births and deaths together', 'By multiplying the total population by the area', 'By subtracting the death rate from the birth rate'],
+      correct: 0
+    },
+    {
+      q: 'Read: "Brazil has approximately 215.2 million inhabitants and an area of 8,510,345.5 km²." What is Brazil\'s population density (relative population)?',
+      opts: ['215.2 million people', '8,510,345.5 km²', '215.2 inhabitants/km²', '25.2 inhabitants/km²'],
+      correct: 3
+    },
+    {
+      q: 'What is demography?',
+      opts: ['The study of climate and weather patterns', 'The science that studies population size, distribution and changes', 'The study of historical events and ancient civilizations', 'The study of soil types and natural resources'],
+      correct: 1
+    },
+  ],
+
+  // ── SEÇÃO 5 — Crescimento Populacional ────────────────────
+  // Respostas corretas PT: A, D, B, C, A  (nunca a mesma letra consecutiva)
+  // Respostas corretas EN: C, B, D, A
+  's4-pt': [
+    {
+      q: 'O que é o CRESCIMENTO VEGETATIVO (ou natural) de uma população?',
+      opts: ['A diferença entre a taxa de natalidade e a taxa de mortalidade', 'O total de habitantes de um país', 'O aumento da expectativa de vida das pessoas', 'O número de migrantes que chegam a um lugar'],
+      correct: 0
+    },
+    {
+      q: 'Leia a fórmula: "TN − TM = crescimento vegetativo". Se a taxa de natalidade for 18‰ e a taxa de mortalidade for 6‰, qual é o crescimento vegetativo?',
+      opts: ['24‰', '3‰', '108‰', '12‰'],
+      correct: 3
+    },
+    {
+      q: 'Qual fator CONTRIBUI para o aumento da expectativa de vida de uma população?',
+      opts: ['Diminuição dos investimentos em tecnologia e ciência', 'Avanços na medicina e melhoria na qualidade de vida', 'Aumento das taxas de mortalidade infantil', 'Redução do acesso à saúde e à educação'],
+      correct: 1
+    },
+    {
+      q: 'Leia: "O crescimento absoluto considera nascimentos, mortes e saldo migratório." O que é o SALDO MIGRATÓRIO?',
+      opts: ['Apenas os nascimentos registrados em uma região no ano', 'Apenas as mortes registradas em uma região no ano', 'A diferença entre quem chega (imigrantes) e quem sai (emigrantes) de um lugar', 'O número total de habitantes de uma cidade'],
+      correct: 2
+    },
+    {
+      q: 'Uma cidade tinha 10.000 habitantes. Em um ano, nasceram 300 crianças, morreram 100 pessoas e chegaram 50 novos moradores. Qual foi o crescimento absoluto?',
+      opts: ['250 pessoas (300 − 100 + 50)', '400 pessoas', '200 pessoas', '300 pessoas'],
+      correct: 0
+    },
+  ],
+  's4-en': [
+    {
+      q: 'What is "vegetative growth" (natural growth) of a population?',
+      opts: ['The total population of a country', 'The number of immigrants arriving in a place', 'The difference between the birth rate and the death rate', 'The increase in life expectancy over time'],
+      correct: 2
+    },
+    {
+      q: 'If a country has a birth rate of 20‰ and a death rate of 8‰, what is its vegetative growth?',
+      opts: ['28‰', '12‰', '160‰', '2.5‰'],
+      correct: 1
+    },
+    {
+      q: 'Read: "Life expectancy is the approximate number of years that a group of individuals born in the same place will live." Which factor INCREASES life expectancy?',
+      opts: ['Increase in infant mortality rates', 'Decrease in science and technology', 'Reduction in access to healthcare', 'Advances in medicine and improvements in quality of life'],
+      correct: 3
+    },
+    {
+      q: 'What does "migratory balance" mean in population calculations?',
+      opts: ['The difference between people arriving (immigrants) and people leaving (emigrants) a place', 'The total number of births in a region', 'The total number of deaths in a region', 'The total population of a city'],
+      correct: 0
+    },
+  ],
+};
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let score = 0, totalQuestions = 0, answeredQuestions = 0;
+const sectionAnswered = { 0:{pt:0,en:0}, 1:{pt:0,en:0}, 2:{pt:0,en:0}, 3:{pt:0,en:0}, 4:{pt:0,en:0} };
+const sectionTotal   = { 0:{pt:5,en:3}, 1:{pt:5,en:3}, 2:{pt:5,en:4}, 3:{pt:5,en:4}, 4:{pt:5,en:4} };
+Object.values(quizData).forEach(q => totalQuestions += q.length);
+
+// ═══════════════════════════════════════════════
+// RENDER QUIZ
+// ═══════════════════════════════════════════════
+function renderQuiz(containerId, key, sectionIdx, lang) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const questions = quizData[key];
+  container.innerHTML = '';
+  questions.forEach((q, qi) => {
+    const letters = ['A','B','C','D'];
+    const block = document.createElement('div');
+    block.className = 'question-block';
+    block.innerHTML = `
+      <div class="question-num">Pergunta ${qi+1} / Question ${qi+1}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options" id="opts-${containerId}-${qi}">
+        ${q.opts.map((o,oi) => `
+          <button class="option-btn" onclick="checkAnswer(this,'${containerId}',${qi},${oi},${q.correct},${sectionIdx},'${lang}')">
+            <span class="option-letter">${letters[oi]}</span>${o}
+          </button>`).join('')}
+      </div>
+      <div class="feedback-msg" id="fb-${containerId}-${qi}"></div>
+    `;
+    container.appendChild(block);
+  });
+}
+
+// ═══════════════════════════════════════════════
+// CHECK ANSWER
+// ═══════════════════════════════════════════════
+function checkAnswer(btn, containerId, qi, chosen, correct, sectionIdx, lang) {
+  const opts = document.querySelectorAll(`#opts-${containerId}-${qi} .option-btn`);
+  opts.forEach(b => b.disabled = true);
+  const fb = document.getElementById(`fb-${containerId}-${qi}`);
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    fb.className = 'feedback-msg correct';
+    fb.innerHTML = '✅ Correto! · Correct!';
+    fb.style.display = 'flex';
+    score += 10;
+    document.getElementById('scoreDisplay').textContent = score;
+    launchConfetti();
+  } else {
+    btn.classList.add('wrong');
+    opts[correct].classList.add('correct');
+    const correctText = quizData[`s${sectionIdx}-${lang}`][qi].opts[correct];
+    fb.className = 'feedback-msg wrong';
+    fb.innerHTML = `❌ Ops! A resposta certa é: <strong>${correctText}</strong> · The correct answer is: <strong>${correctText}</strong>`;
+    fb.style.display = 'flex';
+  }
+  answeredQuestions++;
+  sectionAnswered[sectionIdx][lang]++;
+  updateProgress();
+  checkSectionComplete(sectionIdx);
+}
+
+// ═══════════════════════════════════════════════
+// PROGRESS
+// ═══════════════════════════════════════════════
+function updateProgress() {
+  document.getElementById('progressFill').style.width = (answeredQuestions / totalQuestions * 100) + '%';
+}
+
+// ═══════════════════════════════════════════════
+// SECTION COMPLETE
+// ═══════════════════════════════════════════════
+function checkSectionComplete(idx) {
+  const a = sectionAnswered[idx], t = sectionTotal[idx];
+  if (a.pt >= t.pt && a.en >= t.en) {
+    document.getElementById(`complete-s${idx}`).classList.add('show');
+    document.getElementById(`next-s${idx}`).classList.add('show');
+    const dots = document.querySelectorAll('.nav-dot');
+    dots[idx].classList.remove('active');
+    dots[idx].classList.add('done');
+    if (idx < 4) dots[idx+1].classList.add('active');
+  }
+}
+
+// ═══════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════
+function goToSection(idx) {
+  const secEl = document.getElementById(`sec${idx}`);
+  secEl.style.display = '';
+  secEl.classList.add('reveal');
+  setTimeout(() => secEl.classList.add('visible'), 50);
+  secEl.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+// ═══════════════════════════════════════════════
+// CONFETTI
+// ═══════════════════════════════════════════════
+function launchConfetti() {
+  const container = document.getElementById('confettiContainer');
+  const colors = ['#f97316','#fb923c','#fbbf24','#f59e0b','#fdba74','#fed7aa','#fff'];
+  for (let i = 0; i < 22; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.top = '-10px';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.width = (6 + Math.random() * 8) + 'px';
+    piece.style.height = (6 + Math.random() * 8) + 'px';
+    piece.style.borderRadius = Math.random() > .5 ? '50%' : '2px';
+    piece.style.animationDuration = (.7 + Math.random() * .8) + 's';
+    piece.style.animationDelay = (Math.random() * .3) + 's';
+    container.appendChild(piece);
+    setTimeout(() => piece.remove(), 1500);
+  }
+}
+
+// ═══════════════════════════════════════════════
+// TROPHY
+// ═══════════════════════════════════════════════
+function showTrophy() {
+  document.getElementById('finalScore').textContent = score;
+  const pct = Math.round((score / (totalQuestions * 10)) * 100);
+  let msg = pct >= 90
+    ? '🌟 Desempenho excepcional! · Exceptional performance!'
+    : pct >= 70
+      ? '👏 Muito bem! Continue assim! · Very well done! Keep it up!'
+      : '📚 Continue estudando! · Keep on studying!';
+  document.getElementById('finalMsg').textContent = msg;
+  document.getElementById('finalTrophy').classList.add('show');
+  document.getElementById('finalTrophy').scrollIntoView({ behavior:'smooth' });
+  launchConfetti(); launchConfetti();
+}
+
+// ═══════════════════════════════════════════════
+// SCROLL REVEAL
+// ═══════════════════════════════════════════════
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ═══════════════════════════════════════════════
+// DOT NAVIGATION
+// ═══════════════════════════════════════════════
+document.querySelectorAll('.nav-dot').forEach(dot => {
+  dot.addEventListener('click', () => {
+    const idx = parseInt(dot.dataset.section);
+    const el = document.getElementById(`sec${idx}`);
+    if (el) { el.style.display = ''; el.scrollIntoView({ behavior:'smooth' }); }
+  });
+});
+
+// ═══════════════════════════════════════════════
+// INIT — render all quizzes + reveal section 0
+// ═══════════════════════════════════════════════
+for (let i = 0; i < 5; i++) {
+  renderQuiz(`quiz-s${i}-pt`, `s${i}-pt`, i, 'pt');
+  renderQuiz(`quiz-s${i}-en`, `s${i}-en`, i, 'en');
+}
+document.querySelector('#sec0').classList.add('visible');
+</script>
+</body>
+</html>
