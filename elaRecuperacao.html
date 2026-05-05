@@ -7,1632 +7,713 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --blue-50: #eff6ff;
-    --blue-100: #dbeafe;
-    --blue-200: #bfdbfe;
-    --blue-300: #93c5fd;
-    --blue-400: #60a5fa;
-    --blue-500: #3b82f6;
-    --blue-600: #2563eb;
-    --blue-700: #1d4ed8;
-    --white: #ffffff;
-    --glass-bg: rgba(255,255,255,0.68);
-    --glass-border: rgba(59,130,246,0.18);
-    --shadow-soft: 0 8px 32px rgba(59,130,246,0.10);
-    --shadow-card: 0 4px 24px rgba(59,130,246,0.13);
-    --radius-xl: 2rem;
-    --radius-lg: 1.25rem;
-    --radius-md: 0.875rem;
+    --orange-50:#fff7ed;--orange-100:#ffedd5;--orange-200:#fed7aa;--orange-300:#fdba74;
+    --orange-400:#fb923c;--orange-500:#f97316;--orange-600:#ea580c;--orange-700:#c2410c;
+    --white:#ffffff;
+    --glass-bg:rgba(255,255,255,0.65);
+    --glass-border:rgba(249,115,22,0.18);
+    --shadow-soft:0 8px 32px rgba(249,115,22,0.10);
+    --shadow-card:0 4px 24px rgba(249,115,22,0.13);
+    --radius-xl:2rem;--radius-lg:1.25rem;--radius-md:0.875rem;
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 40%, #e0f2fe 70%, #f0f9ff 100%);
-    min-height: 100vh;
-    color: #1e3a5f;
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Nunito',sans-serif;background:linear-gradient(135deg,#fff7ed 0%,#ffedd5 40%,#fff3e0 70%,#fde8d0 100%);min-height:100vh;color:#3a1a00;}
+  body::before{content:'';position:fixed;top:-120px;right:-120px;width:520px;height:520px;background:radial-gradient(circle,rgba(251,146,60,0.18) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0;}
+  body::after{content:'';position:fixed;bottom:-100px;left:-100px;width:440px;height:440px;background:radial-gradient(circle,rgba(249,115,22,0.12) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0;}
+
+  header{position:sticky;top:0;z-index:100;backdrop-filter:blur(18px) saturate(1.4);background:rgba(255,255,255,0.72);border-bottom:1.5px solid rgba(249,115,22,0.15);box-shadow:0 2px 18px rgba(249,115,22,0.08);padding:0.7rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;position:relative;}
+  .logo{display:flex;align-items:center;gap:0.7rem;}
+  .logo-text{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.2rem;color:var(--orange-600);}
+  .logo-sub{font-size:0.72rem;font-weight:600;color:var(--orange-400);letter-spacing:.04em;}
+  .progress-bar-wrap{flex:1;max-width:320px;}
+  .progress-label{font-size:0.7rem;font-weight:700;color:var(--orange-500);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;}
+  .progress-track{height:8px;background:rgba(253,186,116,0.35);border-radius:99px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--orange-400),var(--orange-600));border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1);width:0%;}
+  .score-badge{background:linear-gradient(135deg,var(--orange-400),var(--orange-600));color:#fff;font-weight:800;font-size:0.95rem;padding:.38rem .9rem;border-radius:99px;box-shadow:0 3px 12px rgba(234,88,12,0.28);display:flex;align-items:center;gap:.4rem;}
+
+  .hero{text-align:center;padding:3.5rem 1.5rem 2.5rem;position:relative;z-index:1;}
+  .hero-badge{display:inline-block;background:linear-gradient(90deg,#fb923c22,#f9731611);border:1.5px solid var(--orange-300);border-radius:99px;padding:.3rem 1rem;font-size:.78rem;font-weight:700;color:var(--orange-600);letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.1rem;}
+  .hero h1{font-family:'Baloo 2',cursive;font-weight:800;font-size:clamp(2rem,5vw,3rem);color:var(--orange-700);line-height:1.15;margin-bottom:.6rem;}
+  .hero p{font-size:1.05rem;color:#a05022;max-width:620px;margin:0 auto;font-weight:500;}
+  .hero-meta{display:flex;justify-content:center;gap:1.2rem;margin-top:1.2rem;flex-wrap:wrap;}
+  .meta-chip{background:var(--glass-bg);border:1.5px solid var(--glass-border);border-radius:99px;padding:.28rem .85rem;font-size:.76rem;font-weight:700;color:var(--orange-600);backdrop-filter:blur(8px);}
+
+  .unit-divider{max-width:860px;margin:2rem auto 0;padding:0 1rem;position:relative;z-index:1;}
+  .unit-label{display:flex;align-items:center;gap:.8rem;background:linear-gradient(90deg,rgba(234,88,12,0.10),transparent);border-left:4px solid var(--orange-600);border-radius:0 var(--radius-md) var(--radius-md) 0;padding:.6rem 1.2rem;margin-bottom:.3rem;}
+  .unit-label span{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.05rem;color:var(--orange-700);}
+  .unit-label small{font-size:.75rem;font-weight:700;color:var(--orange-400);}
+
+  .section-nav{display:flex;justify-content:center;gap:1.1rem;padding:1rem 0 .5rem;position:relative;z-index:1;flex-wrap:wrap;}
+  .nav-dot{width:38px;height:38px;border-radius:50%;background:var(--orange-200);border:2.5px solid var(--orange-300);cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;font-size:1.25rem;font-weight:800;color:var(--orange-700);box-shadow:0 2px 8px rgba(249,115,22,0.10);}
+  .nav-dot.active{background:var(--orange-500);border-color:var(--orange-600);color:#fff;transform:scale(1.18);box-shadow:0 4px 16px rgba(249,115,22,0.18);}
+  .nav-dot.done{background:var(--orange-400);border-color:var(--orange-500);color:#fff;}
+  .nav-dot-link{background:var(--glass-bg);border:1.5px solid var(--glass-border);border-radius:99px;padding:.35rem .9rem;font-size:.75rem;font-weight:700;color:var(--orange-600);cursor:pointer;transition:all .2s;backdrop-filter:blur(8px);text-decoration:none;}
+  .nav-dot-link:hover,.nav-dot-link.active{background:var(--orange-500);color:#fff;border-color:var(--orange-500);}
+
+  .section-card{background:var(--glass-bg);backdrop-filter:blur(20px) saturate(1.3);border:1.5px solid var(--glass-border);border-radius:var(--radius-xl);box-shadow:var(--shadow-soft);padding:2rem 2.2rem 1.8rem;margin-bottom:1.5rem;position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s;}
+  .section-card:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(249,115,22,0.14);}
+  .section-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--orange-400),var(--orange-600),var(--orange-300));border-radius:var(--radius-xl) var(--radius-xl) 0 0;}
+
+  .section-header{display:flex;align-items:center;gap:.9rem;margin-bottom:1.5rem;}
+  .section-icon{width:52px;height:52px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:0 4px 16px rgba(234,88,12,0.22);flex-shrink:0;}
+  .section-icon.purple{background:linear-gradient(135deg,#a78bfa,#7c3aed);}
+  .section-icon.green{background:linear-gradient(135deg,#34d399,#059669);}
+  .section-icon.blue{background:linear-gradient(135deg,#60a5fa,#2563eb);}
+  .section-icon.orange{background:linear-gradient(135deg,var(--orange-400),var(--orange-600));}
+  .section-icon.pink{background:linear-gradient(135deg,#f472b6,#db2777);}
+  .section-icon.teal{background:linear-gradient(135deg,#2dd4bf,#0d9488);}
+  .section-icon.indigo{background:linear-gradient(135deg,#818cf8,#4f46e5);}
+  .section-icon.yellow{background:linear-gradient(135deg,#fbbf24,#d97706);}
+  .section-icon.red{background:linear-gradient(135deg,#f87171,#dc2626);}
+  .section-icon.emerald{background:linear-gradient(135deg,#6ee7b7,#10b981);}
+  .section-title{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.5rem;color:var(--orange-700);}
+  .section-subtitle{font-size:.78rem;font-weight:700;color:var(--orange-400);text-transform:uppercase;letter-spacing:.07em;}
+  .section-body{font-size:1rem;line-height:1.75;color:#4a2000;}
+  .section-body p{margin-bottom:1rem;}
+
+  .key-phrase-pt{background:linear-gradient(90deg,rgba(253,186,116,0.35),rgba(249,115,22,0.10));border-left:4px solid var(--orange-500);border-radius:0 var(--radius-md) var(--radius-md) 0;padding:.7rem 1.1rem;margin:1.2rem 0;font-weight:700;font-size:1.02rem;color:var(--orange-700);position:relative;}
+  .key-phrase-pt::before{content:'🔑 PT';position:absolute;top:-.62rem;left:.8rem;font-size:.65rem;font-weight:800;background:var(--orange-500);color:#fff;padding:.15rem .45rem;border-radius:99px;letter-spacing:.04em;}
+  .key-phrase-en{background:linear-gradient(90deg,rgba(251,191,36,0.18),rgba(245,158,11,0.08));border-left:4px solid #f59e0b;border-radius:0 var(--radius-md) var(--radius-md) 0;padding:.7rem 1.1rem;margin:1.2rem 0;font-weight:700;font-size:1.02rem;color:#92400e;font-style:italic;position:relative;}
+  .key-phrase-en::before{content:'🔑 EN';position:absolute;top:-.62rem;left:.8rem;font-size:.65rem;font-weight:800;background:#f59e0b;color:#fff;padding:.15rem .45rem;border-radius:99px;letter-spacing:.04em;}
+
+  .example-box{background:rgba(255,247,237,0.85);border:1.5px solid rgba(253,186,116,0.45);border-radius:var(--radius-md);padding:1rem 1.3rem;margin:1rem 0;}
+  .example-box strong{color:var(--orange-600);}
+  .example-box p{margin-bottom:.4rem;}
+  .example-grid{display:flex;flex-wrap:wrap;gap:.45rem .9rem;margin-top:.55rem;}
+  .example-pair{background:white;border:1.5px solid var(--orange-200);border-radius:99px;padding:.25rem .8rem;font-size:.88rem;font-weight:700;color:var(--orange-700);}
+
+  .grammar-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.92rem;}
+  .grammar-table th{background:linear-gradient(135deg,var(--orange-400),var(--orange-600));color:white;padding:.55rem .9rem;text-align:left;font-family:'Baloo 2',cursive;font-weight:700;}
+  .grammar-table th:first-child{border-radius:var(--radius-md) 0 0 0;}
+  .grammar-table th:last-child{border-radius:0 var(--radius-md) 0 0;}
+  .grammar-table td{padding:.5rem .9rem;border-bottom:1px solid rgba(253,186,116,0.3);color:#4a2000;font-weight:600;background:rgba(255,255,255,0.6);}
+  .grammar-table tr:last-child td{border-bottom:none;}
+  .grammar-table tr:hover td{background:rgba(255,237,213,0.7);}
+  .tag-same{display:inline-block;background:var(--orange-100);color:var(--orange-700);border-radius:99px;padding:.1rem .5rem;font-size:.73rem;font-weight:700;margin-left:.3rem;}
+
+  .writing-steps{display:flex;flex-direction:column;gap:.7rem;margin:1rem 0;}
+  .writing-step{display:flex;align-items:flex-start;gap:.9rem;background:rgba(255,255,255,0.75);border:1.5px solid rgba(253,186,116,0.35);border-radius:var(--radius-md);padding:.8rem 1.1rem;transition:transform .2s,box-shadow .2s;}
+  .writing-step:hover{transform:translateX(4px);box-shadow:0 4px 16px rgba(249,115,22,0.12);}
+  .step-num{width:36px;height:36px;background:linear-gradient(135deg,var(--orange-400),var(--orange-600));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2',cursive;font-weight:800;color:white;font-size:1rem;flex-shrink:0;}
+  .step-body h4{font-family:'Baloo 2',cursive;font-weight:800;color:var(--orange-700);font-size:1rem;}
+  .step-body p{font-size:.88rem;color:#5c2800;margin-top:.2rem;}
+  .step-tip{font-size:.78rem;color:var(--orange-600);background:rgba(255,237,213,0.7);border-radius:6px;padding:.2rem .5rem;margin-top:.3rem;display:inline-block;font-weight:700;}
+
+  .memory-box{background:linear-gradient(135deg,#fef9c3,#fef3c7);border:1.5px solid #fde68a;border-radius:var(--radius-lg);padding:1rem 1.2rem;margin:.8rem 0;display:flex;gap:.8rem;align-items:flex-start;}
+  .memory-box .mem-emoji{font-size:1.6rem;}
+  .memory-box strong{display:block;font-size:.82rem;font-weight:800;color:#92400e;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.2rem;}
+  .memory-box p{font-size:.88rem;color:#78350f;font-weight:600;}
+
+  .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:.8rem 0;}
+  .compare-card{border-radius:var(--radius-md);padding:.9rem 1rem;}
+  .compare-card.a{background:linear-gradient(135deg,#ede9fe,#ddd6fe);border:1.5px solid #c4b5fd;}
+  .compare-card.b{background:linear-gradient(135deg,#dcfce7,#d1fae5);border:1.5px solid #86efac;}
+  .compare-card strong{display:block;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.4rem;}
+  .compare-card.a strong{color:#5b21b6;}
+  .compare-card.b strong{color:#166534;}
+  .compare-card span{font-size:.88rem;font-weight:600;color:#3a1a00;}
+
+  .timeline{display:flex;align-items:center;gap:.3rem;margin:.8rem 0;flex-wrap:wrap;}
+  .tl-node{background:linear-gradient(135deg,var(--orange-400),var(--orange-600));color:#fff;border-radius:var(--radius-md);padding:.45rem .9rem;font-size:.82rem;font-weight:800;white-space:nowrap;}
+  .tl-arrow{color:var(--orange-400);font-size:1.2rem;font-weight:900;}
+
+  .vocab-box{background:linear-gradient(135deg,rgba(255,237,213,0.8),rgba(255,247,237,0.9));border:1.5px solid rgba(253,186,116,0.5);border-radius:var(--radius-lg);padding:1.2rem 1.5rem;margin:1.5rem 0;}
+  .vocab-title{font-family:'Baloo 2',cursive;font-weight:800;color:var(--orange-600);font-size:1rem;margin-bottom:.8rem;display:flex;align-items:center;gap:.4rem;}
+  .vocab-grid{display:flex;flex-wrap:wrap;gap:.5rem;}
+  .vocab-term{background:white;border:1.5px solid var(--orange-300);border-radius:99px;padding:.28rem .85rem;font-size:.83rem;font-weight:700;color:var(--orange-700);cursor:pointer;transition:all .2s;position:relative;}
+  .vocab-term:hover{background:var(--orange-500);color:white;transform:translateY(-2px);box-shadow:0 4px 12px rgba(249,115,22,0.28);}
+
+  .pill{display:inline-block;border-radius:99px;padding:.2rem .7rem;font-size:.76rem;font-weight:800;margin:.15rem;}
+  .pill-orange{background:#ffedd5;color:#c2410c;}
+  .pill-green{background:#dcfce7;color:#166534;}
+  .pill-purple{background:#ede9fe;color:#5b21b6;}
+  .pill-blue{background:#dbeafe;color:#1d4ed8;}
+  .pill-pink{background:#fce7f3;color:#9d174d;}
+
+  .chars-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.8rem;margin:.8rem 0;}
+  .char-card{background:rgba(255,237,213,0.45);border:1.5px solid rgba(253,186,116,0.5);border-radius:var(--radius-lg);padding:.9rem 1rem;text-align:center;}
+  .char-avatar{font-size:2rem;margin-bottom:.4rem;}
+  .char-name{font-family:'Baloo 2',cursive;font-weight:800;color:var(--orange-700);font-size:1rem;}
+
+  .lesson-section{max-width:860px;margin:1.5rem auto;padding:0 1rem;position:relative;z-index:1;}
+
+  .quiz-section{background:var(--glass-bg);backdrop-filter:blur(20px) saturate(1.3);border:1.5px solid var(--glass-border);border-radius:var(--radius-xl);box-shadow:var(--shadow-card);padding:1.8rem 2.2rem;margin-bottom:1.5rem;position:relative;overflow:hidden;}
+  .quiz-section::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#f59e0b,var(--orange-500),#f97316);border-radius:var(--radius-xl) var(--radius-xl) 0 0;}
+  .quiz-header{display:flex;align-items:center;gap:.8rem;margin-bottom:1.3rem;}
+  .quiz-icon{font-size:1.4rem;}
+  .quiz-title{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.1rem;color:var(--orange-700);}
+
+  .question-block{margin-bottom:1.5rem;}
+  .question-num{font-size:.73rem;font-weight:800;color:var(--orange-400);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem;}
+  .question-text{font-weight:700;font-size:1rem;color:#3a1a00;margin-bottom:.85rem;line-height:1.5;}
+
+  .options{display:flex;flex-direction:column;gap:.55rem;}
+  .option-btn{background:rgba(255,255,255,0.8);border:2px solid rgba(253,186,116,0.4);border-radius:var(--radius-md);padding:.75rem 1.1rem;font-family:'Nunito',sans-serif;font-size:.93rem;font-weight:600;color:#5c2800;cursor:pointer;text-align:left;transition:all .2s;display:flex;align-items:center;gap:.7rem;}
+  .option-btn:hover:not(:disabled){background:rgba(255,237,213,0.95);border-color:var(--orange-400);transform:translateX(4px);}
+  .option-letter{width:28px;height:28px;background:linear-gradient(135deg,var(--orange-200),var(--orange-300));border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.82rem;color:var(--orange-700);flex-shrink:0;transition:all .2s;}
+  .option-btn.correct{background:rgba(187,247,208,0.7);border-color:#22c55e;color:#14532d;}
+  .option-btn.correct .option-letter{background:#22c55e;color:white;}
+  .option-btn.wrong{background:rgba(254,202,202,0.7);border-color:#ef4444;color:#7f1d1d;}
+  .option-btn.wrong .option-letter{background:#ef4444;color:white;}
+  .option-btn:disabled{cursor:default;}
+
+  .feedback-msg{border-radius:var(--radius-md);padding:.7rem 1rem;font-weight:700;font-size:.9rem;margin-top:.7rem;display:none;}
+  .feedback-msg.correct{background:rgba(187,247,208,0.6);color:#15803d;border:1.5px solid #86efac;display:flex;gap:.5rem;align-items:center;}
+  .feedback-msg.wrong{background:rgba(254,202,202,0.6);color:#dc2626;border:1.5px solid #fca5a5;display:flex;gap:.5rem;align-items:center;}
+
+  .open-q{background:rgba(255,247,237,0.85);border:1.5px solid rgba(253,186,116,0.45);border-radius:var(--radius-md);padding:1rem 1.3rem;margin-bottom:1rem;}
+  .open-q p{font-weight:700;font-size:.95rem;color:#3a1a00;margin-bottom:.5rem;}
+  .btn-show{background:linear-gradient(90deg,var(--orange-400),var(--orange-600));color:#fff;border:none;border-radius:var(--radius-md);padding:.45rem 1rem;font-size:.82rem;font-weight:800;cursor:pointer;}
+  .btn-show:hover{filter:brightness(1.08);}
+  .open-answer{background:rgba(187,247,208,0.5);border:1.5px solid #86efac;border-radius:var(--radius-md);padding:.6rem .9rem;font-size:.88rem;color:#15803d;font-weight:700;margin-top:.4rem;display:none;}
+
+  .exercise{background:rgba(255,237,213,0.5);border:1.5px solid rgba(253,186,116,0.5);border-radius:var(--radius-lg);padding:1rem 1.2rem;margin-top:.9rem;}
+  .exercise h4{font-family:'Baloo 2',cursive;font-weight:800;font-size:.95rem;color:var(--orange-700);margin-bottom:.7rem;}
+  .fill-q{display:flex;align-items:center;flex-wrap:wrap;gap:.35rem;margin-bottom:.6rem;font-size:.9rem;font-weight:600;color:#3a1a00;}
+  .fill-input{border:none;border-bottom:2px solid var(--orange-400);background:transparent;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;color:var(--orange-700);width:90px;outline:none;text-align:center;padding:.1rem .2rem;}
+  .fill-input.ok{border-color:#22c55e;color:#166534;}
+  .fill-input.err{border-color:#ef4444;color:#991b1b;}
+  .btn-check{background:linear-gradient(90deg,var(--orange-400),var(--orange-600));color:#fff;border:none;border-radius:var(--radius-md);padding:.5rem 1.2rem;font-size:.85rem;font-weight:800;cursor:pointer;margin-top:.7rem;}
+  .btn-check:hover{filter:brightness(1.08);}
+
+  .section-complete{display:none;text-align:center;padding:1.5rem;margin-top:1rem;background:linear-gradient(135deg,rgba(187,247,208,0.4),rgba(134,239,172,0.2));border:1.5px solid #86efac;border-radius:var(--radius-lg);}
+  .section-complete.show{display:block;}
+  .section-complete h3{font-family:'Baloo 2',cursive;font-weight:800;color:#15803d;font-size:1.3rem;margin-bottom:.4rem;}
+  .section-complete p{color:#166534;font-size:.9rem;}
+
+  .next-section-btn{display:none;margin:1rem auto 0;padding:.8rem 2rem;background:linear-gradient(135deg,var(--orange-400),var(--orange-600));color:white;border:none;border-radius:99px;font-family:'Baloo 2',cursive;font-weight:800;font-size:1rem;cursor:pointer;box-shadow:0 4px 16px rgba(234,88,12,0.28);transition:all .25s;text-transform:uppercase;letter-spacing:.05em;}
+  .next-section-btn:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 8px 24px rgba(234,88,12,0.35);}
+  .next-section-btn.show{display:block;}
+
+  .final-trophy{display:none;text-align:center;padding:3rem 2rem;position:relative;z-index:1;}
+  .final-trophy.show{display:block;}
+  .trophy-card{background:var(--glass-bg);backdrop-filter:blur(20px);border:2px solid rgba(253,186,116,0.4);border-radius:var(--radius-xl);padding:3rem 2rem;max-width:540px;margin:0 auto;box-shadow:0 16px 48px rgba(249,115,22,0.15);}
+  .trophy-emoji{font-size:5rem;margin-bottom:1rem;display:block;}
+  .trophy-card h2{font-family:'Baloo 2',cursive;font-weight:800;font-size:2rem;color:var(--orange-700);margin-bottom:.7rem;}
+  .trophy-score{font-size:3rem;font-weight:900;color:var(--orange-600);font-family:'Baloo 2',cursive;}
+  .trophy-card p{color:#a05022;margin-top:.8rem;font-size:1rem;}
+
+  .confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;}
+  .confetti-piece{position:absolute;width:10px;height:10px;border-radius:2px;animation:confettiFall 1.2s ease-in forwards;}
+
+  .summary-ribbon{max-width:860px;margin:2rem auto;padding:0 1rem;position:relative;z-index:1;}
+  .ribbon-card{background:linear-gradient(135deg,var(--orange-600),var(--orange-700));border-radius:var(--radius-xl);padding:1.8rem 2rem;color:#fff;box-shadow:0 8px 32px rgba(234,88,12,0.25);}
+  .ribbon-card h2{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.3rem;margin-bottom:1rem;}
+  .ribbon-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;}
+  .ribbon-unit{background:rgba(255,255,255,.12);border-radius:var(--radius-md);padding:.9rem 1.1rem;border:1px solid rgba(255,255,255,.2);}
+  .ribbon-unit strong{display:block;font-size:.82rem;font-weight:800;opacity:.85;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.04em;}
+  .ribbon-unit ul{list-style:none;display:flex;flex-direction:column;gap:.25rem;}
+  .ribbon-unit li{font-size:.85rem;font-weight:600;display:flex;align-items:flex-start;gap:.4rem;opacity:.92;}
+  .ribbon-unit li::before{content:'✓';font-size:.7rem;margin-top:.18rem;opacity:.8;flex-shrink:0;}
+
+  footer{text-align:center;padding:2.5rem 1rem 3rem;position:relative;z-index:1;}
+  footer p{font-size:.82rem;color:#a05022;font-weight:600;}
+
+  @keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg) scale(1);}100%{opacity:0;transform:translateY(100vh) rotate(540deg) scale(.6);}}
+  @keyframes fadeInUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  @media(max-width:600px){
+    .section-card,.quiz-section{padding:1.3rem 1.1rem;}
+    header{padding:.6rem 1rem;}
+    .logo-text{font-size:1rem;}
+    .progress-bar-wrap{max-width:160px;}
+    .compare-grid{grid-template-columns:1fr;}
+    .grammar-table{font-size:.78rem;}
   }
-  body::before {
-    content:''; position: fixed; top: -120px; right: -120px;
-    width: 520px; height: 520px;
-    background: radial-gradient(circle, rgba(96,165,250,0.18) 0%, transparent 70%);
-    border-radius: 50%; pointer-events: none; z-index: 0;
-  }
-  body::after {
-    content:''; position: fixed; bottom: -100px; left: -100px;
-    width: 440px; height: 440px;
-    background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%);
-    border-radius: 50%; pointer-events: none; z-index: 0;
-  }
-
-  /* HEADER */
-  header {
-    position: sticky; top: 0; z-index: 100;
-    backdrop-filter: blur(18px) saturate(1.4);
-    background: rgba(255,255,255,0.78);
-    border-bottom: 1.5px solid rgba(59,130,246,0.15);
-    box-shadow: 0 2px 18px rgba(59,130,246,0.08);
-    padding: 0.7rem 2rem;
-    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  }
-  .logo { display: flex; align-items: center; gap: 0.7rem; }
-  .logo-icon { width: 42px; height: 42px; background: linear-gradient(135deg, var(--blue-400), var(--blue-600)); border-radius: 12px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; box-shadow: 0 4px 12px rgba(37,99,235,0.25); }
-  .logo-text { font-family: 'Baloo 2', cursive; font-weight:800; font-size:1.2rem; color: var(--blue-600); }
-  .logo-sub { font-size:0.72rem; font-weight:600; color: var(--blue-400); letter-spacing:.04em; }
-  .progress-bar-wrap { flex:1; max-width:320px; }
-  .progress-label { font-size:0.7rem; font-weight:700; color:var(--blue-500); margin-bottom:4px; text-transform:uppercase; letter-spacing:.06em; }
-  .progress-track { height:8px; background:rgba(147,197,253,0.35); border-radius:99px; overflow:hidden; }
-  .progress-fill { height:100%; background: linear-gradient(90deg, var(--blue-400), var(--blue-600)); border-radius:99px; transition: width .6s cubic-bezier(.4,0,.2,1); width:0%; }
-  .score-badge { background: linear-gradient(135deg, var(--blue-400), var(--blue-600)); color:#fff; font-weight:800; font-size:0.95rem; padding:.38rem .9rem; border-radius:99px; box-shadow: 0 3px 12px rgba(37,99,235,0.28); display:flex; align-items:center; gap:.4rem; }
-
-  /* HERO */
-  .hero { text-align:center; padding: 3.5rem 1.5rem 2rem; position:relative; z-index:1; }
-  .hero-badge { display:inline-block; background: linear-gradient(90deg,#60a5fa22,#3b82f611); border:1.5px solid var(--blue-300); border-radius:99px; padding:.3rem 1rem; font-size:.78rem; font-weight:700; color:var(--blue-600); letter-spacing:.06em; text-transform:uppercase; margin-bottom:1.1rem; }
-  .hero h1 { font-family:'Baloo 2',cursive; font-weight:800; font-size:clamp(2rem,5vw,3rem); color:var(--blue-700); line-height:1.15; margin-bottom:.6rem; }
-  .hero p { font-size:1.05rem; color:#2563eb99; max-width:620px; margin:0 auto; font-weight:600; }
-  .hero-meta { display:flex; justify-content:center; gap:1.5rem; margin-top:1.2rem; flex-wrap:wrap; }
-  .meta-chip { background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:99px; padding:.28rem .85rem; font-size:.76rem; font-weight:700; color:var(--blue-600); backdrop-filter:blur(8px); }
-
-  /* STUDY GUIDE */
-  .study-guide { max-width:860px; margin:1.5rem auto; padding:0 1rem; position:relative; z-index:1; }
-  .guide-card { background:var(--glass-bg); border:1.5px solid var(--glass-border); border-radius:var(--radius-xl); padding:1.6rem 2rem; backdrop-filter:blur(12px); box-shadow:var(--shadow-soft); }
-  .guide-card h2 { font-family:'Baloo 2',cursive; font-weight:800; font-size:1.15rem; color:var(--blue-700); margin-bottom:1rem; display:flex; align-items:center; gap:.5rem; }
-  .guide-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-  @media(max-width:600px){ .guide-grid { grid-template-columns:1fr; } }
-  .guide-item { background:rgba(219,234,254,0.5); border-radius:var(--radius-md); padding:.9rem 1rem; border-left:4px solid var(--blue-400); }
-  .guide-item strong { display:block; font-size:.8rem; font-weight:800; color:var(--blue-600); text-transform:uppercase; letter-spacing:.04em; margin-bottom:.3rem; }
-  .guide-item span { font-size:.88rem; color:#1e3a5f; }
-
-  /* UNIT DIVIDER */
-  .unit-divider { max-width:860px; margin:2rem auto 0; padding:0 1rem; position:relative; z-index:1; }
-  .unit-label { display:flex; align-items:center; gap:.8rem; background:linear-gradient(90deg,rgba(37,99,235,0.10),transparent); border-left:4px solid var(--blue-600); border-radius:0 var(--radius-md) var(--radius-md) 0; padding:.6rem 1.2rem; margin-bottom:.3rem; }
-  .unit-label span { font-family:'Baloo 2',cursive; font-weight:800; font-size:1.05rem; color:var(--blue-700); }
-  .unit-label small { font-size:.75rem; font-weight:700; color:var(--blue-400); }
-
-  /* SECTION NAV */
-  .section-nav { display:flex; justify-content:center; gap:.7rem; padding:1rem 0 .5rem; position:relative; z-index:1; flex-wrap:wrap; }
-  .nav-dot { background:var(--glass-bg); border:1.5px solid var(--glass-border); border-radius:99px; padding:.35rem .9rem; font-size:.75rem; font-weight:700; color:var(--blue-600); cursor:pointer; transition:all .2s; backdrop-filter:blur(8px); text-decoration:none; }
-  .nav-dot:hover, .nav-dot.active { background:var(--blue-500); color:#fff; border-color:var(--blue-500); }
-
-  /* CARDS */
-  .cards-grid { max-width:860px; margin:0 auto; padding:1rem; display:grid; gap:1.4rem; position:relative; z-index:1; }
-  .card { background:var(--glass-bg); border:1.5px solid var(--glass-border); border-radius:var(--radius-xl); padding:1.8rem 2rem; backdrop-filter:blur(12px); box-shadow:var(--shadow-card); }
-  .card-header { display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.2rem; }
-  .card-icon { width:52px; height:52px; min-width:52px; border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center; font-size:1.6rem; box-shadow:0 4px 12px rgba(37,99,235,0.18); }
-  .card-icon.purple { background:linear-gradient(135deg,#a78bfa,#7c3aed); }
-  .card-icon.green  { background:linear-gradient(135deg,#34d399,#059669); }
-  .card-icon.blue   { background:linear-gradient(135deg,#60a5fa,#2563eb); }
-  .card-icon.orange { background:linear-gradient(135deg,#fb923c,#ea580c); }
-  .card-icon.pink   { background:linear-gradient(135deg,#f472b6,#db2777); }
-  .card-icon.teal   { background:linear-gradient(135deg,#2dd4bf,#0d9488); }
-  .card-icon.indigo { background:linear-gradient(135deg,#818cf8,#4f46e5); }
-  .card-icon.yellow { background:linear-gradient(135deg,#fbbf24,#d97706); }
-  .card-icon.red    { background:linear-gradient(135deg,#f87171,#dc2626); }
-  .card-icon.emerald{ background:linear-gradient(135deg,#6ee7b7,#10b981); }
-  .card-title { font-family:'Baloo 2',cursive; font-weight:800; font-size:1.2rem; color:var(--blue-700); }
-  .card-sub { font-size:.8rem; font-weight:700; color:var(--blue-400); margin-top:.1rem; }
-
-  /* DEFINITION BOX */
-  .def-box { background:linear-gradient(135deg,#eff6ff,#dbeafe); border:1.5px solid #bfdbfe; border-radius:var(--radius-lg); padding:1rem 1.2rem; margin-bottom:1rem; }
-  .def-box .label { font-size:.72rem; font-weight:800; color:var(--blue-600); text-transform:uppercase; letter-spacing:.06em; margin-bottom:.3rem; }
-  .def-box p { font-size:.95rem; color:#1e3a5f; font-weight:600; }
-
-  /* PT TIP */
-  .pt-tip { background:linear-gradient(135deg,#f0fdf4,#dcfce7); border:1.5px solid #86efac; border-radius:var(--radius-md); padding:.7rem 1rem; margin:.7rem 0; display:flex; align-items:flex-start; gap:.6rem; font-size:.88rem; color:#166534; font-weight:600; }
-
-  /* FORMULA BOX */
-  .formula { background:linear-gradient(90deg,#dbeafe,#eff6ff); border-left:4px solid var(--blue-500); border-radius:0 var(--radius-md) var(--radius-md) 0; padding:.7rem 1.1rem; font-family:'Baloo 2',cursive; font-weight:800; font-size:1.05rem; color:var(--blue-700); margin:.7rem 0; }
-
-  /* TABLE */
-  .tbl-wrap { overflow-x:auto; margin:.8rem 0; border-radius:var(--radius-md); border:1.5px solid var(--glass-border); }
-  table { width:100%; border-collapse:collapse; font-size:.88rem; }
-  th { background:linear-gradient(90deg,var(--blue-500),var(--blue-600)); color:#fff; font-weight:800; padding:.55rem .9rem; text-align:left; font-family:'Baloo 2',cursive; font-size:.85rem; letter-spacing:.03em; }
-  td { padding:.5rem .9rem; border-bottom:1px solid rgba(191,219,254,.5); color:#1e3a5f; font-weight:600; }
-  tr:last-child td { border-bottom:none; }
-  tr:nth-child(even) td { background:rgba(219,234,254,.3); }
-  td .tag { display:inline-block; background:var(--blue-100); color:var(--blue-700); border-radius:99px; padding:.1rem .5rem; font-size:.75rem; font-weight:700; margin-left:.3rem; }
-
-  /* EXAMPLES */
-  .examples { list-style:none; display:flex; flex-direction:column; gap:.5rem; margin:.7rem 0; }
-  .examples li { background:rgba(219,234,254,0.4); border-radius:var(--radius-md); padding:.6rem 1rem; font-size:.92rem; font-weight:600; color:#1e3a5f; display:flex; align-items:flex-start; gap:.6rem; }
-  .examples li::before { content:'✦'; color:var(--blue-400); font-size:.7rem; margin-top:.25rem; flex-shrink:0; }
-  .ex-tr { font-size:.78rem; color:#64748b; font-weight:600; font-style:italic; margin-left:.3rem; }
-
-  /* STEPS */
-  .steps { display:grid; gap:.8rem; margin:.8rem 0; }
-  .step { display:flex; gap:.9rem; align-items:flex-start; background:rgba(219,234,254,.35); border-radius:var(--radius-md); padding:.8rem 1rem; }
-  .step-num { min-width:32px; height:32px; background:linear-gradient(135deg,var(--blue-400),var(--blue-600)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Baloo 2',cursive; font-weight:800; font-size:.9rem; color:#fff; box-shadow:0 2px 8px rgba(37,99,235,.25); }
-  .step-body strong { display:block; font-size:.95rem; color:var(--blue-700); font-weight:800; }
-  .step-body span { font-size:.85rem; color:#334155; }
-  .step-body .tip { font-size:.78rem; color:#2563eb; background:#eff6ff; border-radius:6px; padding:.2rem .5rem; margin-top:.3rem; display:inline-block; font-weight:700; }
-
-  /* QUIZ */
-  .quiz-section { margin-top:1.4rem; }
-  .quiz-section h3 { font-family:'Baloo 2',cursive; font-weight:800; font-size:1rem; color:var(--blue-700); margin-bottom:.8rem; display:flex; align-items:center; gap:.4rem; }
-  .quiz-q { background:rgba(239,246,255,.8); border:1.5px solid rgba(191,219,254,.7); border-radius:var(--radius-lg); padding:1rem 1.2rem; margin-bottom:.9rem; }
-  .quiz-q p { font-size:.93rem; font-weight:700; color:#1e3a5f; margin-bottom:.7rem; }
-  .quiz-opts { display:flex; flex-direction:column; gap:.45rem; }
-  .quiz-opt { background:#fff; border:1.5px solid rgba(191,219,254,.8); border-radius:var(--radius-md); padding:.55rem .9rem; font-size:.87rem; font-weight:600; cursor:pointer; transition:all .18s; color:#1e3a5f; display:flex; align-items:center; gap:.6rem; }
-  .quiz-opt:hover { border-color:var(--blue-400); background:#eff6ff; }
-  .quiz-opt.correct { background:linear-gradient(90deg,#dcfce7,#f0fdf4); border-color:#22c55e; color:#166534; }
-  .quiz-opt.wrong   { background:linear-gradient(90deg,#fef2f2,#fff5f5); border-color:#ef4444; color:#991b1b; }
-  .quiz-opt.disabled { pointer-events:none; }
-  .quiz-fb { margin-top:.6rem; font-size:.82rem; font-weight:700; padding:.4rem .8rem; border-radius:var(--radius-md); display:none; }
-  .quiz-fb.show { display:block; }
-  .quiz-fb.ok  { background:#dcfce7; color:#166534; }
-  .quiz-fb.err { background:#fef2f2; color:#991b1b; }
-  .quiz-open { background:rgba(239,246,255,.8); border:1.5px solid rgba(191,219,254,.7); border-radius:var(--radius-lg); padding:1rem 1.2rem; margin-bottom:.9rem; }
-  .quiz-open p { font-size:.93rem; font-weight:700; color:#1e3a5f; margin-bottom:.5rem; }
-  .open-answer { background:#fff; border:1.5px solid #bfdbfe; border-radius:var(--radius-md); padding:.6rem .9rem; font-size:.88rem; color:#166534; font-weight:700; margin-top:.4rem; display:none; cursor:pointer; }
-  .btn-show { background:var(--blue-500); color:#fff; border:none; border-radius:var(--radius-md); padding:.45rem 1rem; font-size:.82rem; font-weight:800; cursor:pointer; transition:background .18s; }
-  .btn-show:hover { background:var(--blue-600); }
-
-  /* EXERCISE */
-  .exercise { background:rgba(224,242,254,.5); border:1.5px solid rgba(147,197,253,.5); border-radius:var(--radius-lg); padding:1rem 1.2rem; margin-top:.9rem; }
-  .exercise h4 { font-family:'Baloo 2',cursive; font-weight:800; font-size:.95rem; color:var(--blue-700); margin-bottom:.7rem; }
-  .fill-q { display:flex; align-items:center; flex-wrap:wrap; gap:.35rem; margin-bottom:.6rem; font-size:.9rem; font-weight:600; color:#1e3a5f; }
-  .fill-input { border:none; border-bottom:2px solid var(--blue-400); background:transparent; font-family:'Nunito',sans-serif; font-size:.9rem; font-weight:700; color:var(--blue-700); width:90px; outline:none; text-align:center; padding:.1rem .2rem; }
-  .fill-input.ok  { border-color:#22c55e; color:#166534; }
-  .fill-input.err { border-color:#ef4444; color:#991b1b; }
-  .btn-check-all { background:linear-gradient(90deg,var(--blue-500),var(--blue-600)); color:#fff; border:none; border-radius:var(--radius-md); padding:.5rem 1.2rem; font-size:.85rem; font-weight:800; cursor:pointer; margin-top:.7rem; }
-  .btn-check-all:hover { filter:brightness(1.1); }
-
-  /* PILL TAGS */
-  .pill { display:inline-block; border-radius:99px; padding:.2rem .7rem; font-size:.76rem; font-weight:800; margin:.15rem; }
-  .pill-blue   { background:#dbeafe; color:#1d4ed8; }
-  .pill-green  { background:#dcfce7; color:#166534; }
-  .pill-purple { background:#ede9fe; color:#5b21b6; }
-  .pill-orange { background:#ffedd5; color:#c2410c; }
-  .pill-pink   { background:#fce7f3; color:#9d174d; }
-
-  /* MEMORY CARD */
-  .memory-box { background:linear-gradient(135deg,#fef9c3,#fef3c7); border:1.5px solid #fde68a; border-radius:var(--radius-lg); padding:1rem 1.2rem; margin:.8rem 0; display:flex; gap:.8rem; align-items:flex-start; }
-  .memory-box .emoji { font-size:1.6rem; }
-  .memory-box strong { display:block; font-size:.82rem; font-weight:800; color:#92400e; text-transform:uppercase; letter-spacing:.05em; margin-bottom:.2rem; }
-  .memory-box p { font-size:.88rem; color:#78350f; font-weight:600; }
-
-  /* COMPARISON */
-  .compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; margin:.8rem 0; }
-  @media(max-width:500px){ .compare-grid { grid-template-columns:1fr; } }
-  .compare-card { border-radius:var(--radius-md); padding:.9rem 1rem; }
-  .compare-card.a { background:linear-gradient(135deg,#ede9fe,#ddd6fe); border:1.5px solid #c4b5fd; }
-  .compare-card.b { background:linear-gradient(135deg,#dcfce7,#d1fae5); border:1.5px solid #86efac; }
-  .compare-card strong { display:block; font-size:.78rem; font-weight:800; text-transform:uppercase; letter-spacing:.05em; margin-bottom:.4rem; }
-  .compare-card.a strong { color:#5b21b6; }
-  .compare-card.b strong { color:#166534; }
-  .compare-card span { font-size:.88rem; font-weight:600; }
-
-  /* TIMELINE */
-  .timeline { display:flex; align-items:center; gap:.3rem; margin:.8rem 0; flex-wrap:wrap; }
-  .tl-node { background:linear-gradient(135deg,var(--blue-400),var(--blue-600)); color:#fff; border-radius:var(--radius-md); padding:.45rem .9rem; font-size:.82rem; font-weight:800; white-space:nowrap; }
-  .tl-arrow { color:var(--blue-400); font-size:1.2rem; font-weight:900; }
-  .tl-label { font-size:.72rem; color:#64748b; font-weight:700; }
-
-  /* CHARACTERS */
-  .chars-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:.8rem; margin:.8rem 0; }
-  .char-card { background:rgba(219,234,254,.4); border:1.5px solid rgba(191,219,254,.7); border-radius:var(--radius-lg); padding:.9rem 1rem; text-align:center; }
-  .char-avatar { font-size:2rem; margin-bottom:.4rem; }
-  .char-name { font-family:'Baloo 2',cursive; font-weight:800; font-size:1rem; color:var(--blue-700); }
-  .char-tags { margin-top:.4rem; }
-
-  /* SUMMARY RIBBON */
-  .summary-ribbon { max-width:860px; margin:2rem auto; padding:0 1rem; position:relative; z-index:1; }
-  .ribbon-card { background:linear-gradient(135deg,var(--blue-600),var(--blue-700)); border-radius:var(--radius-xl); padding:1.8rem 2rem; color:#fff; box-shadow:0 8px 32px rgba(37,99,235,.25); }
-  .ribbon-card h2 { font-family:'Baloo 2',cursive; font-weight:800; font-size:1.3rem; margin-bottom:1rem; display:flex; align-items:center; gap:.5rem; }
-  .ribbon-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; }
-  .ribbon-unit { background:rgba(255,255,255,.12); border-radius:var(--radius-md); padding:.9rem 1.1rem; border:1px solid rgba(255,255,255,.2); }
-  .ribbon-unit strong { display:block; font-size:.82rem; font-weight:800; opacity:.85; margin-bottom:.4rem; text-transform:uppercase; letter-spacing:.04em; }
-  .ribbon-unit ul { list-style:none; display:flex; flex-direction:column; gap:.25rem; }
-  .ribbon-unit li { font-size:.85rem; font-weight:600; display:flex; align-items:flex-start; gap:.4rem; opacity:.92; }
-  .ribbon-unit li::before { content:'✓'; font-size:.7rem; margin-top:.18rem; opacity:.8; flex-shrink:0; }
-
-  /* FOOTER */
-  footer { text-align:center; padding:2.5rem 1rem 3rem; position:relative; z-index:1; }
-  footer p { font-size:.82rem; color:#64748b; font-weight:600; }
-
-  /* SCORE MODAL */
-  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:999; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
-  .modal-overlay.show { display:flex; }
-  .modal-box { background:#fff; border-radius:var(--radius-xl); padding:2.5rem; max-width:360px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,.2); animation:pop .3s cubic-bezier(.34,1.56,.64,1); }
-  @keyframes pop { from{transform:scale(.7);opacity:0} to{transform:scale(1);opacity:1} }
-  .modal-emoji { font-size:3.5rem; margin-bottom:.8rem; }
-  .modal-title { font-family:'Baloo 2',cursive; font-weight:800; font-size:1.5rem; color:var(--blue-700); margin-bottom:.4rem; }
-  .modal-score { font-size:2.5rem; font-weight:900; color:var(--blue-600); margin:.5rem 0; }
-  .modal-msg { font-size:.95rem; color:#64748b; font-weight:600; margin-bottom:1.2rem; }
-  .btn-close-modal { background:linear-gradient(90deg,var(--blue-500),var(--blue-600)); color:#fff; border:none; border-radius:99px; padding:.6rem 1.8rem; font-size:.95rem; font-weight:800; cursor:pointer; }
 </style>
 </head>
 <body>
+<div class="confetti-container" id="confettiContainer"></div>
 
-<!-- HEADER -->
-<header>
+<header style="position:sticky;">
   <div class="logo">
-    <div class="logo-icon">📘</div>
-    <div>
-      <div class="logo-text">ELA · Year 5</div>
-      <div class="logo-sub">Maple Bear Maceió</div>
+    <div style="width:38px;height:38px;background:linear-gradient(135deg,var(--orange-400),var(--orange-600));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 4px 12px rgba(234,88,12,0.25);">📘</div>
+    <div style="margin-left:10px;">
+      <div class="logo-text">MapleBear Y5</div>
+      <div class="logo-sub">ELA · Recuperação · Abril &amp; Maio</div>
     </div>
   </div>
   <div class="progress-bar-wrap">
-    <div class="progress-label">Progresso do Quiz</div>
+    <div class="progress-label">Progresso · Progress</div>
     <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
   </div>
   <div class="score-badge">⭐ <span id="scoreDisplay">0</span> pts</div>
 </header>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-badge">📚 Recuperação · Abril &amp; Maio</div>
-  <h1>E.L.A — Recuperação</h1>
-  <p>English Language and Arts · Year 5 · Maple Bear Maceió</p>
+<div class="hero">
+  <div class="hero-badge">📚 Recuperação · Abril &amp; Maio · ELA Y5</div>
+  <h1>E.L.A — Recuperação<br><span style="font-size:.65em;color:var(--orange-500);">English Language and Arts · Year 5</span></h1>
+  <p>Maple Bear Maceió · Units 1, 2 &amp; 3 · 10 Materiais de Pesquisa</p>
   <div class="hero-meta">
     <span class="meta-chip">🏫 Units 1, 2 &amp; 3</span>
     <span class="meta-chip">📖 10 Materiais</span>
     <span class="meta-chip">✏️ Quizzes Interativos</span>
     <span class="meta-chip">🏆 Pontuação</span>
   </div>
-</section>
-
-<!-- STUDY GUIDE -->
-<div class="study-guide">
-  <div class="guide-card">
-    <h2>🗺️ Roteiro de Estudos — Como Usar Este Material</h2>
-    <div class="guide-grid">
-      <div class="guide-item">
-        <strong>📖 Unit 1</strong>
-        <span>Research Material 1, 2 e 3 — Irregular Verbs, Past Perfect &amp; Present Continuous</span>
-      </div>
-      <div class="guide-item">
-        <strong>✍️ Unit 2</strong>
-        <span>Research Material 4, 5, 6 e 7 — Writing Process, Linking Verbs, Verbals &amp; Tales of 4th Grade Nothing</span>
-      </div>
-      <div class="guide-item">
-        <strong>📚 Unit 3</strong>
-        <span>Research Material 8, 9 e 10 — Adjectives, Comparatives/Superlatives &amp; Adverbs of Manner</span>
-      </div>
-      <div class="guide-item">
-        <strong>💡 Dicas de Estudo</strong>
-        <span>Responda os quizzes, anote as respostas nas Cornell Notes e leia no Kids A-Z.</span>
-      </div>
-    </div>
-  </div>
 </div>
 
-<!-- NAV -->
-<nav class="section-nav" aria-label="Navegação por unidade">
-  <a href="#unit1" class="nav-dot">Unit 1</a>
-  <a href="#unit2" class="nav-dot">Unit 2</a>
-  <a href="#unit3" class="nav-dot">Unit 3</a>
-  <a href="#summary" class="nav-dot">Resumo</a>
-</nav>
-
-<!-- ═══════════════════════ UNIT 1 ═══════════════════════ -->
-<div class="unit-divider" id="unit1">
-  <div class="unit-label">
-    <span>🏫 Unit 1</span>
-    <small>Building a Classroom Community · ELA 1, 2, 3</small>
-  </div>
+<!-- NAV DOTS -->
+<div class="section-nav" id="sectionNav">
+  <div class="nav-dot active" data-section="0" title="ELA 1 — Irregular Verbs">1</div>
+  <div class="nav-dot" data-section="1" title="ELA 2 — Past Perfect">2</div>
+  <div class="nav-dot" data-section="2" title="ELA 3 — Present Continuous">3</div>
+  <div class="nav-dot" data-section="3" title="ELA 4 — Writing Process">4</div>
+  <div class="nav-dot" data-section="4" title="ELA 5 — Linking Verbs">5</div>
+  <div class="nav-dot" data-section="5" title="ELA 6 — Verbs &amp; Verbals">6</div>
+  <div class="nav-dot" data-section="6" title="ELA 7 — Tales 4th Grade Nothing">7</div>
+  <div class="nav-dot" data-section="7" title="ELA 8 — Adjectives &amp; Personality">8</div>
+  <div class="nav-dot" data-section="8" title="ELA 9 — Comparatives &amp; Superlatives">9</div>
+  <div class="nav-dot" data-section="9" title="ELA 10 — Adverbs of Manner">10</div>
 </div>
-<div class="cards-grid">
 
-  <!-- ELA_1 · Irregular Verbs -->
-  <div class="card" id="ela1">
-    <div class="card-header">
-      <div class="card-icon purple">📝</div>
+<!-- UNIT 1 -->
+<div class="unit-divider reveal" id="ud0">
+  <div class="unit-label"><span>🏫 Unit 1: Building a Classroom Community</span><small>ELA 1, 2 &amp; 3</small></div>
+</div>
+
+<!-- SEC 0 — ELA 1 -->
+<div class="lesson-section reveal" id="sec0">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon purple">📝</div>
       <div>
-        <div class="card-title">ELA 1 · Irregular Verbs</div>
-        <div class="card-sub">Unit 1 · Building a Classroom Community</div>
+        <div class="section-subtitle">ELA 1 · Seção 1 of 10</div>
+        <div class="section-title">Irregular Verbs · Verbos Irregulares</div>
       </div>
     </div>
-
-    <div class="def-box">
-      <div class="label">📌 Definição</div>
+    <div class="section-body">
       <p>Irregular verbs are verbs that do <strong>NOT</strong> follow the regular rule when changed to the past. Regular verbs simply add <strong>-ed</strong>; irregular verbs change in their own unique way.</p>
-    </div>
-
-    <div class="pt-tip">🇧🇷 Em português: verbos irregulares mudam de forma diferente no passado, assim como em inglês — eles simplesmente precisam ser memorizados!</div>
-
-    <div class="compare-grid">
-      <div class="compare-card a">
-        <strong>✅ Regular Verbs (add -ed)</strong>
-        <span>play → <b>played</b><br>walk → <b>walked</b><br>jump → <b>jumped</b></span>
-      </div>
-      <div class="compare-card b">
-        <strong>⚡ Irregular Verbs (own rule)</strong>
-        <span>go → <b>went</b><br>eat → <b>ate</b><br>see → <b>saw</b></span>
-      </div>
-    </div>
-
-    <div class="memory-box">
-      <div class="emoji">🧠</div>
-      <div>
-        <strong>Dica de Memória</strong>
-        <p>Alguns verbos irregulares são "unchanging" — ficam iguais nas 3 formas: <b>cut→cut→cut</b>, <b>put→put→put</b>, <b>cost→cost→cost</b>.</p>
-      </div>
-    </div>
-
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Base Form</th><th>Simple Past</th><th>Past Participle</th></tr></thead>
-        <tbody>
-          <tr><td>be</td><td>was / were</td><td>been</td></tr>
-          <tr><td>begin</td><td>began</td><td>begun</td></tr>
-          <tr><td>break</td><td>broke</td><td>broken</td></tr>
-          <tr><td>bring</td><td>brought</td><td>brought</td></tr>
-          <tr><td>build</td><td>built</td><td>built</td></tr>
-          <tr><td>buy</td><td>bought</td><td>bought</td></tr>
-          <tr><td>catch</td><td>caught</td><td>caught</td></tr>
-          <tr><td>choose</td><td>chose</td><td>chosen</td></tr>
-          <tr><td>come</td><td>came</td><td>come</td></tr>
-          <tr><td>cut</td><td>cut <span class="tag">✦ same</span></td><td>cut</td></tr>
-          <tr><td>do</td><td>did</td><td>done</td></tr>
-          <tr><td>draw</td><td>drew</td><td>drawn</td></tr>
-          <tr><td>eat</td><td>ate</td><td>eaten</td></tr>
-          <tr><td>go</td><td>went</td><td>gone</td></tr>
-          <tr><td>keep</td><td>kept</td><td>kept</td></tr>
-          <tr><td>know</td><td>knew</td><td>known</td></tr>
-          <tr><td>leave</td><td>left</td><td>left</td></tr>
-          <tr><td>lose</td><td>lost</td><td>lost</td></tr>
-          <tr><td>make</td><td>made</td><td>made</td></tr>
-          <tr><td>put</td><td>put <span class="tag">✦ same</span></td><td>put</td></tr>
-          <tr><td>read</td><td>read <span class="tag">✦ same</span></td><td>read</td></tr>
-          <tr><td>ride</td><td>rode</td><td>ridden</td></tr>
-          <tr><td>run</td><td>ran</td><td>run</td></tr>
-          <tr><td>say</td><td>said</td><td>said</td></tr>
-          <tr><td>see</td><td>saw</td><td>seen</td></tr>
-          <tr><td>sell</td><td>sold</td><td>sold</td></tr>
-          <tr><td>send</td><td>sent</td><td>sent</td></tr>
-          <tr><td>write</td><td>wrote</td><td>written</td></tr>
-          <tr><td>think</td><td>thought</td><td>thought</td></tr>
-          <tr><td>take</td><td>took</td><td>taken</td></tr>
-          <tr><td>give</td><td>gave</td><td>given</td></tr>
-          <tr><td>find</td><td>found</td><td>found</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <ul class="examples">
-      <li>Yesterday, I <b>went</b> to school early.</li>
-      <li>She <b>ate</b> her breakfast before class.</li>
-      <li>We <b>saw</b> a funny movie last night.</li>
-      <li>He <b>broke</b> his pencil during the test.</li>
-      <li>They <b>built</b> a sandcastle at the beach.</li>
-    </ul>
-
-    <!-- QUIZ ELA1 -->
-    <div class="quiz-section">
-      <h3>🎯 Quiz — Irregular Verbs</h3>
-
-      <div class="quiz-q" data-correct="b">
-        <p>1. What is the simple past of <b>"go"</b>?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) goed</div>
-          <div class="quiz-opt" data-opt="b">b) went</div>
-          <div class="quiz-opt" data-opt="c">c) gone</div>
-          <div class="quiz-opt" data-opt="d">d) going</div>
-        </div>
-        <div class="quiz-fb">✅ Correto! "go" → <b>went</b> (simple past) → gone (past participle)</div>
-      </div>
-
-      <div class="quiz-q" data-correct="c">
-        <p>2. Which verb is <b>regular</b>?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) run</div>
-          <div class="quiz-opt" data-opt="b">b) eat</div>
-          <div class="quiz-opt" data-opt="c">c) play</div>
-          <div class="quiz-opt" data-opt="d">d) break</div>
-        </div>
-        <div class="quiz-fb">✅ Correto! "play" é regular → <b>played</b>. Os outros são irregulares.</div>
-      </div>
-
-      <div class="quiz-q" data-correct="b">
-        <p>3. What is the <b>past participle</b> of "break"?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) broke</div>
-          <div class="quiz-opt" data-opt="b">b) broken</div>
-          <div class="quiz-opt" data-opt="c">c) breaked</div>
-          <div class="quiz-opt" data-opt="d">d) broked</div>
-        </div>
-        <div class="quiz-fb">✅ break → broke (past) → <b>broken</b> (past participle)!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="b">
-        <p>4. Choose the <b>correct</b> sentence:</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) She buyed a new book.</div>
-          <div class="quiz-opt" data-opt="b">b) She bought a new book.</div>
-          <div class="quiz-opt" data-opt="c">c) She buyed new book.</div>
-          <div class="quiz-opt" data-opt="d">d) She buy a new book.</div>
-        </div>
-        <div class="quiz-fb">✅ "buy" é irregular → <b>bought</b>. Nunca "buyed"!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="c">
-        <p>5. What is the simple past of <b>"know"</b>?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) knowed</div>
-          <div class="quiz-opt" data-opt="b">b) known</div>
-          <div class="quiz-opt" data-opt="c">c) knew</div>
-          <div class="quiz-opt" data-opt="d">d) knews</div>
-        </div>
-        <div class="quiz-fb">✅ know → <b>knew</b> (past) → known (past participle)!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="a">
-        <p>6. What is the simple past of <b>"write"</b>?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) wrote</div>
-          <div class="quiz-opt" data-opt="b">b) writed</div>
-          <div class="quiz-opt" data-opt="c">c) written</div>
-          <div class="quiz-opt" data-opt="d">d) writ</div>
-        </div>
-        <div class="quiz-fb">✅ write → <b>wrote</b> (simple past) → written (past participle)!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="d">
-        <p>7. Which verbs are <b>"unchanging"</b> irregular verbs (all three forms are the same)?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) go, eat, see</div>
-          <div class="quiz-opt" data-opt="b">b) break, make, run</div>
-          <div class="quiz-opt" data-opt="c">c) know, draw, give</div>
-          <div class="quiz-opt" data-opt="d">d) cut, put, read</div>
-        </div>
-        <div class="quiz-fb">✅ <b>cut→cut→cut</b>, <b>put→put→put</b>, <b>read→read→read</b> são iguais nas 3 formas!</div>
-      </div>
-    </div>
-
-    <!-- EXERCISE ELA1 -->
-    <div class="exercise">
-      <h4>✏️ Exercício — Complete com o Simple Past</h4>
-      <div class="fill-q">Yesterday, I <input class="fill-input" data-ans="ate" placeholder="eat"> a sandwich for lunch.</div>
-      <div class="fill-q">She <input class="fill-input" data-ans="ran" placeholder="run"> very fast at the race.</div>
-      <div class="fill-q">We <input class="fill-input" data-ans="saw" placeholder="see"> a rainbow after the rain.</div>
-      <div class="fill-q">He <input class="fill-input" data-ans="made" placeholder="make"> a delicious cake.</div>
-      <div class="fill-q">They <input class="fill-input" data-ans="came" placeholder="come"> to the party early.</div>
-      <div class="fill-q">She <input class="fill-input" data-ans="wrote" placeholder="write"> a beautiful story.</div>
-      <button class="btn-check-all" onclick="checkFills(this)">Verificar Respostas ✓</button>
-    </div>
-  </div>
-
-  <!-- ELA_2 · Past Perfect -->
-  <div class="card" id="ela2">
-    <div class="card-header">
-      <div class="card-icon green">⏪</div>
-      <div>
-        <div class="card-title">ELA 2 · Past Perfect</div>
-        <div class="card-sub">Unit 1 · Building a Classroom Community</div>
-      </div>
-    </div>
-
-    <div class="def-box">
-      <div class="label">📌 Definição</div>
-      <p>We use <strong>HAD + past participle</strong> to talk about something that happened <strong>BEFORE</strong> another action in the past. This is called Past Perfect.</p>
-    </div>
-
-    <div class="formula">Subject + <b>HAD</b> + past participle</div>
-
-    <div class="pt-tip">🇧🇷 Em português equivale ao <b>Pretérito Mais-que-perfeito</b>: "Eu <u>já tinha comido</u> quando ela chegou."</div>
-
-    <div class="timeline">
-      <div class="tl-node">HAD + participle</div>
-      <div class="tl-arrow">→</div>
-      <div class="tl-node">Simple Past</div>
-      <div class="tl-arrow">→</div>
-      <div class="tl-node">NOW</div>
-    </div>
-    <p style="font-size:.8rem;color:#64748b;font-weight:600;margin:.3rem 0 .8rem;">A ação com HAD acontece PRIMEIRO. A ação no simple past acontece DEPOIS.</p>
-
-    <div class="memory-box">
-      <div class="emoji">💡</div>
-      <div>
-        <strong>Como Lembrar</strong>
-        <p>Pense em uma linha do tempo: <b>Past Perfect (HAD)</b> fica ANTES do <b>Simple Past</b>. O que veio primeiro usa HAD!</p>
-      </div>
-    </div>
-
-    <ul class="examples">
-      <li>I <b>had eaten</b> before I went to school. <span class="ex-tr">(comi primeiro, depois fui)</span></li>
-      <li>She <b>had finished</b> her homework before dinner. <span class="ex-tr">(ela terminou antes do jantar)</span></li>
-      <li>We <b>had studied</b> all night before the exam. <span class="ex-tr">(estudamos antes da prova)</span></li>
-      <li>He <b>had gone</b> home before it rained. <span class="ex-tr">(foi para casa antes de chover)</span></li>
-      <li>By the time the teacher arrived, students <b>had finished</b> the test.</li>
-    </ul>
-
-    <div class="quiz-section">
-      <h3>🎯 Quiz — Past Perfect</h3>
-
-      <div class="quiz-q" data-correct="b">
-        <p>1. What structure is used for <b>Past Perfect</b>?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) have + past participle</div>
-          <div class="quiz-opt" data-opt="b">b) had + past participle</div>
-          <div class="quiz-opt" data-opt="c">c) was + verb + ing</div>
-          <div class="quiz-opt" data-opt="d">d) will + verb</div>
-        </div>
-        <div class="quiz-fb">✅ Past Perfect = <b>HAD + past participle</b>!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="b">
-        <p>2. Choose the correct <b>Past Perfect</b> sentence:</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) She has eaten before he arrived.</div>
-          <div class="quiz-opt" data-opt="b">b) She had eaten before he arrived.</div>
-          <div class="quiz-opt" data-opt="c">c) She have eaten before he arrived.</div>
-          <div class="quiz-opt" data-opt="d">d) She eating before he arrived.</div>
-        </div>
-        <div class="quiz-fb">✅ <b>had eaten</b> — Past Perfect correto!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="b">
-        <p>3. In "He <b>had gone</b> home before it rained", which action happened <b>FIRST</b>?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) It rained</div>
-          <div class="quiz-opt" data-opt="b">b) He went home</div>
-          <div class="quiz-opt" data-opt="c">c) Both at the same time</div>
-          <div class="quiz-opt" data-opt="d">d) None of the above</div>
-        </div>
-        <div class="quiz-fb">✅ <b>He had gone home</b> — o Past Perfect indica a ação que veio PRIMEIRO!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="c">
-        <p>4. What is the <b>past participle</b> of "study"?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) studyed</div>
-          <div class="quiz-opt" data-opt="b">b) studying</div>
-          <div class="quiz-opt" data-opt="c">c) studied</div>
-          <div class="quiz-opt" data-opt="d">d) studyied</div>
-        </div>
-        <div class="quiz-fb">✅ study → <b>studied</b> (regular verb: -y vira -ied)!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="a">
-        <p>5. Complete: "By the time she arrived, I _____ (finish) the homework."</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) had finished</div>
-          <div class="quiz-opt" data-opt="b">b) finished</div>
-          <div class="quiz-opt" data-opt="c">c) have finished</div>
-          <div class="quiz-opt" data-opt="d">d) was finishing</div>
-        </div>
-        <div class="quiz-fb">✅ <b>had finished</b> — aconteceu ANTES dela chegar, então usa Past Perfect!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="c">
-        <p>6. Which sentence is <b>NOT</b> in Past Perfect?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) She had read the book before the test.</div>
-          <div class="quiz-opt" data-opt="b">b) They had left when I arrived.</div>
-          <div class="quiz-opt" data-opt="c">c) He was eating dinner.</div>
-          <div class="quiz-opt" data-opt="d">d) We had studied before the exam.</div>
-        </div>
-        <div class="quiz-fb">✅ <b>"He was eating"</b> é Past Continuous, não Past Perfect!</div>
-      </div>
-    </div>
-
-    <div class="exercise">
-      <h4>✏️ Exercício — Complete com Past Perfect (had + participle)</h4>
-      <div class="fill-q">By the time the teacher arrived, the students <input class="fill-input" data-ans="had finished" placeholder="finish" style="width:130px"> the test.</div>
-      <div class="fill-q">She <input class="fill-input" data-ans="had eaten" placeholder="eat" style="width:110px"> dinner before she watched TV.</div>
-      <div class="fill-q">We <input class="fill-input" data-ans="had studied" placeholder="study" style="width:120px"> all night before the exam.</div>
-      <button class="btn-check-all" onclick="checkFills(this)">Verificar Respostas ✓</button>
-    </div>
-  </div>
-
-  <!-- ELA_3 · Present Continuous -->
-  <div class="card" id="ela3">
-    <div class="card-header">
-      <div class="card-icon blue">▶️</div>
-      <div>
-        <div class="card-title">ELA 3 · Present Continuous</div>
-        <div class="card-sub">Unit 1 · Building a Classroom Community</div>
-      </div>
-    </div>
-
-    <div class="def-box">
-      <div class="label">📌 Definição</div>
-      <p>The Present Continuous is used to talk about things happening <strong>NOW</strong>, at this exact moment.</p>
-    </div>
-
-    <div class="formula">Subject + <b>am / is / are</b> + verb + <b>-ING</b></div>
-
-    <div class="pt-tip">🇧🇷 Em português: corresponde ao gerúndio — "Eu <b>estou lendo</b>", "Ela <b>está escrevendo</b>".</div>
-
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Subject</th><th>To Be</th><th>Example</th></tr></thead>
-        <tbody>
-          <tr><td>I</td><td><b>am</b></td><td>I <b>am reading</b> a book.</td></tr>
-          <tr><td>He / She / It</td><td><b>is</b></td><td>She <b>is writing</b> a paragraph.</td></tr>
-          <tr><td>You / We / They</td><td><b>are</b></td><td>They <b>are playing</b> soccer.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Regra para -ING</th><th>Exemplo</th></tr></thead>
-        <tbody>
-          <tr><td>Most verbs: add -ing</td><td>play → <b>playing</b>, read → <b>reading</b></td></tr>
-          <tr><td>Ends in -e: remove -e + ing</td><td>write → <b>writing</b>, ride → <b>riding</b></td></tr>
-          <tr><td>CVC short verb: double last consonant</td><td>run → <b>running</b>, sit → <b>sitting</b></td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="memory-box">
-      <div class="emoji">🧠</div>
-      <div>
-        <strong>Dica CVC</strong>
-        <p>CVC = Consoante + Vogal + Consoante. Ex: r-u-n. Se termina nesse padrão e é curto → dobra a última letra! <b>run→running</b>, <b>sit→sitting</b>, <b>swim→swimming</b>.</p>
-      </div>
-    </div>
-
-    <div class="quiz-section">
-      <h3>🎯 Quiz — Present Continuous</h3>
-
-      <div class="quiz-q" data-correct="b">
-        <p>1. What is the correct structure for <b>Present Continuous</b>?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) Subject + verb + ed</div>
-          <div class="quiz-opt" data-opt="b">b) Subject + am/is/are + verb + ing</div>
-          <div class="quiz-opt" data-opt="c">c) Subject + had + past participle</div>
-          <div class="quiz-opt" data-opt="d">d) Subject + will + verb</div>
-        </div>
-        <div class="quiz-fb">✅ <b>am/is/are + verb-ing</b>!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="c">
-        <p>2. Which sentence is in <b>Present Continuous</b>?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) She reads every day.</div>
-          <div class="quiz-opt" data-opt="b">b) She was reading yesterday.</div>
-          <div class="quiz-opt" data-opt="c">c) She is reading right now.</div>
-          <div class="quiz-opt" data-opt="d">d) She read a book last week.</div>
-        </div>
-        <div class="quiz-fb">✅ <b>She is reading right now</b> — "right now" indica o momento presente!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="c">
-        <p>3. What is the correct <b>-ING</b> form of "write"?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) writeing</div>
-          <div class="quiz-opt" data-opt="b">b) writting</div>
-          <div class="quiz-opt" data-opt="c">c) writing</div>
-          <div class="quiz-opt" data-opt="d">d) writ</div>
-        </div>
-        <div class="quiz-fb">✅ write termina em -e → remove o -e → <b>writing</b>!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="b">
-        <p>4. Complete: "They _____ soccer right now."</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) plays</div>
-          <div class="quiz-opt" data-opt="b">b) are playing</div>
-          <div class="quiz-opt" data-opt="c">c) played</div>
-          <div class="quiz-opt" data-opt="d">d) is playing</div>
-        </div>
-        <div class="quiz-fb">✅ They → <b>are playing</b>!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="a">
-        <p>5. What is the correct -ING form of "run"?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) running</div>
-          <div class="quiz-opt" data-opt="b">b) runing</div>
-          <div class="quiz-opt" data-opt="c">c) runned</div>
-          <div class="quiz-opt" data-opt="d">d) runs</div>
-        </div>
-        <div class="quiz-fb">✅ run (CVC: r-u-n) → dobra o N → <b>running</b>!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="b">
-        <p>6. Complete: "He _____ his homework right now." (do)</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) does doing</div>
-          <div class="quiz-opt" data-opt="b">b) is doing</div>
-          <div class="quiz-opt" data-opt="c">c) are doing</div>
-          <div class="quiz-opt" data-opt="d">d) am doing</div>
-        </div>
-        <div class="quiz-fb">✅ He → <b>is doing</b>!</div>
-      </div>
-    </div>
-
-    <div class="exercise">
-      <h4>✏️ Exercício — Transforme para o Present Continuous</h4>
-      <div class="fill-q">I read. → I <input class="fill-input" data-ans="am reading" placeholder="___" style="width:120px">.</div>
-      <div class="fill-q">She sings. → She <input class="fill-input" data-ans="is singing" placeholder="___" style="width:120px">.</div>
-      <div class="fill-q">They run. → They <input class="fill-input" data-ans="are running" placeholder="___" style="width:130px">.</div>
-      <div class="fill-q">He writes. → He <input class="fill-input" data-ans="is writing" placeholder="___" style="width:120px">.</div>
-      <button class="btn-check-all" onclick="checkFills(this)">Verificar Respostas ✓</button>
-    </div>
-  </div>
-
-</div><!-- /cards-grid unit1 -->
-
-<!-- ═══════════════════════ UNIT 2 ═══════════════════════ -->
-<div class="unit-divider" id="unit2">
-  <div class="unit-label">
-    <span>✍️ Unit 2</span>
-    <small>Establishing the Writing Process · ELA 4, 5, 6, 7</small>
-  </div>
-</div>
-<div class="cards-grid">
-
-  <!-- ELA_4 · Writing Process -->
-  <div class="card" id="ela4">
-    <div class="card-header">
-      <div class="card-icon orange">🖊️</div>
-      <div>
-        <div class="card-title">ELA 4 · The Writing Process</div>
-        <div class="card-sub">Unit 2 · Establishing the Writing Process</div>
-      </div>
-    </div>
-
-    <div class="def-box">
-      <div class="label">📌 Definição</div>
-      <p>The writing process is the <strong>5 steps</strong> we follow to write a good text. Good writers do NOT write everything at once — they write step by step.</p>
-    </div>
-
-    <div class="pt-tip">🇧🇷 É como construir uma casa: você planeja → levanta a estrutura → melhora os acabamentos → conserta erros → entrega!</div>
-
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <strong>Prewriting — Think &amp; Plan</strong>
-          <span>Brainstorm ideas, organize thoughts, use mind maps or lists.</span>
-          <span class="tip">💡 Dica: Antes de escrever, anote 3 ideias sobre o tema!</span>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <strong>Drafting — Write</strong>
-          <span>Write your first draft. Get ideas down. Don't worry about mistakes!</span>
-          <span class="tip">💡 Dica: Foque em colocar as ideias no papel. Erros serão corrigidos depois.</span>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <strong>Revising — Make it Better</strong>
-          <span>Improve ideas, add details, make text clearer and more interesting.</span>
-          <span class="tip">💡 Dica: Pergunte-se: "Faz sentido? Posso adicionar mais detalhes?"</span>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-body">
-          <strong>Editing — Fix Mistakes</strong>
-          <span>Check spelling, punctuation, and grammar errors.</span>
-          <span class="tip">💡 Dica: Leia devagar e verifique cada frase!</span>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">5</div>
-        <div class="step-body">
-          <strong>Publishing — Final Copy</strong>
-          <span>Write the final, clean copy and share your work with others.</span>
-          <span class="tip">💡 Dica: O texto final deve estar organizado e pronto para ser lido!</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="memory-box">
-      <div class="emoji">🔑</div>
-      <div>
-        <strong>Revising vs Editing — Diferença Importante!</strong>
-        <p><b>Revising</b> = melhorar as IDEIAS e o conteúdo.<br><b>Editing</b> = corrigir GRAMÁTICA, ORTOGRAFIA e PONTUAÇÃO.</p>
-      </div>
-    </div>
-
-    <div class="quiz-section">
-      <h3>🎯 Quiz — The Writing Process</h3>
-
-      <div class="quiz-q" data-correct="c">
-        <p>1. What is the <b>FIRST</b> step of the writing process?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) Drafting</div>
-          <div class="quiz-opt" data-opt="b">b) Editing</div>
-          <div class="quiz-opt" data-opt="c">c) Prewriting</div>
-          <div class="quiz-opt" data-opt="d">d) Publishing</div>
-        </div>
-        <div class="quiz-fb">✅ <b>Prewriting</b> — você pensa e planeja ANTES de escrever!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="b">
-        <p>2. During which step do you <b>fix spelling and grammar</b> mistakes?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) Revising</div>
-          <div class="quiz-opt" data-opt="b">b) Editing</div>
-          <div class="quiz-opt" data-opt="c">c) Drafting</div>
-          <div class="quiz-opt" data-opt="d">d) Publishing</div>
-        </div>
-        <div class="quiz-fb">✅ <b>Editing</b> = consertar erros de ortografia e gramática!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="d">
-        <p>3. What is the <b>LAST</b> step?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) Revising</div>
-          <div class="quiz-opt" data-opt="b">b) Drafting</div>
-          <div class="quiz-opt" data-opt="c">c) Editing</div>
-          <div class="quiz-opt" data-opt="d">d) Publishing</div>
-        </div>
-        <div class="quiz-fb">✅ <b>Publishing</b> — cópia final e compartilhamento!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="b">
-        <p>4. During <b>Revising</b>, what do you do?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) Fix spelling mistakes</div>
-          <div class="quiz-opt" data-opt="b">b) Improve ideas and add details</div>
-          <div class="quiz-opt" data-opt="c">c) Write the final copy</div>
-          <div class="quiz-opt" data-opt="d">d) Brainstorm new ideas</div>
-        </div>
-        <div class="quiz-fb">✅ Revising = melhorar as <b>ideias e o conteúdo</b>!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="a">
-        <p>5. In which step do you <b>brainstorm</b> and organize ideas?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) Prewriting</div>
-          <div class="quiz-opt" data-opt="b">b) Drafting</div>
-          <div class="quiz-opt" data-opt="c">c) Revising</div>
-          <div class="quiz-opt" data-opt="d">d) Editing</div>
-        </div>
-        <div class="quiz-fb">✅ <b>Prewriting</b> — pense e planeje antes de começar!</div>
-      </div>
-
-      <div class="quiz-open">
-        <p>6. What is the difference between <b>Revising</b> and <b>Editing</b>?</p>
-        <button class="btn-show" onclick="toggleOpen(this)">Ver Resposta</button>
-        <div class="open-answer">✅ <b>Revising</b> is about improving IDEAS and content (adding details, making it clearer). <b>Editing</b> is about fixing GRAMMAR, SPELLING, and PUNCTUATION mistakes.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ELA_5 · Linking Verbs -->
-  <div class="card" id="ela5">
-    <div class="card-header">
-      <div class="card-icon pink">🔗</div>
-      <div>
-        <div class="card-title">ELA 5 · Linking Verbs</div>
-        <div class="card-sub">Unit 2 · Establishing the Writing Process</div>
-      </div>
-    </div>
-
-    <div class="def-box">
-      <div class="label">📌 Definição</div>
-      <p>Linking verbs do <strong>NOT show action</strong>. They <strong>CONNECT (link)</strong> the subject to more information — usually an adjective or a noun.</p>
-    </div>
-
-    <div class="compare-grid">
-      <div class="compare-card a">
-        <strong>⚡ Action Verb</strong>
-        <span>She <b>RUNS</b> every day.<br><i>(shows action)</i></span>
-      </div>
-      <div class="compare-card b">
-        <strong>🔗 Linking Verb</strong>
-        <span>She <b>IS</b> happy.<br><i>(connects to adjective)</i></span>
-      </div>
-    </div>
-
-    <p style="font-weight:800;color:var(--blue-700);margin:.8rem 0 .4rem;font-size:.95rem;">Common Linking Verbs:</p>
-    <div>
-      <span class="pill pill-blue">am</span><span class="pill pill-blue">is</span><span class="pill pill-blue">are</span>
-      <span class="pill pill-blue">was</span><span class="pill pill-blue">were</span>
-      <span class="pill pill-purple">seem</span><span class="pill pill-purple">become</span>
-      <span class="pill pill-green">feel</span><span class="pill pill-green">look</span>
-      <span class="pill pill-orange">smell</span><span class="pill pill-orange">taste</span>
-      <span class="pill pill-pink">sound</span>
-    </div>
-
-    <ul class="examples" style="margin-top:.9rem">
-      <li>Peter <b>is</b> frustrated because his brother Fudge <b>is</b> very naughty.</li>
-      <li>Fudge <b>is</b> a funny boy, but he <b>is</b> very messy.</li>
-      <li>Peter <b>feels</b> angry when Fudge is in his room.</li>
-      <li>Fudge <b>becomes</b> quiet when he <b>is</b> sleepy.</li>
-      <li>The soup <b>smells</b> wonderful.</li>
-      <li>The flowers <b>look</b> beautiful.</li>
-    </ul>
-
-    <div class="quiz-section">
-      <h3>🎯 Quiz — Linking Verbs</h3>
-
-      <div class="quiz-q" data-correct="c">
-        <p>1. Which of the following is a <b>Linking Verb</b>?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) run</div>
-          <div class="quiz-opt" data-opt="b">b) jump</div>
-          <div class="quiz-opt" data-opt="c">c) seem</div>
-          <div class="quiz-opt" data-opt="d">d) eat</div>
-        </div>
-        <div class="quiz-fb">✅ <b>seem</b> é um linking verb — conecta o sujeito a uma descrição!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="b">
-        <p>2. In "She <b>looks</b> happy", what is the linking verb?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) She</div>
-          <div class="quiz-opt" data-opt="b">b) looks</div>
-          <div class="quiz-opt" data-opt="c">c) happy</div>
-          <div class="quiz-opt" data-opt="d">d) None</div>
-        </div>
-        <div class="quiz-fb">✅ <b>looks</b> conecta "She" ao adjetivo "happy"!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="c">
-        <p>3. Which sentence uses a <b>linking verb</b>?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) He runs in the park.</div>
-          <div class="quiz-opt" data-opt="b">b) She writes a letter.</div>
-          <div class="quiz-opt" data-opt="c">c) The cake smells delicious.</div>
-          <div class="quiz-opt" data-opt="d">d) They play soccer.</div>
-        </div>
-        <div class="quiz-fb">✅ <b>smells</b> liga "The cake" ao adjetivo "delicious"!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="b">
-        <p>4. Complete: "Peter _____ very frustrated in the story."</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) runs</div>
-          <div class="quiz-opt" data-opt="b">b) feels</div>
-          <div class="quiz-opt" data-opt="c">c) jumps</div>
-          <div class="quiz-opt" data-opt="d">d) writes</div>
-        </div>
-        <div class="quiz-fb">✅ <b>feels</b> é um linking verb que conecta Peter ao estado "frustrated"!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="a">
-        <p>5. What do linking verbs connect the subject to?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) An adjective or noun</div>
-          <div class="quiz-opt" data-opt="b">b) Another verb</div>
-          <div class="quiz-opt" data-opt="c">c) An adverb only</div>
-          <div class="quiz-opt" data-opt="d">d) A preposition</div>
-        </div>
-        <div class="quiz-fb">✅ Linking verbs conectam o sujeito a um <b>adjetivo ou substantivo</b>!</div>
-      </div>
-    </div>
-
-    <div class="exercise">
-      <h4>✏️ Identifique o Linking Verb</h4>
-      <ul class="examples">
-        <li>The flowers <b>look</b> beautiful. <span class="pill pill-green">look ✓</span></li>
-        <li>She <b>became</b> a great student. <span class="pill pill-green">became ✓</span></li>
-        <li>The soup <b>smells</b> wonderful. <span class="pill pill-green">smells ✓</span></li>
-        <li>He <b>is</b> very tired today. <span class="pill pill-green">is ✓</span></li>
-        <li>The music <b>sounds</b> amazing. <span class="pill pill-green">sounds ✓</span></li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- ELA_6 · Verbs and Verbals -->
-  <div class="card" id="ela6">
-    <div class="card-header">
-      <div class="card-icon teal">🔠</div>
-      <div>
-        <div class="card-title">ELA 6 · Verbs and Verbals</div>
-        <div class="card-sub">Unit 2 · Establishing the Writing Process</div>
-      </div>
-    </div>
-
-    <div class="compare-grid">
-      <div class="compare-card a">
-        <strong>⚡ VERB — action word</strong>
-        <span>I <b>RUN</b> every day.<br>She <b>READS</b> a book.<br><i>→ shows what someone DOES</i></span>
-      </div>
-      <div class="compare-card b">
-        <strong>📌 VERBAL — from a verb, acts as noun</strong>
-        <span><b>READING</b> is fun.<br><b>PLAYING</b> is exciting.<br><i>→ names an ACTIVITY (subject)</i></span>
-      </div>
-    </div>
-
-    <div class="pt-tip">🇧🇷 Verbals são palavras que <b>vêm de verbos</b>, mas funcionam como <b>substantivos</b> na frase. "Ler é divertido" → <b>Ler</b> é o sujeito!</div>
-
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Tipo</th><th>Estrutura</th><th>Exemplo</th><th>Função</th></tr></thead>
-        <tbody>
-          <tr><td><b>Gerund</b></td><td>verb + ing</td><td><b>Reading</b> is fun.</td><td>Subject (noun)</td></tr>
-          <tr><td><b>Infinitive</b></td><td>to + verb</td><td>Peter likes <b>to help</b>.</td><td>Noun / adjective</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <ul class="examples">
-      <li><b>Reading</b> is fun. <span class="pill pill-purple">verbal · subject</span></li>
-      <li><b>Playing</b> soccer is exciting. <span class="pill pill-purple">verbal · subject</span></li>
-      <li><b>Writing</b> is important. <span class="pill pill-purple">verbal · subject</span></li>
-      <li>Peter likes <b>to help</b> his mom. <span class="pill pill-blue">infinitive</span></li>
-      <li>She loves <b>to read</b> every night. <span class="pill pill-blue">infinitive</span></li>
-    </ul>
-
-    <div class="quiz-section">
-      <h3>🎯 Quiz — Verbs and Verbals</h3>
-
-      <div class="quiz-q" data-correct="c">
-        <p>1. In "<b>Swimming</b> is my favorite sport", what is the verbal?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) is</div>
-          <div class="quiz-opt" data-opt="b">b) my</div>
-          <div class="quiz-opt" data-opt="c">c) Swimming</div>
-          <div class="quiz-opt" data-opt="d">d) sport</div>
-        </div>
-        <div class="quiz-fb">✅ <b>Swimming</b> — gerund usado como sujeito da frase!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="b">
-        <p>2. Which sentence uses a <b>verbal</b> (not a regular verb)?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) She runs fast.</div>
-          <div class="quiz-opt" data-opt="b">b) Cooking is delicious.</div>
-          <div class="quiz-opt" data-opt="c">c) They play outside.</div>
-          <div class="quiz-opt" data-opt="d">d) He reads every night.</div>
-        </div>
-        <div class="quiz-fb">✅ <b>Cooking</b> é um gerund (verbal) funcionando como sujeito!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="c">
-        <p>3. In "Peter likes <b>to help</b> his mom", "to help" is a(n):</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) action verb</div>
-          <div class="quiz-opt" data-opt="b">b) linking verb</div>
-          <div class="quiz-opt" data-opt="c">c) verbal (infinitive)</div>
-          <div class="quiz-opt" data-opt="d">d) adjective</div>
-        </div>
-        <div class="quiz-fb">✅ <b>to help</b> é um infinitivo — verbal que funciona como objeto!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="a">
-        <p>4. In "<b>Running</b> every day is healthy", what is RUNNING?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) Verbal (gerund) — subject</div>
-          <div class="quiz-opt" data-opt="b">b) Action verb</div>
-          <div class="quiz-opt" data-opt="c">c) Linking verb</div>
-          <div class="quiz-opt" data-opt="d">d) Adjective</div>
-        </div>
-        <div class="quiz-fb">✅ <b>Running</b> é um gerund (verbal) funcionando como sujeito!</div>
-      </div>
-    </div>
-
-    <div class="exercise">
-      <h4>✏️ Verb ou Verbal?</h4>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>Frase</th><th>Resposta</th></tr></thead>
-          <tbody>
-            <tr><td><b>RUNNING</b> is good for your health.</td><td><span class="pill pill-purple">Verbal (gerund)</span></td></tr>
-            <tr><td>She <b>RUNS</b> every morning.</td><td><span class="pill pill-blue">Verb (action)</span></td></tr>
-            <tr><td><b>WRITING</b> stories is fun.</td><td><span class="pill pill-purple">Verbal (gerund)</span></td></tr>
-            <tr><td>He <b>WRITES</b> stories.</td><td><span class="pill pill-blue">Verb (action)</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- ELA_7 · Tales of Fourth Grade Nothing -->
-  <div class="card" id="ela7">
-    <div class="card-header">
-      <div class="card-icon indigo">📗</div>
-      <div>
-        <div class="card-title">ELA 7 · Tales of a Fourth Grade Nothing</div>
-        <div class="card-sub">Unit 2 &amp; 3 · Judy Blume</div>
-      </div>
-    </div>
-
-    <div class="def-box">
-      <div class="label">📖 About the Book</div>
-      <p>A story about <strong>Peter Hatcher</strong> and his little brother <strong>Fudge</strong>. Peter is in fourth grade and feels frustrated because Fudge always causes problems and gets all the attention.</p>
-    </div>
-
-    <div class="chars-grid">
-      <div class="char-card">
-        <div class="char-avatar">👦</div>
-        <div class="char-name">Peter</div>
-        <div class="char-tags">
-          <span class="pill pill-blue">responsible</span>
-          <span class="pill pill-green">patient</span>
-          <span class="pill pill-orange">frustrated</span>
-        </div>
-      </div>
-      <div class="char-card">
-        <div class="char-avatar">👶</div>
-        <div class="char-name">Fudge</div>
-        <div class="char-tags">
-          <span class="pill pill-pink">naughty</span>
-          <span class="pill pill-purple">funny</span>
-          <span class="pill pill-orange">energetic</span>
-        </div>
-      </div>
-      <div class="char-card">
-        <div class="char-avatar">👨‍👩‍👦</div>
-        <div class="char-name">Mom &amp; Dad</div>
-        <div class="char-tags">
-          <span class="pill pill-green">patient</span>
-          <span class="pill pill-blue">caring</span>
-          <span class="pill pill-orange">busy</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Story Element</th><th>Details</th></tr></thead>
-        <tbody>
-          <tr><td><b>Setting</b></td><td>New York City — Hatcher family's apartment</td></tr>
-          <tr><td><b>Problem</b></td><td>Fudge causes problems and gets all the attention, making Peter feel frustrated and ignored.</td></tr>
-          <tr><td><b>Solution</b></td><td>Peter receives a dog from his parents and learns to be more patient with his brother.</td></tr>
-          <tr><td><b>Theme</b></td><td>Family relationships, patience, and growing up.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p style="font-weight:800;color:var(--blue-700);margin:.9rem 0 .4rem;">📚 Vocabulário Importante:</p>
-    <div>
-      <span class="pill pill-blue">frustrated = frustrado</span>
-      <span class="pill pill-pink">naughty = travesso</span>
-      <span class="pill pill-green">patient = paciente</span>
-      <span class="pill pill-purple">responsible = responsável</span>
-      <span class="pill pill-orange">tantrum = birra</span>
-      <span class="pill pill-blue">attention = atenção</span>
-      <span class="pill pill-green">energetic = energético</span>
-    </div>
-
-    <div class="quiz-section">
-      <h3>🎯 Quiz — Tales of a Fourth Grade Nothing</h3>
-
-      <div class="quiz-q" data-correct="b">
-        <p>1. What is Peter's <b>main problem</b> in the story?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) He doesn't like school.</div>
-          <div class="quiz-opt" data-opt="b">b) Fudge always causes problems and gets all the attention.</div>
-          <div class="quiz-opt" data-opt="c">c) He lost his dog.</div>
-          <div class="quiz-opt" data-opt="d">d) He moved to a new city.</div>
-        </div>
-        <div class="quiz-fb">✅ Fudge rouba toda a atenção dos pais, deixando Peter frustrado!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="c">
-        <p>2. What did Fudge eat that made Peter very upset?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) A sandwich</div>
-          <div class="quiz-opt" data-opt="b">b) His homework</div>
-          <div class="quiz-opt" data-opt="c">c) His pet turtle Dribble</div>
-          <div class="quiz-opt" data-opt="d">d) A book</div>
-        </div>
-        <div class="quiz-fb">✅ Fudge comeu o jabuti <b>Dribble</b>, o animal de estimação de Peter!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="b">
-        <p>3. How does the story <b>end</b> for Peter?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) He runs away from home.</div>
-          <div class="quiz-opt" data-opt="b">b) His parents give him a dog.</div>
-          <div class="quiz-opt" data-opt="c">c) Fudge apologizes.</div>
-          <div class="quiz-opt" data-opt="d">d) Peter moves to his grandmother's house.</div>
-        </div>
-        <div class="quiz-fb">✅ Os pais deram um <b>cachorro</b> a Peter para compensar a perda do jabuti!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="c">
-        <p>4. Which personality trait <b>best describes</b> Fudge?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) responsible</div>
-          <div class="quiz-opt" data-opt="b">b) shy</div>
-          <div class="quiz-opt" data-opt="c">c) naughty</div>
-          <div class="quiz-opt" data-opt="d">d) serious</div>
-        </div>
-        <div class="quiz-fb">✅ Fudge é <b>naughty</b> (travesso) — sempre causando problemas!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="a">
-        <p>5. Where does the story take place?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) New York City</div>
-          <div class="quiz-opt" data-opt="b">b) Los Angeles</div>
-          <div class="quiz-opt" data-opt="c">c) London</div>
-          <div class="quiz-opt" data-opt="d">d) Chicago</div>
-        </div>
-        <div class="quiz-fb">✅ A história se passa em <b>Nova York</b>, no apartamento da família Hatcher!</div>
-      </div>
-
-      <div class="quiz-open">
-        <p>6. What advice can you give Peter? How can he solve the problem with Fudge?</p>
-        <button class="btn-show" onclick="toggleOpen(this)">Ver Resposta Modelo</button>
-        <div class="open-answer">✅ <i>Model answer:</i> "Peter could talk to his parents about how he feels. He is very responsible and patient, but he seems frustrated. His parents could spend more time with him. Peter feels ignored, but he should understand that Fudge is still very young and energetic."</div>
-      </div>
-    </div>
-  </div>
-
-</div><!-- /cards-grid unit2 -->
-
-<!-- ═══════════════════════ UNIT 3 ═══════════════════════ -->
-<div class="unit-divider" id="unit3">
-  <div class="unit-label">
-    <span>📚 Unit 3</span>
-    <small>Reading Novels · ELA 8, 9, 10</small>
-  </div>
-</div>
-<div class="cards-grid">
-
-  <!-- ELA_8 · Adjectives and Personality Traits -->
-  <div class="card" id="ela8">
-    <div class="card-header">
-      <div class="card-icon yellow">🎨</div>
-      <div>
-        <div class="card-title">ELA 8 · Adjectives &amp; Personality Traits</div>
-        <div class="card-sub">Unit 3 · Reading Novels</div>
-      </div>
-    </div>
-
-    <div class="compare-grid">
-      <div class="compare-card a">
-        <strong>🎨 Adjectives — O que você VÊ</strong>
-        <span>Describe appearance, size, color, feelings of things.<br><b>tall, big, red, beautiful, fast</b></span>
-      </div>
-      <div class="compare-card b">
-        <strong>💭 Personality Traits — Como a pessoa É</strong>
-        <span>Describe how a person <b>behaves</b> or their character.<br><b>kind, honest, helpful, funny, brave</b></span>
-      </div>
-    </div>
-
-    <div class="pt-tip">🇧🇷 Adjectives descrevem o que você <b>pode ver</b>. Personality traits descrevem o <b>comportamento e caráter</b> de uma pessoa.</div>
-
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Personality Trait</th><th>Português</th><th>Exemplo</th></tr></thead>
-        <tbody>
-          <tr><td>kind</td><td>gentil / bondoso</td><td>She is very <b>kind</b> to everyone.</td></tr>
-          <tr><td>honest</td><td>honesto</td><td>He is always <b>honest</b>.</td></tr>
-          <tr><td>helpful</td><td>prestativo</td><td>Peter is very <b>helpful</b>.</td></tr>
-          <tr><td>funny</td><td>engraçado</td><td>Fudge is so <b>funny</b>!</td></tr>
-          <tr><td>responsible</td><td>responsável</td><td>Peter is very <b>responsible</b>.</td></tr>
-          <tr><td>brave</td><td>corajoso</td><td>The hero is <b>brave</b>.</td></tr>
-          <tr><td>patient</td><td>paciente</td><td>The teacher is very <b>patient</b>.</td></tr>
-          <tr><td>creative</td><td>criativo</td><td>She is a <b>creative</b> writer.</td></tr>
-          <tr><td>stubborn</td><td>teimoso</td><td>Fudge is very <b>stubborn</b>.</td></tr>
-          <tr><td>generous</td><td>generoso</td><td>He is <b>generous</b> with his friends.</td></tr>
-          <tr><td>caring</td><td>carinhoso / cuidadoso</td><td>His mom is very <b>caring</b>.</td></tr>
-          <tr><td>confident</td><td>confiante</td><td>She is a <b>confident</b> speaker.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="quiz-section">
-      <h3>🎯 Quiz — Adjectives &amp; Personality Traits</h3>
-
-      <div class="quiz-q" data-correct="c">
-        <p>1. Which is a <b>personality trait</b>?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) tall</div>
-          <div class="quiz-opt" data-opt="b">b) red</div>
-          <div class="quiz-opt" data-opt="c">c) kind</div>
-          <div class="quiz-opt" data-opt="d">d) big</div>
-        </div>
-        <div class="quiz-fb">✅ <b>kind</b> descreve o comportamento/caráter de uma pessoa!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="c">
-        <p>2. Which adjective describes <b>appearance</b>?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) honest</div>
-          <div class="quiz-opt" data-opt="b">b) helpful</div>
-          <div class="quiz-opt" data-opt="c">c) beautiful</div>
-          <div class="quiz-opt" data-opt="d">d) brave</div>
-        </div>
-        <div class="quiz-fb">✅ <b>beautiful</b> descreve aparência — algo que você pode ver!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="c">
-        <p>3. "She is very <b>generous</b>." — "generous" is a:</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) verb</div>
-          <div class="quiz-opt" data-opt="b">b) noun</div>
-          <div class="quiz-opt" data-opt="c">c) personality trait</div>
-          <div class="quiz-opt" data-opt="d">d) adverb</div>
-        </div>
-        <div class="quiz-fb">✅ <b>generous</b> (generoso) é um personality trait!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="c">
-        <p>4. Choose the sentence with an adjective of <b>appearance</b>:</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) He is very patient.</div>
-          <div class="quiz-opt" data-opt="b">b) She is honest.</div>
-          <div class="quiz-opt" data-opt="c">c) The house is enormous.</div>
-          <div class="quiz-opt" data-opt="d">d) The student is responsible.</div>
-        </div>
-        <div class="quiz-fb">✅ <b>enormous</b> descreve o tamanho da casa — aparência!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="b">
-        <p>5. Which word is a personality trait that describes <b>Fudge</b>?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) tall</div>
-          <div class="quiz-opt" data-opt="b">b) naughty</div>
-          <div class="quiz-opt" data-opt="c">c) small</div>
-          <div class="quiz-opt" data-opt="d">d) blue-eyed</div>
-        </div>
-        <div class="quiz-fb">✅ <b>naughty</b> (travesso) é um personality trait que descreve o comportamento de Fudge!</div>
-      </div>
-    </div>
-
-    <div class="exercise">
-      <h4>✏️ Descreva Peter e Fudge com adjetivos e personality traits</h4>
+      <div class="key-phrase-en">Regular verbs → add -ed in the past. Irregular verbs → change in a different way (they do not follow one rule).</div>
+      <div class="key-phrase-pt">Verbos regulares adicionam -ed no passado. Verbos irregulares mudam de forma diferente — cada um à sua maneira.</div>
       <div class="compare-grid">
-        <div class="compare-card a">
-          <strong>👦 Peter</strong>
-          <span>Peter <b>is</b> responsible and patient. He <b>is</b> sometimes frustrated. He <b>feels</b> sad when no one listens to him. He <b>seems</b> very mature for his age.</span>
-        </div>
-        <div class="compare-card b">
-          <strong>👶 Fudge</strong>
-          <span>Fudge <b>is</b> very naughty and energetic. He <b>is</b> funny but sometimes irresponsible. He <b>becomes</b> quiet when he <b>is</b> sleepy.</span>
-        </div>
+        <div class="compare-card a"><strong>✅ Regular Verbs (add -ed)</strong><span>play → <b>played</b><br>walk → <b>walked</b><br>jump → <b>jumped</b></span></div>
+        <div class="compare-card b"><strong>⚡ Irregular Verbs (own rule)</strong><span>go → <b>went</b><br>eat → <b>ate</b><br>see → <b>saw</b></span></div>
+      </div>
+      <div class="memory-box">
+        <div class="mem-emoji">🧠</div>
+        <div><strong>Dica de Memória</strong><p>Alguns verbos irregulares são "unchanging" — ficam iguais nas 3 formas: <b>cut→cut→cut</b>, <b>put→put→put</b>, <b>cost→cost→cost</b>.</p></div>
+      </div>
+      <table class="grammar-table">
+        <tr><th>Base Form</th><th>Simple Past</th><th>Past Participle</th><th>Base Form</th><th>Simple Past</th><th>Past Participle</th></tr>
+        <tr><td>be</td><td>was/were</td><td>been</td><td>go</td><td>went</td><td>gone</td></tr>
+        <tr><td>begin</td><td>began</td><td>begun</td><td>keep</td><td>kept</td><td>kept</td></tr>
+        <tr><td>break</td><td>broke</td><td>broken</td><td>know</td><td>knew</td><td>known</td></tr>
+        <tr><td>bring</td><td>brought</td><td>brought</td><td>leave</td><td>left</td><td>left</td></tr>
+        <tr><td>buy</td><td>bought</td><td>bought</td><td>make</td><td>made</td><td>made</td></tr>
+        <tr><td>catch</td><td>caught</td><td>caught</td><td>put</td><td>put <span class="tag-same">✦ same</span></td><td>put</td></tr>
+        <tr><td>come</td><td>came</td><td>come</td><td>read</td><td>read <span class="tag-same">✦ same</span></td><td>read</td></tr>
+        <tr><td>cut</td><td>cut <span class="tag-same">✦ same</span></td><td>cut</td><td>run</td><td>ran</td><td>run</td></tr>
+        <tr><td>do</td><td>did</td><td>done</td><td>say</td><td>said</td><td>said</td></tr>
+        <tr><td>draw</td><td>drew</td><td>drawn</td><td>see</td><td>saw</td><td>seen</td></tr>
+        <tr><td>eat</td><td>ate</td><td>eaten</td><td>write</td><td>wrote</td><td>written</td></tr>
+        <tr><td>give</td><td>gave</td><td>given</td><td>take</td><td>took</td><td>taken</td></tr>
+      </table>
+      <div class="exercise">
+        <h4>✏️ Exercício — Complete com o Simple Past</h4>
+        <div class="fill-q">Yesterday, I <input class="fill-input" data-ans="ate" placeholder="eat"> a sandwich for lunch.</div>
+        <div class="fill-q">She <input class="fill-input" data-ans="ran" placeholder="run"> very fast at the race.</div>
+        <div class="fill-q">We <input class="fill-input" data-ans="saw" placeholder="see"> a rainbow after the rain.</div>
+        <div class="fill-q">He <input class="fill-input" data-ans="wrote" placeholder="write"> a beautiful story.</div>
+        <button class="btn-check" onclick="checkFills(this)">Verificar Respostas ✓</button>
       </div>
     </div>
   </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🎯</span><span class="quiz-title">Quiz — Irregular Verbs</span></div>
+    <div id="quiz-s0"></div>
+  </div>
+  <div class="section-complete" id="complete-s0"><h3>🎉 Seção concluída! · Section Complete!</h3><p>Arrasou nos Irregular Verbs!</p></div>
+  <button class="next-section-btn" id="next-s0" onclick="goToSection(1)">Próxima Seção ➜</button>
+</div>
 
-  <!-- ELA_9 · Comparatives and Superlatives -->
-  <div class="card" id="ela9">
-    <div class="card-header">
-      <div class="card-icon red">📊</div>
+<!-- SEC 1 — ELA 2 -->
+<div class="lesson-section reveal" id="sec1" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon green">⏪</div>
       <div>
-        <div class="card-title">ELA 9 · Comparatives &amp; Superlatives</div>
-        <div class="card-sub">Unit 3 · Reading Novels</div>
+        <div class="section-subtitle">ELA 2 · Seção 2 of 10</div>
+        <div class="section-title">Past Perfect · Passado Perfeito</div>
       </div>
     </div>
-
-    <div class="compare-grid">
-      <div class="compare-card a">
-        <strong>📊 Comparative — Compara 2 coisas</strong>
-        <span>Adjective + <b>-er + than</b><br><i>or</i> <b>more</b> + adjective + <b>than</b><br><br>Peter is <b>taller than</b> Fudge.</span>
+    <div class="section-body">
+      <p>We use <strong>HAD + past participle</strong> to talk about something that happened <strong>BEFORE</strong> another action in the past.</p>
+      <div class="key-phrase-en">Structure: Subject + HAD + past participle — use HAD + past participle for the FIRST action in the past.</div>
+      <div class="key-phrase-pt">Estrutura: Sujeito + HAD + particípio passado. Em português: Pretérito Mais-que-perfeito — "Eu já tinha comido quando ela chegou."</div>
+      <div class="timeline">
+        <div class="tl-node">HAD + participle (FIRST)</div>
+        <div class="tl-arrow">→</div>
+        <div class="tl-node">Simple Past (SECOND)</div>
+        <div class="tl-arrow">→</div>
+        <div class="tl-node">NOW</div>
       </div>
-      <div class="compare-card b">
-        <strong>🏆 Superlative — Compara 3+ coisas</strong>
-        <span><b>the</b> + adjective + <b>-est</b><br><i>or</i> <b>the most</b> + adjective<br><br>Peter is <b>the tallest</b> boy in the class.</span>
+      <div class="memory-box">
+        <div class="mem-emoji">💡</div>
+        <div><strong>Como Lembrar</strong><p>O que veio PRIMEIRO usa HAD! "I <b>had eaten</b> before I went to school." → comer veio antes de ir.</p></div>
+      </div>
+      <div class="example-box">
+        <strong>Examples · Exemplos:</strong>
+        <p>I <b>had eaten</b> before I went to school.</p>
+        <p>She <b>had finished</b> her homework before dinner.</p>
+        <p>We <b>had studied</b> all night before the exam.</p>
+        <p>He <b>had gone</b> home before it rained.</p>
+      </div>
+      <div class="exercise">
+        <h4>✏️ Exercício — Complete com Past Perfect (had + participle)</h4>
+        <div class="fill-q">By the time she arrived, I <input class="fill-input" data-ans="had finished" placeholder="finish" style="width:130px"> the homework.</div>
+        <div class="fill-q">She <input class="fill-input" data-ans="had eaten" placeholder="eat" style="width:110px"> dinner before she watched TV.</div>
+        <div class="fill-q">We <input class="fill-input" data-ans="had studied" placeholder="study" style="width:120px"> all night before the exam.</div>
+        <button class="btn-check" onclick="checkFills(this)">Verificar Respostas ✓</button>
       </div>
     </div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🎯</span><span class="quiz-title">Quiz — Past Perfect</span></div>
+    <div id="quiz-s1"></div>
+  </div>
+  <div class="section-complete" id="complete-s1"><h3>🎉 Seção concluída!</h3><p>Você dominou o Past Perfect!</p></div>
+  <button class="next-section-btn" id="next-s1" onclick="goToSection(2)">Próxima Seção ➜</button>
+</div>
 
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Adjective</th><th>Comparative</th><th>Superlative</th><th>Regra</th></tr></thead>
-        <tbody>
-          <tr><td>tall</td><td>taller</td><td>the tallest</td><td>+er / +est</td></tr>
-          <tr><td>small</td><td>smaller</td><td>the smallest</td><td>+er / +est</td></tr>
-          <tr><td>fast</td><td>faster</td><td>the fastest</td><td>+er / +est</td></tr>
-          <tr><td>happy</td><td>happier</td><td>the happiest</td><td>y → ier / iest</td></tr>
-          <tr><td>big</td><td>bigger</td><td>the biggest</td><td>CVC → dupla</td></tr>
-          <tr><td>interesting</td><td>more interesting</td><td>the most interesting</td><td>3+ sílabas: more/most</td></tr>
-          <tr><td>beautiful</td><td>more beautiful</td><td>the most beautiful</td><td>3+ sílabas: more/most</td></tr>
-          <tr><td>good</td><td><b>better</b></td><td><b>the best</b></td><td>⚠️ irregular!</td></tr>
-          <tr><td>bad</td><td><b>worse</b></td><td><b>the worst</b></td><td>⚠️ irregular!</td></tr>
-          <tr><td>far</td><td>farther</td><td>the farthest</td><td>irregular</td></tr>
-        </tbody>
+<!-- SEC 2 — ELA 3 -->
+<div class="lesson-section reveal" id="sec2" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon blue">▶️</div>
+      <div>
+        <div class="section-subtitle">ELA 3 · Seção 3 of 10</div>
+        <div class="section-title">Present Continuous · Presente Contínuo</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>The Present Continuous is used to talk about things happening <strong>NOW</strong>, at this exact moment.</p>
+      <div class="key-phrase-en">Structure: am / is / are + verb + -ING — use for actions happening NOW.</div>
+      <div class="key-phrase-pt">Estrutura: am/is/are + verbo + ing. Em português: gerúndio — "Eu estou lendo", "Ela está escrevendo".</div>
+      <table class="grammar-table">
+        <tr><th>Subject</th><th>To Be</th><th>Example</th></tr>
+        <tr><td><b>I</b></td><td>am</td><td>I <b>am reading</b> a book.</td></tr>
+        <tr><td><b>He / She / It</b></td><td>is</td><td>She <b>is writing</b> a paragraph.</td></tr>
+        <tr><td><b>You / We / They</b></td><td>are</td><td>They <b>are playing</b> soccer.</td></tr>
+      </table>
+      <div class="memory-box">
+        <div class="mem-emoji">🧠</div>
+        <div><strong>Regra CVC</strong><p>CVC = Consoante + Vogal + Consoante. Ex: r-u-n. Se termina nesse padrão → dobra a última letra! <b>run→running</b>, <b>sit→sitting</b>. Verbo com -e: remove o -e → <b>write→writing</b>.</p></div>
+      </div>
+      <div class="exercise">
+        <h4>✏️ Exercício — Transforme para Present Continuous</h4>
+        <div class="fill-q">I read. → I <input class="fill-input" data-ans="am reading" placeholder="___" style="width:120px">.</div>
+        <div class="fill-q">She sings. → She <input class="fill-input" data-ans="is singing" placeholder="___" style="width:120px">.</div>
+        <div class="fill-q">They run. → They <input class="fill-input" data-ans="are running" placeholder="___" style="width:130px">.</div>
+        <button class="btn-check" onclick="checkFills(this)">Verificar Respostas ✓</button>
+      </div>
+    </div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🎯</span><span class="quiz-title">Quiz — Present Continuous</span></div>
+    <div id="quiz-s2"></div>
+  </div>
+  <div class="section-complete" id="complete-s2"><h3>🎉 Seção concluída!</h3><p>Present Continuous dominado!</p></div>
+  <button class="next-section-btn" id="next-s2" onclick="goToSection(3)">Próxima Seção ➜</button>
+</div>
+
+<!-- UNIT 2 -->
+<div class="unit-divider reveal" id="ud1" style="display:none">
+  <div class="unit-label"><span>✍️ Unit 2: Establishing the Writing Process</span><small>ELA 4, 5, 6 &amp; 7</small></div>
+</div>
+
+<!-- SEC 3 — ELA 4 -->
+<div class="lesson-section reveal" id="sec3" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon orange">🖊️</div>
+      <div>
+        <div class="section-subtitle">ELA 4 · Seção 4 of 10</div>
+        <div class="section-title">The Writing Process · O Processo de Escrita</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>The Writing Process is the <strong>5 steps</strong> we follow to write a good text. Good writers do NOT write everything at once — they write step by step.</p>
+      <div class="key-phrase-en">The Writing Process has 5 steps: Prewriting → Drafting → Revising → Editing → Publishing.</div>
+      <div class="key-phrase-pt">É como construir uma casa: você planeja → levanta a estrutura → melhora → conserta erros → entrega!</div>
+      <div class="writing-steps">
+        <div class="writing-step"><div class="step-num">1</div><div class="step-body"><h4>Prewriting — Think &amp; Plan</h4><p>Brainstorm ideas, organize thoughts, use mind maps or lists.</p><span class="step-tip">💡 Antes de escrever, anote 3 ideias sobre o tema!</span></div></div>
+        <div class="writing-step"><div class="step-num">2</div><div class="step-body"><h4>Drafting — Write</h4><p>Write your first draft. Get ideas down. Don't worry about mistakes!</p><span class="step-tip">💡 Foque em colocar as ideias no papel. Erros serão corrigidos depois.</span></div></div>
+        <div class="writing-step"><div class="step-num">3</div><div class="step-body"><h4>Revising — Make it Better</h4><p>Improve ideas, add details, make text clearer and more interesting.</p><span class="step-tip">💡 Pergunte-se: "Faz sentido? Posso adicionar mais detalhes?"</span></div></div>
+        <div class="writing-step"><div class="step-num">4</div><div class="step-body"><h4>Editing — Fix Mistakes</h4><p>Check spelling, punctuation, and grammar errors.</p><span class="step-tip">💡 Leia devagar e verifique cada frase!</span></div></div>
+        <div class="writing-step"><div class="step-num">5</div><div class="step-body"><h4>Publishing — Final Copy</h4><p>Write the final, clean copy and share your work with others.</p><span class="step-tip">💡 O texto final deve estar organizado e pronto para ser lido!</span></div></div>
+      </div>
+      <div class="memory-box">
+        <div class="mem-emoji">🔑</div>
+        <div><strong>Revising vs Editing</strong><p><b>Revising</b> = melhorar as IDEIAS e o conteúdo.<br><b>Editing</b> = corrigir GRAMÁTICA, ORTOGRAFIA e PONTUAÇÃO.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🎯</span><span class="quiz-title">Quiz — The Writing Process</span></div>
+    <div id="quiz-s3"></div>
+  </div>
+  <div class="section-complete" id="complete-s3"><h3>🎉 Seção concluída!</h3><p>Writing Process dominado!</p></div>
+  <button class="next-section-btn" id="next-s3" onclick="goToSection(4)">Próxima Seção ➜</button>
+</div>
+
+<!-- SEC 4 — ELA 5 -->
+<div class="lesson-section reveal" id="sec4" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon pink">🔗</div>
+      <div>
+        <div class="section-subtitle">ELA 5 · Seção 5 of 10</div>
+        <div class="section-title">Linking Verbs · Verbos de Ligação</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>Linking verbs do <strong>NOT show action</strong>. They <strong>CONNECT</strong> the subject to more information — usually an adjective or a noun describing a state or feeling.</p>
+      <div class="key-phrase-en">Linking verbs: am, is, are, was, were, seem, become, feel, look, smell, taste, sound — they connect the subject to a description.</div>
+      <div class="key-phrase-pt">Verbos de ligação conectam o sujeito a uma descrição, sentimento ou estado — não mostram ação física.</div>
+      <div class="compare-grid">
+        <div class="compare-card a"><strong>⚡ Action Verb</strong><span>She <b>RUNS</b> every day.<br><i>(shows action)</i></span></div>
+        <div class="compare-card b"><strong>🔗 Linking Verb</strong><span>She <b>IS</b> happy.<br><i>(connects to adjective)</i></span></div>
+      </div>
+      <div class="vocab-box">
+        <div class="vocab-title">🔗 Common Linking Verbs</div>
+        <div class="vocab-grid">
+          <span class="vocab-term">am / is / are</span><span class="vocab-term">was / were</span><span class="vocab-term">seem</span>
+          <span class="vocab-term">become</span><span class="vocab-term">feel</span><span class="vocab-term">look</span>
+          <span class="vocab-term">smell</span><span class="vocab-term">taste</span><span class="vocab-term">sound</span>
+        </div>
+      </div>
+      <div class="example-box">
+        <strong>Examples with characters:</strong>
+        <p>👦 Peter <b>is</b> frustrated because Fudge always causes problems.</p>
+        <p>👶 Fudge <b>is</b> funny but very naughty.</p>
+        <p>🌸 The flowers <b>look</b> beautiful.</p>
+        <p>🍲 The soup <b>smells</b> wonderful.</p>
+        <p>⭐ Peter <b>becomes</b> more patient at the end of the story.</p>
+      </div>
+    </div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🎯</span><span class="quiz-title">Quiz — Linking Verbs</span></div>
+    <div id="quiz-s4"></div>
+  </div>
+  <div class="section-complete" id="complete-s4"><h3>🎉 Seção concluída!</h3><p>Linking Verbs dominados!</p></div>
+  <button class="next-section-btn" id="next-s4" onclick="goToSection(5)">Próxima Seção ➜</button>
+</div>
+
+<!-- SEC 5 — ELA 6 -->
+<div class="lesson-section reveal" id="sec5" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon teal">🔠</div>
+      <div>
+        <div class="section-subtitle">ELA 6 · Seção 6 of 10</div>
+        <div class="section-title">Verbs &amp; Verbals · Verbos e Verbais</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p><strong>Verbs</strong> are action words — they show what someone <em>does</em>. <strong>Verbals</strong> come from verbs but work as <strong>nouns</strong> in the sentence (subjects or objects).</p>
+      <div class="key-phrase-en">Verb = action. Verbal = a word from a verb that acts as a NOUN (subject or object) in the sentence.</div>
+      <div class="key-phrase-pt">Verbo = ação. Verbal = palavra derivada de um verbo que funciona como SUBSTANTIVO (sujeito ou objeto) na frase.</div>
+      <div class="compare-grid">
+        <div class="compare-card a"><strong>⚡ VERB — action word</strong><span>I <b>RUN</b> every day.<br>She <b>READS</b> a book.<br><i>shows what someone DOES</i></span></div>
+        <div class="compare-card b"><strong>📌 VERBAL — acts as noun</strong><span><b>READING</b> is fun.<br><b>PLAYING</b> is exciting.<br><i>names an ACTIVITY (subject)</i></span></div>
+      </div>
+      <table class="grammar-table">
+        <tr><th>Tipo</th><th>Estrutura</th><th>Exemplo</th><th>Função</th></tr>
+        <tr><td><b>Gerund</b></td><td>verb + -ing</td><td><b>Reading</b> is fun.</td><td>Subject (noun)</td></tr>
+        <tr><td><b>Infinitive</b></td><td>to + verb</td><td>Peter likes <b>to help</b>.</td><td>Noun / object</td></tr>
       </table>
     </div>
-
-    <div class="memory-box">
-      <div class="emoji">⚠️</div>
-      <div>
-        <strong>Irregulares Importantes</strong>
-        <p><b>good → better → the best</b><br><b>bad → worse → the worst</b><br>Esses dois precisam ser memorizados!</p>
-      </div>
-    </div>
-
-    <div class="quiz-section">
-      <h3>🎯 Quiz — Comparatives &amp; Superlatives</h3>
-
-      <div class="quiz-q" data-correct="b">
-        <p>1. What do we use <b>Comparatives</b> for?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) Compare 3 or more things</div>
-          <div class="quiz-opt" data-opt="b">b) Compare 2 things</div>
-          <div class="quiz-opt" data-opt="c">c) Describe a noun</div>
-          <div class="quiz-opt" data-opt="d">d) Show an action</div>
-        </div>
-        <div class="quiz-fb">✅ Comparative = compara <b>2 coisas</b>!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="c">
-        <p>2. What is the <b>comparative</b> of "interesting"?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) interestinger</div>
-          <div class="quiz-opt" data-opt="b">b) the most interesting</div>
-          <div class="quiz-opt" data-opt="c">c) more interesting</div>
-          <div class="quiz-opt" data-opt="d">d) interestingest</div>
-        </div>
-        <div class="quiz-fb">✅ 3+ sílabas → <b>more interesting</b>!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="a">
-        <p>3. "Fudge is _____ than Peter." (naughty)</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) naughtier</div>
-          <div class="quiz-opt" data-opt="b">b) more naughty</div>
-          <div class="quiz-opt" data-opt="c">c) naughtiest</div>
-          <div class="quiz-opt" data-opt="d">d) the most naughty</div>
-        </div>
-        <div class="quiz-fb">✅ naughty termina em -y → <b>naughtier</b>!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="d">
-        <p>4. What is the <b>superlative</b> of "good"?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) gooder</div>
-          <div class="quiz-opt" data-opt="b">b) more good</div>
-          <div class="quiz-opt" data-opt="c">c) the goodest</div>
-          <div class="quiz-opt" data-opt="d">d) the best</div>
-        </div>
-        <div class="quiz-fb">✅ good → better → <b>the best</b> (irregular)!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="b">
-        <p>5. "This is _____ building in the city." (tall)</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) more tall building</div>
-          <div class="quiz-opt" data-opt="b">b) the tallest building</div>
-          <div class="quiz-opt" data-opt="c">c) the more tall building</div>
-          <div class="quiz-opt" data-opt="d">d) tallest building</div>
-        </div>
-        <div class="quiz-fb">✅ <b>the tallest</b> — superlative sempre começa com "the"!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="c">
-        <p>6. What is the <b>comparative</b> of "bad"?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) badder</div>
-          <div class="quiz-opt" data-opt="b">b) more bad</div>
-          <div class="quiz-opt" data-opt="c">c) worse</div>
-          <div class="quiz-opt" data-opt="d">d) the worst</div>
-        </div>
-        <div class="quiz-fb">✅ bad → <b>worse</b> (comparative irregular)!</div>
-      </div>
-    </div>
-
-    <div class="exercise">
-      <h4>✏️ Complete com Comparative ou Superlative</h4>
-      <div class="fill-q">Peter is <input class="fill-input" data-ans="taller" placeholder="tall"> than Fudge.</div>
-      <div class="fill-q">This is <input class="fill-input" data-ans="the most interesting" placeholder="interesting" style="width:180px"> book in the library.</div>
-      <div class="fill-q">Math is <input class="fill-input" data-ans="easier" placeholder="easy"> than science.</div>
-      <div class="fill-q">Fudge is <input class="fill-input" data-ans="the naughtiest" placeholder="naughty" style="width:160px"> boy in the family.</div>
-      <button class="btn-check-all" onclick="checkFills(this)">Verificar Respostas ✓</button>
-    </div>
   </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🎯</span><span class="quiz-title">Quiz — Verbs &amp; Verbals</span></div>
+    <div id="quiz-s5"></div>
+  </div>
+  <div class="section-complete" id="complete-s5"><h3>🎉 Seção concluída!</h3><p>Verbs &amp; Verbals dominados!</p></div>
+  <button class="next-section-btn" id="next-s5" onclick="goToSection(6)">Próxima Seção ➜</button>
+</div>
 
-  <!-- ELA_10 · Adverbs of Manner -->
-  <div class="card" id="ela10">
-    <div class="card-header">
-      <div class="card-icon emerald">⚡</div>
+<!-- SEC 6 — ELA 7 -->
+<div class="lesson-section reveal" id="sec6" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon indigo">📗</div>
       <div>
-        <div class="card-title">ELA 10 · Adverbs of Manner</div>
-        <div class="card-sub">Unit 3 · Reading Novels</div>
+        <div class="section-subtitle">ELA 7 · Seção 7 of 10</div>
+        <div class="section-title">Tales of a Fourth Grade Nothing</div>
       </div>
     </div>
-
-    <div class="def-box">
-      <div class="label">📌 Definição</div>
-      <p>Adverbs of manner tell us <strong>HOW</strong> an action happens. They usually come <strong>AFTER the verb</strong>. Most are formed by adding <strong>-LY</strong> to an adjective.</p>
-    </div>
-
-    <div class="formula">Adjective + <b>-ly</b> = Adverb of Manner</div>
-
-    <div class="pt-tip">🇧🇷 Em português, muitas vezes equivale a palavras que terminam em <b>-mente</b>: quickly = <b>rapidamente</b>, softly = <b>suavemente</b>.</div>
-
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Regra</th><th>Exemplo</th></tr></thead>
-        <tbody>
-          <tr><td>Most: add -ly</td><td>quick → <b>quickly</b>, soft → <b>softly</b></td></tr>
-          <tr><td>Ends in -y: → -ily</td><td>happy → <b>happily</b>, easy → <b>easily</b></td></tr>
-          <tr><td>Ends in -le: → -ly</td><td>gentle → <b>gently</b>, simple → <b>simply</b></td></tr>
-          <tr><td>⚠️ good → well (irregular)</td><td>She sings <b>well</b>.</td></tr>
-          <tr><td>⚠️ fast → fast (no change)</td><td>He runs <b>fast</b>.</td></tr>
-          <tr><td>⚠️ hard → hard (no change)</td><td>She works <b>hard</b>.</td></tr>
-        </tbody>
+    <div class="section-body">
+      <div class="example-box">
+        <strong>📚 About the Book — Judy Blume</strong>
+        <p>A story about <b>Peter Hatcher</b> and his little brother <b>Fudge</b>. Peter is in fourth grade and feels frustrated because Fudge always causes problems and gets all the attention.</p>
+      </div>
+      <div class="key-phrase-en">Peter feels angry and ignored. He thinks life is not fair because his parents give a lot of attention to Fudge.</div>
+      <div class="key-phrase-pt">Peter se sente com raiva e ignorado. Ele acha que a vida não é justa porque seus pais dão muita atenção a Fudge.</div>
+      <div class="chars-grid">
+        <div class="char-card"><div class="char-avatar">👦</div><div class="char-name">Peter</div><div style="margin-top:.4rem"><span class="pill pill-blue">responsible</span><span class="pill pill-green">patient</span><span class="pill pill-orange">frustrated</span></div></div>
+        <div class="char-card"><div class="char-avatar">👶</div><div class="char-name">Fudge</div><div style="margin-top:.4rem"><span class="pill pill-pink">naughty</span><span class="pill pill-purple">funny</span><span class="pill pill-orange">energetic</span></div></div>
+        <div class="char-card"><div class="char-avatar">👨‍👩‍👦</div><div class="char-name">Mom &amp; Dad</div><div style="margin-top:.4rem"><span class="pill pill-green">patient</span><span class="pill pill-blue">caring</span><span class="pill pill-orange">busy</span></div></div>
+      </div>
+      <table class="grammar-table">
+        <tr><th>Story Element</th><th>Details</th></tr>
+        <tr><td><b>Setting</b></td><td>New York City — Hatcher family's apartment</td></tr>
+        <tr><td><b>Problem</b></td><td>Fudge causes problems and gets all attention, making Peter feel ignored.</td></tr>
+        <tr><td><b>Solution</b></td><td>Peter receives a dog and learns to be more patient with his brother.</td></tr>
+        <tr><td><b>Theme</b></td><td>Family relationships, patience, and growing up.</td></tr>
       </table>
     </div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🎯</span><span class="quiz-title">Quiz — Tales of a Fourth Grade Nothing</span></div>
+    <div id="quiz-s6"></div>
+  </div>
+  <div class="section-complete" id="complete-s6"><h3>🎉 Seção concluída!</h3><p>Peter e Fudge dominados!</p></div>
+  <button class="next-section-btn" id="next-s6" onclick="goToSection(7)">Próxima Seção ➜</button>
+</div>
 
-    <ul class="examples">
-      <li>He runs <b>quickly</b>. <span class="ex-tr">(quick → quickly)</span></li>
-      <li>She speaks <b>softly</b>. <span class="ex-tr">(soft → softly)</span></li>
-      <li>They walk <b>slowly</b>. <span class="ex-tr">(slow → slowly)</span></li>
-      <li>He works <b>carefully</b>. <span class="ex-tr">(careful → carefully)</span></li>
-      <li>She sings <b>beautifully</b>. <span class="ex-tr">(beautiful → beautifully)</span></li>
-      <li>Fudge runs <b>wildly</b> through the apartment. <span class="ex-tr">(from the book!)</span></li>
-      <li>Peter speaks <b>quietly</b> to his parents. <span class="ex-tr">(from the book!)</span></li>
-    </ul>
+<!-- UNIT 3 -->
+<div class="unit-divider reveal" id="ud2" style="display:none">
+  <div class="unit-label"><span>📖 Unit 3: Reading Novels</span><small>ELA 8, 9 &amp; 10</small></div>
+</div>
 
-    <div class="quiz-section">
-      <h3>🎯 Quiz — Adverbs of Manner</h3>
-
-      <div class="quiz-q" data-correct="b">
-        <p>1. What is the adverb of manner for <b>"quick"</b>?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) quicker</div>
-          <div class="quiz-opt" data-opt="b">b) quickly</div>
-          <div class="quiz-opt" data-opt="c">c) quickest</div>
-          <div class="quiz-opt" data-opt="d">d) quickful</div>
-        </div>
-        <div class="quiz-fb">✅ quick + ly = <b>quickly</b>!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="c">
-        <p>2. What is the adverb of manner for <b>"good"</b>?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) goodly</div>
-          <div class="quiz-opt" data-opt="b">b) better</div>
-          <div class="quiz-opt" data-opt="c">c) well</div>
-          <div class="quiz-opt" data-opt="d">d) gooder</div>
-        </div>
-        <div class="quiz-fb">✅ good → <b>well</b> (irregular — precisa memorizar)!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="b">
-        <p>3. Where do adverbs of manner usually go in a sentence?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) Before the subject</div>
-          <div class="quiz-opt" data-opt="b">b) After the verb</div>
-          <div class="quiz-opt" data-opt="c">c) Before the adjective</div>
-          <div class="quiz-opt" data-opt="d">d) At the beginning only</div>
-        </div>
-        <div class="quiz-fb">✅ Adverbs of manner ficam <b>depois do verbo</b>: She sings <b>beautifully</b>.</div>
-      </div>
-
-      <div class="quiz-q" data-correct="b">
-        <p>4. Choose the sentence with the <b>correct</b> adverb of manner:</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) She sings beautiful.</div>
-          <div class="quiz-opt" data-opt="b">b) She sings beautifully.</div>
-          <div class="quiz-opt" data-opt="c">c) She sings more beautiful.</div>
-          <div class="quiz-opt" data-opt="d">d) She sings beautifuly.</div>
-        </div>
-        <div class="quiz-fb">✅ beautiful + ly = <b>beautifully</b> (dois L's)!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="c">
-        <p>5. What is the adverb form of <b>"fast"</b>?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) fastly</div>
-          <div class="quiz-opt" data-opt="b">b) faster</div>
-          <div class="quiz-opt" data-opt="c">c) fast</div>
-          <div class="quiz-opt" data-opt="d">d) fastest</div>
-        </div>
-        <div class="quiz-fb">✅ fast → <b>fast</b> (não muda — forma adjetivo e advérbio são iguais)!</div>
-      </div>
-
-      <div class="quiz-q" data-correct="a">
-        <p>6. What is the adverb form of <b>"happy"</b>?</p>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-opt="a">a) happily</div>
-          <div class="quiz-opt" data-opt="b">b) happily</div>
-          <div class="quiz-opt" data-opt="c">c) happyly</div>
-          <div class="quiz-opt" data-opt="d">d) happly</div>
-        </div>
-        <div class="quiz-fb">✅ happy → y vira i → <b>happily</b>!</div>
+<!-- SEC 7 — ELA 8 -->
+<div class="lesson-section reveal" id="sec7" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon yellow">🎨</div>
+      <div>
+        <div class="section-subtitle">ELA 8 · Seção 8 of 10</div>
+        <div class="section-title">Adjectives &amp; Personality Traits</div>
       </div>
     </div>
-
-    <div class="exercise">
-      <h4>✏️ Transforme o adjetivo em advérbio</h4>
-      <div class="fill-q">slow → <input class="fill-input" data-ans="slowly" placeholder="___"></div>
-      <div class="fill-q">beautiful → <input class="fill-input" data-ans="beautifully" placeholder="___"></div>
-      <div class="fill-q">careful → <input class="fill-input" data-ans="carefully" placeholder="___"></div>
-      <div class="fill-q">happy → <input class="fill-input" data-ans="happily" placeholder="___"></div>
-      <div class="fill-q">good → <input class="fill-input" data-ans="well" placeholder="___"></div>
-      <button class="btn-check-all" onclick="checkFills(this)">Verificar Respostas ✓</button>
+    <div class="section-body">
+      <div class="compare-grid">
+        <div class="compare-card a"><strong>🎨 Adjectives — O que você VÊ</strong><span>Describe appearance, size, color.<br><b>tall, big, red, beautiful, fast</b></span></div>
+        <div class="compare-card b"><strong>💭 Personality Traits — Como a pessoa É</strong><span>Describe how a person <b>behaves</b>.<br><b>kind, honest, helpful, funny, brave</b></span></div>
+      </div>
+      <div class="key-phrase-en">Adjectives describe what you CAN SEE — appearance, size, color. Personality traits describe how a person BEHAVES — character.</div>
+      <div class="key-phrase-pt">Adjetivos descrevem o que você pode VER. Personality traits descrevem o COMPORTAMENTO e caráter de uma pessoa.</div>
+      <table class="grammar-table">
+        <tr><th>Personality Trait</th><th>Português</th><th>Exemplo</th></tr>
+        <tr><td>kind</td><td>gentil / bondoso</td><td>She is very <b>kind</b> to everyone.</td></tr>
+        <tr><td>honest</td><td>honesto</td><td>He is always <b>honest</b>.</td></tr>
+        <tr><td>responsible</td><td>responsável</td><td>Peter is very <b>responsible</b>.</td></tr>
+        <tr><td>naughty</td><td>travesso</td><td>Fudge is so <b>naughty</b>!</td></tr>
+        <tr><td>patient</td><td>paciente</td><td>The teacher is very <b>patient</b>.</td></tr>
+        <tr><td>brave</td><td>corajoso</td><td>The hero is <b>brave</b>.</td></tr>
+        <tr><td>creative</td><td>criativo</td><td>She is a <b>creative</b> writer.</td></tr>
+        <tr><td>generous</td><td>generoso</td><td>He is <b>generous</b> with his friends.</td></tr>
+      </table>
     </div>
   </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🎯</span><span class="quiz-title">Quiz — Adjectives &amp; Personality Traits</span></div>
+    <div id="quiz-s7"></div>
+  </div>
+  <div class="section-complete" id="complete-s7"><h3>🎉 Seção concluída!</h3><p>Adjectives &amp; Personality Traits dominados!</p></div>
+  <button class="next-section-btn" id="next-s7" onclick="goToSection(8)">Próxima Seção ➜</button>
+</div>
 
-</div><!-- /cards-grid unit3 -->
+<!-- SEC 8 — ELA 9 -->
+<div class="lesson-section reveal" id="sec8" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon red">📊</div>
+      <div>
+        <div class="section-subtitle">ELA 9 · Seção 9 of 10</div>
+        <div class="section-title">Comparatives &amp; Superlatives</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="compare-grid">
+        <div class="compare-card a"><strong>📊 Comparative — Compara 2 coisas</strong><span>Adjective + <b>-er + than</b><br>or <b>more</b> + adjective + <b>than</b><br>Peter is <b>taller than</b> Fudge.</span></div>
+        <div class="compare-card b"><strong>🏆 Superlative — Compara 3+ coisas</strong><span><b>the</b> + adjective + <b>-est</b><br>or <b>the most</b> + adjective<br>Peter is <b>the tallest</b> in the class.</span></div>
+      </div>
+      <div class="key-phrase-en">Comparative = compare 2 things → add -er + than OR more + adjective + than. Superlative = compare 3+ things → the -est OR the most.</div>
+      <div class="key-phrase-pt">Comparativo = 2 coisas. Superlativo = 3 ou mais coisas.</div>
+      <table class="grammar-table">
+        <tr><th>Adjective</th><th>Comparative</th><th>Superlative</th><th>Regra</th></tr>
+        <tr><td>tall</td><td>taller</td><td>the tallest</td><td>+er / +est</td></tr>
+        <tr><td>happy</td><td>happier</td><td>the happiest</td><td>y → ier / iest</td></tr>
+        <tr><td>big</td><td>bigger</td><td>the biggest</td><td>CVC → dobra</td></tr>
+        <tr><td>interesting</td><td>more interesting</td><td>the most interesting</td><td>3+ sílabas</td></tr>
+        <tr><td>good</td><td><b>better</b></td><td><b>the best</b></td><td>⚠️ irregular!</td></tr>
+        <tr><td>bad</td><td><b>worse</b></td><td><b>the worst</b></td><td>⚠️ irregular!</td></tr>
+      </table>
+      <div class="memory-box">
+        <div class="mem-emoji">⚠️</div>
+        <div><strong>Irregulares Importantes</strong><p><b>good → better → the best</b><br><b>bad → worse → the worst</b><br>Esses dois precisam ser memorizados!</p></div>
+      </div>
+      <div class="exercise">
+        <h4>✏️ Complete com Comparative ou Superlative</h4>
+        <div class="fill-q">Peter is <input class="fill-input" data-ans="taller" placeholder="tall"> than Fudge.</div>
+        <div class="fill-q">This is <input class="fill-input" data-ans="the most interesting" placeholder="interesting" style="width:180px"> book in the library.</div>
+        <div class="fill-q">Math is <input class="fill-input" data-ans="easier" placeholder="easy"> than science.</div>
+        <button class="btn-check" onclick="checkFills(this)">Verificar Respostas ✓</button>
+      </div>
+    </div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🎯</span><span class="quiz-title">Quiz — Comparatives &amp; Superlatives</span></div>
+    <div id="quiz-s8"></div>
+  </div>
+  <div class="section-complete" id="complete-s8"><h3>🎉 Seção concluída!</h3><p>Comparatives &amp; Superlatives dominados!</p></div>
+  <button class="next-section-btn" id="next-s8" onclick="goToSection(9)">Próxima Seção ➜</button>
+</div>
 
-<!-- SUMMARY RIBBON -->
+<!-- SEC 9 — ELA 10 -->
+<div class="lesson-section reveal" id="sec9" style="display:none">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon emerald">⚡</div>
+      <div>
+        <div class="section-subtitle">ELA 10 · Seção 10 of 10</div>
+        <div class="section-title">Adverbs of Manner · Advérbios de Modo</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>Adverbs of manner tell us <strong>HOW</strong> an action happens. They usually come <strong>after the verb</strong>. Most are formed by adding <strong>-LY</strong> to an adjective.</p>
+      <div class="key-phrase-en">Adverbs of manner describe HOW an action happens. Add -ly to the adjective: quick → quickly, soft → softly.</div>
+      <div class="key-phrase-pt">Advérbios de modo descrevem COMO uma ação acontece. Em português terminam em -mente: quickly = rapidamente.</div>
+      <table class="grammar-table">
+        <tr><th>Regra</th><th>Exemplo</th></tr>
+        <tr><td>Most: add -ly</td><td>quick → <b>quickly</b>, soft → <b>softly</b></td></tr>
+        <tr><td>Ends in -y: → -ily</td><td>happy → <b>happily</b>, easy → <b>easily</b></td></tr>
+        <tr><td>Ends in -le: → -ly</td><td>gentle → <b>gently</b></td></tr>
+        <tr><td>⚠️ good → well (irregular)</td><td>She sings <b>well</b>.</td></tr>
+        <tr><td>⚠️ fast → fast (no change)</td><td>He runs <b>fast</b>.</td></tr>
+        <tr><td>⚠️ hard → hard (no change)</td><td>She works <b>hard</b>.</td></tr>
+      </table>
+      <div class="exercise">
+        <h4>✏️ Transforme o adjetivo em advérbio</h4>
+        <div class="fill-q">slow → <input class="fill-input" data-ans="slowly" placeholder="___"></div>
+        <div class="fill-q">beautiful → <input class="fill-input" data-ans="beautifully" placeholder="___"></div>
+        <div class="fill-q">careful → <input class="fill-input" data-ans="carefully" placeholder="___"></div>
+        <div class="fill-q">happy → <input class="fill-input" data-ans="happily" placeholder="___"></div>
+        <div class="fill-q">good → <input class="fill-input" data-ans="well" placeholder="___"></div>
+        <button class="btn-check" onclick="checkFills(this)">Verificar Respostas ✓</button>
+      </div>
+    </div>
+  </div>
+  <div class="quiz-section">
+    <div class="quiz-header"><span class="quiz-icon">🎯</span><span class="quiz-title">Quiz — Adverbs of Manner</span></div>
+    <div id="quiz-s9"></div>
+  </div>
+  <div class="section-complete" id="complete-s9"><h3>🎉 Aula concluída! · Lesson Complete!</h3><p>Você terminou todo o ELA Recuperação!</p></div>
+  <button class="next-section-btn" id="next-s9" onclick="showTrophy()">Ver Resultado Final 🏆</button>
+</div>
+
+<!-- SUMMARY -->
 <div class="summary-ribbon" id="summary">
   <div class="ribbon-card">
     <h2>📋 Resumo Geral de Conteúdos</h2>
     <div class="ribbon-grid">
       <div class="ribbon-unit">
-        <strong>🏫 Unit 1 — Building a Classroom Community</strong>
+        <strong>🏫 Unit 1 — Building Community</strong>
         <ul>
           <li>ELA 1 — Irregular Verbs</li>
           <li>ELA 2 — Past Perfect (HAD + participle)</li>
@@ -1640,7 +721,7 @@
         </ul>
       </div>
       <div class="ribbon-unit">
-        <strong>✍️ Unit 2 — The Writing Process</strong>
+        <strong>✍️ Unit 2 — Writing Process</strong>
         <ul>
           <li>ELA 4 — Writing Process (5 steps)</li>
           <li>ELA 5 — Linking Verbs</li>
@@ -1660,13 +741,232 @@
   </div>
 </div>
 
-<!-- FOOTER -->
+<!-- TROPHY -->
+<div class="final-trophy" id="finalTrophy">
+  <div class="trophy-card">
+    <span class="trophy-emoji">🏆</span>
+    <h2>You are amazing!<br><span style="font-size:.65em;color:var(--orange-500);">Você é incrível!</span></h2>
+    <div class="trophy-score"><span id="finalScore">0</span> pts!</div>
+    <p id="finalMsg">Keep studying and exploring ELA!</p>
+    <button onclick="location.reload()" style="margin-top:1.5rem;padding:.7rem 2rem;background:linear-gradient(135deg,var(--orange-400),var(--orange-600));color:white;border:none;border-radius:99px;font-family:'Baloo 2',cursive;font-weight:800;font-size:1rem;cursor:pointer;">Recomeçar · Restart 🔄</button>
+  </div>
+</div>
+
 <footer>
   <p>📘 ELA Year 5 · Recuperação · Maple Bear Maceió · Abril &amp; Maio</p>
   <p style="margin-top:.4rem">Estude com foco, responda os quizzes e você vai arrasar! 🚀</p>
 </footer>
 
-<!-- SCORE MODAL -->
-<div class="modal-overlay" id="scoreModal">
-  <div class="modal-box">
-    <div class="modal-emoji" id="modalEmoji">🏆
+<script>
+const TOTAL = 10;
+let score = 0, answered = 0;
+const secDone = {};
+
+const quizData = {
+  s0:[
+    {q:'What is the simple past of "go"?',opts:['goed','gone','went','going'],c:2},
+    {q:'Which verb is regular?',opts:['run','eat','play','break'],c:2},
+    {q:'What is the past participle of "break"?',opts:['broke','broken','breaked','broked'],c:1},
+    {q:'O que são verbos irregulares em inglês?',opts:['Verbos que adicionam -ed no passado','Verbos que não seguem a regra ao mudar para o passado','Verbos usados apenas no presente','Verbos que terminam em -ing'],c:1},
+    {q:'Qual é o Past Participle do verbo "write"?',opts:['wrote','writed','written','writing'],c:2},
+    {q:'Choose the correct sentence:',opts:['She buyed a new book.','She bought a new book.','She buyed new book.','She buy a new book.'],c:1},
+    {q:'Which verbs are "unchanging" (all 3 forms the same)?',opts:['go, eat, see','break, make, run','know, draw, give','cut, put, read'],c:3},
+  ],
+  s1:[
+    {q:'What structure is used for Past Perfect?',opts:['have + past participle','had + past participle','was + verb + ing','will + verb'],c:1},
+    {q:'Choose the correct Past Perfect sentence:',opts:['She has eaten before he arrived.','She had eaten before he arrived.','She have eaten before he arrived.','She eating before he arrived.'],c:1},
+    {q:'In "He had gone home before it rained" — which action happened FIRST?',opts:['It rained','He went home','Both at the same time','Cannot be determined'],c:1},
+    {q:'O que o Past Perfect expressa?',opts:['Uma ação acontecendo agora','Uma ação que aconteceu ANTES de outra no passado','Uma ação futura','Uma ação habitual'],c:1},
+    {q:'Complete: "By the time she arrived, I _____ (finish) the homework."',opts:['had finished','finished','have finished','was finishing'],c:0},
+    {q:'Which sentence is NOT in Past Perfect?',opts:['She had read the book.','They had left when I arrived.','He was eating dinner.','We had studied before the exam.'],c:2},
+  ],
+  s2:[
+    {q:'What is the correct structure for Present Continuous?',opts:['Subject + verb + ed','Subject + am/is/are + verb + ing','Subject + had + past participle','Subject + will + verb'],c:1},
+    {q:'Which sentence is in Present Continuous?',opts:['She reads every day.','She was reading yesterday.','She is reading right now.','She read a book last week.'],c:2},
+    {q:'What is the correct -ING form of "write"?',opts:['writeing','writting','writing','writ'],c:2},
+    {q:'Complete: "They _____ soccer right now."',opts:['plays','are playing','played','is playing'],c:1},
+    {q:'What is the correct -ING form of "run"?',opts:['running','runing','runned','runs'],c:0},
+    {q:'Complete: "He _____ his homework right now." (do)',opts:['does doing','is doing','are doing','am doing'],c:1},
+  ],
+  s3:[
+    {q:'What is the FIRST step of the Writing Process?',opts:['Drafting','Editing','Revising','Prewriting'],c:3},
+    {q:'During which step do you FIX spelling and grammar mistakes?',opts:['Revising','Editing','Drafting','Publishing'],c:1},
+    {q:'What is the LAST step?',opts:['Revising','Drafting','Editing','Publishing'],c:3},
+    {q:'During Revising, what do you do?',opts:['Fix spelling mistakes','Improve ideas and add details','Write the final copy','Brainstorm new ideas'],c:1},
+    {q:'In which step do you brainstorm and organize ideas?',opts:['Prewriting','Drafting','Revising','Editing'],c:0},
+    {q:'What is the difference between Revising and Editing?',opts:['No difference','Revising = ideas, Editing = grammar/spelling','Revising = grammar, Editing = ideas','Both fix grammar'],c:1},
+  ],
+  s4:[
+    {q:'Which of the following is a Linking Verb?',opts:['run','jump','seem','eat'],c:2},
+    {q:'In "She looks happy", what is the linking verb?',opts:['She','looks','happy','None'],c:1},
+    {q:'Which sentence uses a linking verb?',opts:['He runs in the park.','She writes a letter.','The cake smells delicious.','They play soccer.'],c:2},
+    {q:'Complete: "Peter _____ very frustrated in the story."',opts:['runs','feels','jumps','writes'],c:1},
+    {q:'What do linking verbs connect the subject to?',opts:['An adjective or noun','Another verb','An adverb only','A preposition'],c:0},
+  ],
+  s5:[
+    {q:'In "Swimming is my favorite sport", what is the verbal?',opts:['is','my','Swimming','sport'],c:2},
+    {q:'Which sentence uses a verbal (not a regular verb)?',opts:['She runs fast.','Cooking is delicious.','They play outside.','He reads every night.'],c:1},
+    {q:'In "Peter likes to help his mom", "to help" is a(n):',opts:['action verb','linking verb','verbal (infinitive)','adjective'],c:2},
+    {q:'In "Running every day is healthy", what is RUNNING?',opts:['Verbal (gerund) — subject','Action verb','Linking verb','Adjective'],c:0},
+  ],
+  s6:[
+    {q:"What is Peter's main problem in the story?",opts:["He doesn't like school.",'Fudge always causes problems and gets all the attention.','He lost his dog.','He moved to a new city.'],c:1},
+    {q:'What did Fudge eat that made Peter very upset?',opts:['A sandwich','His homework','His pet turtle Dribble','A book'],c:2},
+    {q:'How does the story end for Peter?',opts:['He runs away from home.','His parents give him a dog.','Fudge apologizes.','Peter moves away.'],c:1},
+    {q:'Which personality trait best describes Fudge?',opts:['responsible','shy','naughty','serious'],c:2},
+    {q:'Where does the story take place?',opts:['New York City','Los Angeles','London','Chicago'],c:0},
+  ],
+  s7:[
+    {q:'Which is a personality trait?',opts:['tall','red','kind','big'],c:2},
+    {q:'Which adjective describes appearance?',opts:['honest','helpful','beautiful','brave'],c:2},
+    {q:'"She is very generous." — "generous" is a:',opts:['verb','noun','personality trait','adverb'],c:2},
+    {q:'Choose the sentence with an adjective of appearance:',opts:['He is very patient.','She is honest.','The house is enormous.','The student is responsible.'],c:2},
+    {q:'Which word is a personality trait that describes Fudge?',opts:['tall','naughty','small','blue-eyed'],c:1},
+  ],
+  s8:[
+    {q:'What do we use Comparatives for?',opts:['Compare 3 or more things','Compare 2 things','Describe a noun','Show an action'],c:1},
+    {q:'What is the comparative of "interesting"?',opts:['interestinger','the most interesting','more interesting','interestingest'],c:2},
+    {q:'"Fudge is _____ than Peter." (naughty)',opts:['naughtier','more naughty','naughtiest','the most naughty'],c:0},
+    {q:'What is the superlative of "good"?',opts:['gooder','more good','the goodest','the best'],c:3},
+    {q:'"This is _____ building in the city." (tall)',opts:['more tall building','the tallest building','the more tall building','tallest building'],c:1},
+    {q:'What is the comparative of "bad"?',opts:['badder','more bad','worse','the worst'],c:2},
+  ],
+  s9:[
+    {q:'What is the adverb of manner for "quick"?',opts:['quicker','quickly','quickest','quickful'],c:1},
+    {q:'What is the adverb of manner for "good"?',opts:['goodly','better','well','gooder'],c:2},
+    {q:'Where do adverbs of manner usually go in a sentence?',opts:['Before the subject','After the verb','Before the adjective','Always at the beginning'],c:1},
+    {q:'Choose the sentence with the correct adverb of manner:',opts:['She sings beautiful.','She sings beautifully.','She sings more beautiful.','She sings beautifuly.'],c:1},
+    {q:'What is the adverb form of "fast"?',opts:['fastly','faster','fast','fastest'],c:2},
+    {q:'What is the adverb form of "happy"?',opts:['happily','happly','happyly','hapily'],c:0},
+  ],
+};
+
+function renderQuiz(id, key){
+  const el = document.getElementById(id);
+  if(!el||!quizData[key]) return;
+  const letters=['A','B','C','D'];
+  el.innerHTML = quizData[key].map((q,qi)=>`
+    <div class="question-block">
+      <div class="question-num">Pergunta ${qi+1}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options" id="opts-${id}-${qi}">
+        ${q.opts.map((o,oi)=>`
+          <button class="option-btn" onclick="check(this,'${id}',${qi},${oi},${q.c},'${key}')">
+            <span class="option-letter">${letters[oi]}</span>${o}
+          </button>`).join('')}
+      </div>
+      <div class="feedback-msg" id="fb-${id}-${qi}"></div>
+    </div>`).join('');
+}
+
+function check(btn,id,qi,chosen,correct,key){
+  const opts = document.querySelectorAll(`#opts-${id}-${qi} .option-btn`);
+  opts.forEach(b=>b.disabled=true);
+  const fb = document.getElementById(`fb-${id}-${qi}`);
+  if(chosen===correct){
+    btn.classList.add('correct');
+    fb.className='feedback-msg correct';
+    fb.innerHTML='✅ Correto! · Correct! 🎉';
+    fb.style.display='flex';
+    score+=10;
+    document.getElementById('scoreDisplay').textContent=score;
+    launchConfetti();
+  } else {
+    btn.classList.add('wrong');
+    opts[correct].classList.add('correct');
+    fb.className='feedback-msg wrong';
+    fb.innerHTML=`❌ A resposta certa é: <strong>${quizData[key][qi].opts[correct]}</strong>`;
+    fb.style.display='flex';
+  }
+  answered++;
+  const si = parseInt(key.replace('s',''));
+  if(!secDone[si]) secDone[si]=0;
+  secDone[si]++;
+  updateProgress();
+  if(secDone[si]>=quizData[key].length){
+    document.getElementById(`complete-s${si}`).classList.add('show');
+    document.getElementById(`next-s${si}`).classList.add('show');
+    const dots=document.querySelectorAll('.nav-dot');
+    if(dots[si]){dots[si].classList.remove('active');dots[si].classList.add('done');}
+    if(si<TOTAL-1&&dots[si+1]) dots[si+1].classList.add('active');
+  }
+}
+
+function updateProgress(){
+  const total=Object.values(quizData).reduce((a,q)=>a+q.length,0);
+  document.getElementById('progressFill').style.width=(answered/total*100)+'%';
+}
+
+function goToSection(idx){
+  if(idx===3){const ud=document.getElementById('ud1');if(ud){ud.style.display='';setTimeout(()=>ud.classList.add('visible'),50);}}
+  if(idx===7){const ud=document.getElementById('ud2');if(ud){ud.style.display='';setTimeout(()=>ud.classList.add('visible'),50);}}
+  const el=document.getElementById(`sec${idx}`);
+  if(!el) return;
+  el.style.display='';
+  el.classList.add('reveal');
+  setTimeout(()=>el.classList.add('visible'),50);
+  setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),80);
+}
+
+function showTrophy(){
+  document.getElementById('finalScore').textContent=score;
+  const total=Object.values(quizData).reduce((a,q)=>a+q.length,0);
+  const pct=Math.round(score/(total*10)*100);
+  document.getElementById('finalMsg').textContent=
+    pct>=90?'🌟 Exceptional! Desempenho excepcional!':
+    pct>=70?'👏 Very well done! Muito bem!':
+    '📚 Keep studying! Continue estudando!';
+  document.getElementById('finalTrophy').classList.add('show');
+  document.getElementById('finalTrophy').scrollIntoView({behavior:'smooth'});
+  launchConfetti();launchConfetti();
+}
+
+function launchConfetti(){
+  const c=document.getElementById('confettiContainer');
+  const colors=['#f97316','#fb923c','#fbbf24','#f59e0b','#fdba74','#fed7aa','#fff'];
+  for(let i=0;i<22;i++){
+    const p=document.createElement('div');
+    p.className='confetti-piece';
+    p.style.cssText=`left:${Math.random()*100}vw;top:-10px;background:${colors[Math.floor(Math.random()*colors.length)]};width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${.7+Math.random()*.8}s;animation-delay:${Math.random()*.3}s`;
+    c.appendChild(p);
+    setTimeout(()=>p.remove(),1500);
+  }
+}
+
+function checkFills(btn){
+  const ex=btn.closest('.exercise');
+  ex.querySelectorAll('.fill-input').forEach(inp=>{
+    const ans=inp.dataset.ans.trim().toLowerCase();
+    const val=inp.value.trim().toLowerCase();
+    inp.classList.toggle('ok',val===ans);
+    inp.classList.toggle('err',val!==ans);
+    if(val===ans) inp.value=inp.dataset.ans;
+  });
+}
+
+function toggleOpen(btn){
+  const ans=btn.nextElementSibling;
+  if(ans) ans.style.display=ans.style.display==='block'?'none':'block';
+}
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+document.querySelectorAll('.nav-dot').forEach(dot=>{
+  dot.addEventListener('click',()=>{
+    const idx=parseInt(dot.dataset.section);
+    const el=document.getElementById(`sec${idx}`);
+    if(el){el.style.display='';el.scrollIntoView({behavior:'smooth'});}
+  });
+});
+
+for(let i=0;i<TOTAL;i++){
+  renderQuiz(`quiz-s${i}`,`s${i}`);
+}
+document.querySelector('#sec0').classList.add('visible');
+document.querySelector('#ud0').classList.add('visible');
+</script>
+</body>
+</html>
