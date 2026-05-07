@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math · Geometry – Triangles · MapleBear</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange-50: #fff7ed;
+    --orange-100: #ffedd5;
+    --orange-200: #fed7aa;
+    --orange-300: #fdba74;
+    --orange-400: #fb923c;
+    --orange-500: #f97316;
+    --orange-600: #ea580c;
+    --orange-700: #c2410c;
+    --white: #ffffff;
+    --glass-bg: rgba(255,255,255,0.65);
+    --glass-border: rgba(249,115,22,0.18);
+    --shadow-soft: 0 8px 32px rgba(249,115,22,0.10);
+    --shadow-card: 0 4px 24px rgba(249,115,22,0.13);
+    --radius-xl: 2rem;
+    --radius-lg: 1.25rem;
+    --radius-md: 0.875rem;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 40%, #fff3e0 70%, #fde8d0 100%);
+    min-height: 100vh; color: #3a1a00;
+  }
+  body::before {
+    content: ''; position: fixed; top: -120px; right: -120px;
+    width: 520px; height: 520px;
+    background: radial-gradient(circle, rgba(251,146,60,0.18) 0%, transparent 70%);
+    border-radius: 50%; pointer-events: none; z-index: 0;
+  }
+  body::after {
+    content: ''; position: fixed; bottom: -100px; left: -100px;
+    width: 440px; height: 440px;
+    background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
+    border-radius: 50%; pointer-events: none; z-index: 0;
+  }
+  /* HEADER */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(18px) saturate(1.4);
+    background: rgba(255,255,255,0.72);
+    border-bottom: 1.5px solid rgba(249,115,22,0.15);
+    box-shadow: 0 2px 18px rgba(249,115,22,0.08);
+    padding: 0.7rem 2rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    position: relative;
+  }
+  .logo { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
+  .logo-text { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1.2rem; color: var(--orange-600); line-height: 1; }
+  .logo-sub { font-size: 0.72rem; font-weight: 600; color: var(--orange-400); letter-spacing: 0.04em; }
+  .header-center { flex: 1; max-width: 280px; }
+  .progress-label { font-size: 0.7rem; font-weight: 700; color: var(--orange-500); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .progress-track { height: 8px; background: rgba(253,186,116,0.35); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--orange-400), var(--orange-600)); border-radius: 99px; transition: width 0.6s cubic-bezier(.4,0,.2,1); width: 0%; }
+  .score-badge { background: linear-gradient(135deg, var(--orange-400), var(--orange-600)); color: #fff; font-weight: 800; font-size: 0.95rem; padding: 0.38rem 0.9rem; border-radius: 99px; box-shadow: 0 3px 12px rgba(234,88,12,0.28); white-space: nowrap; }
+  /* HERO */
+  .hero { text-align: center; padding: 3.5rem 1.5rem 2rem; position: relative; z-index: 1; }
+  .hero-badge { display: inline-block; background: linear-gradient(90deg, #fb923c22, #f9731611); border: 1.5px solid var(--orange-300); border-radius: 99px; padding: 0.3rem 1rem; font-size: 0.78rem; font-weight: 700; color: var(--orange-600); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1.1rem; }
+  .hero h1 { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: clamp(2rem,5vw,3rem); color: var(--orange-700); line-height: 1.15; margin-bottom: 0.5rem; }
+  .hero p { font-size: 1.05rem; color: #a05022; max-width: 580px; margin: 0 auto; font-weight: 500; }
+  /* SECTION NAV */
+  .section-nav { display: flex; justify-content: center; gap: 1.1rem; padding: 1rem 0 0.5rem; position: relative; z-index: 1; flex-wrap: wrap; }
+  .nav-dot { width: 38px; height: 38px; border-radius: 50%; background: var(--orange-200); border: 2.5px solid var(--orange-300); cursor: pointer; transition: all 0.25s; display: flex; align-items: center; justify-content: center; font-size: 1.05rem; font-weight: 800; color: var(--orange-700); box-shadow: 0 2px 8px rgba(249,115,22,0.10); }
+  .nav-dot.active { background: var(--orange-500); border-color: var(--orange-600); color: #fff; transform: scale(1.18); box-shadow: 0 4px 16px rgba(249,115,22,0.18); }
+  .nav-dot.done { background: var(--orange-400); border-color: var(--orange-500); color: #fff; }
+  /* LESSON SECTION */
+  .lesson-section { max-width: 900px; margin: 2rem auto; padding: 0 1rem; position: relative; z-index: 1; }
+  .section-card { background: var(--glass-bg); backdrop-filter: blur(20px) saturate(1.3); border: 1.5px solid var(--glass-border); border-radius: var(--radius-xl); box-shadow: var(--shadow-soft); padding: 2rem 2.2rem 1.8rem; margin-bottom: 1.5rem; position: relative; overflow: visible; transition: transform 0.25s, box-shadow 0.25s; }
+  .section-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(249,115,22,0.14); }
+  .section-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--orange-400), var(--orange-600), var(--orange-300)); border-radius: var(--radius-xl) var(--radius-xl) 0 0; }
+  .section-header { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 1.5rem; }
+  .section-icon { width: 52px; height: 52px; background: linear-gradient(135deg, var(--orange-400), var(--orange-600)); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; box-shadow: 0 4px 16px rgba(234,88,12,0.22); flex-shrink: 0; }
+  .section-title { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1.5rem; color: var(--orange-700); }
+  .section-subtitle { font-size: 0.78rem; font-weight: 700; color: var(--orange-400); text-transform: uppercase; letter-spacing: 0.07em; }
+  .section-body { font-size: 1rem; line-height: 1.8; color: #4a2000; }
+  .section-body p { margin-bottom: 1rem; }
+  /* KEY TERM with PT translation — hover tooltip */
+  .kt { position: relative; display: inline; cursor: help; }
+  .kt b { font-weight: 800; color: var(--orange-700); border-bottom: 1.5px dotted var(--orange-400); }
+  .kt em {
+    display: none; position: absolute; bottom: calc(100% + 7px); left: 50%;
+    transform: translateX(-50%); background: rgba(58,26,0,0.93); color: #fff;
+    border-radius: var(--radius-md); padding: 0.28rem 0.65rem; font-size: 0.75em;
+    font-style: italic; font-weight: 600; white-space: nowrap; z-index: 300;
+    pointer-events: none; box-shadow: 0 3px 10px rgba(0,0,0,0.20); line-height: 1.4;
+  }
+  .kt em::after {
+    content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    border: 5px solid transparent; border-top-color: rgba(58,26,0,0.93);
+  }
+  .kt:hover em { display: block; }
+  /* KEY PHRASES */
+  .key-phrase-en { background: linear-gradient(90deg, rgba(251,191,36,0.18), rgba(245,158,11,0.08)); border-left: 4px solid #f59e0b; border-radius: 0 var(--radius-md) var(--radius-md) 0; padding: 0.7rem 1.1rem; margin: 1.2rem 0; font-weight: 700; font-size: 1.02rem; color: #92400e; font-style: italic; position: relative; }
+  .key-phrase-en::before { content: '🔑 Key Idea'; position: absolute; top: -0.62rem; left: 0.8rem; font-size: 0.65rem; font-weight: 800; background: #f59e0b; color: #fff; padding: 0.15rem 0.45rem; border-radius: 99px; }
+  /* TRIANGLE GRID */
+  .tri-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; margin: 1.5rem 0; }
+  .tri-card { background: rgba(255,255,255,0.75); border: 1.5px solid var(--orange-200); border-radius: var(--radius-lg); padding: 1.2rem 1rem 1rem; text-align: center; transition: transform 0.2s, box-shadow 0.2s; }
+  .tri-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(249,115,22,0.15); }
+  .tri-card svg { display: block; margin: 0 auto; width: 100%; max-width: 200px; height: auto; }
+  .tri-label { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1.05rem; color: var(--orange-700); margin-top: 0.6rem; }
+  .tri-sublabel { font-size: 0.79rem; color: #a05022; font-weight: 600; margin-top: 0.2rem; font-style: italic; }
+  .tri-tag { display: inline-block; margin-top: 0.5rem; padding: 0.2rem 0.8rem; border-radius: 99px; font-size: 0.72rem; font-weight: 700; }
+  .tag-r { background: #E6F1FB; color: #0C447C; }
+  .tag-a { background: #EAF3DE; color: #27500A; }
+  .tag-o { background: #FBEAF0; color: #72243E; }
+  .tag-eq { background: #EEEDFE; color: #3C3489; }
+  .tag-is { background: #FAEEDA; color: #633806; }
+  .tag-sc { background: #F3F4F6; color: #374151; }
+  /* VOCAB BOX */
+  .vocab-box { background: linear-gradient(135deg, rgba(255,237,213,0.8), rgba(255,247,237,0.9)); border: 1.5px solid rgba(253,186,116,0.5); border-radius: var(--radius-lg); padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+  .vocab-title { font-family: 'Baloo 2', cursive; font-weight: 800; color: var(--orange-600); font-size: 1rem; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem; }
+  .vocab-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .vocab-term { background: white; border: 1.5px solid var(--orange-300); border-radius: 99px; padding: 0.28rem 0.85rem; font-size: 0.83rem; font-weight: 700; color: var(--orange-700); cursor: pointer; transition: all 0.2s; position: relative; }
+  .vocab-term:hover { background: var(--orange-500); color: white; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(249,115,22,0.28); }
+  .vocab-tooltip { display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: rgba(58,26,0,0.93); color: white; border-radius: var(--radius-md); padding: 0.5rem 0.85rem; font-size: 0.78rem; font-weight: 600; white-space: nowrap; z-index: 200; box-shadow: 0 4px 16px rgba(0,0,0,0.18); }
+  .vocab-tooltip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: rgba(58,26,0,0.93); }
+  .vocab-term:hover .vocab-tooltip { display: block; }
+  /* HIGHLIGHT BOX */
+  .info-box { background: linear-gradient(90deg, rgba(238,237,254,0.8), rgba(197,194,252,0.2)); border-left: 4px solid #6366f1; border-radius: 0 var(--radius-md) var(--radius-md) 0; padding: 0.8rem 1.1rem; margin: 1.2rem 0; font-weight: 600; font-size: 0.95rem; color: #3730a3; }
+  /* PRACTICE SECTION */
+  .practice-card { background: rgba(255,255,255,0.72); border: 1.5px solid var(--orange-200); border-radius: var(--radius-lg); padding: 1.2rem 1.5rem; margin-bottom: 1rem; }
+  .practice-num { font-size: 0.72rem; font-weight: 800; color: var(--orange-400); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+  .practice-text { font-weight: 700; font-size: 0.97rem; color: #3a1a00; margin-bottom: 0.6rem; line-height: 1.6; }
+  .practice-items { list-style: none; display: flex; flex-direction: column; gap: 0.35rem; padding-left: 0.3rem; }
+  .practice-items li { font-size: 0.93rem; color: #4a2000; font-weight: 600; display: flex; gap: 0.5rem; line-height: 1.55; }
+  .practice-items li::before { content: '→'; color: var(--orange-400); flex-shrink: 0; }
+  /* POLYGON GRID */
+  .polygon-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1.2rem 0; }
+  .poly-card { background: rgba(255,255,255,0.75); border: 1.5px solid var(--orange-200); border-radius: var(--radius-md); padding: 0.9rem 0.7rem; text-align: center; transition: transform 0.2s; }
+  .poly-card:hover { transform: translateY(-2px); }
+  .poly-name { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 0.92rem; color: var(--orange-700); margin-top: 0.5rem; }
+  .poly-info { font-size: 0.72rem; color: #a05022; font-weight: 600; }
+  /* QUIZ */
+  .quiz-wrap { background: var(--glass-bg); backdrop-filter: blur(20px) saturate(1.3); border: 1.5px solid var(--glass-border); border-radius: var(--radius-xl); box-shadow: var(--shadow-card); padding: 1.8rem 2.2rem; margin-bottom: 2rem; position: relative; overflow: hidden; }
+  .quiz-wrap::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #f59e0b, var(--orange-500), #f97316); border-radius: var(--radius-xl) var(--radius-xl) 0 0; }
+  .quiz-head { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem; }
+  .quiz-title { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1.15rem; color: var(--orange-700); }
+  .q-progress { height: 6px; background: rgba(253,186,116,0.3); border-radius: 99px; margin-bottom: 1.5rem; overflow: hidden; }
+  .q-progress-fill { height: 100%; background: linear-gradient(90deg, var(--orange-400), var(--orange-600)); border-radius: 99px; transition: width 0.4s ease; width: 0%; }
+  .q-counter { font-size: 0.72rem; font-weight: 800; color: var(--orange-400); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+  .q-text { font-weight: 700; font-size: 1rem; color: #3a1a00; margin-bottom: 1rem; line-height: 1.6; }
+  .q-opts { display: flex; flex-direction: column; gap: 0.6rem; }
+  .opt-btn { background: rgba(255,255,255,0.8); border: 2px solid rgba(253,186,116,0.4); border-radius: var(--radius-md); padding: 0.75rem 1.1rem; font-family: 'Nunito', sans-serif; font-size: 0.93rem; font-weight: 600; color: #5c2800; cursor: pointer; text-align: left; transition: all 0.2s; display: flex; align-items: center; gap: 0.7rem; }
+  .opt-btn:hover:not(:disabled) { background: rgba(255,237,213,0.95); border-color: var(--orange-400); transform: translateX(4px); }
+  .opt-ltr { width: 28px; height: 28px; background: linear-gradient(135deg, var(--orange-200), var(--orange-300)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.82rem; color: var(--orange-700); flex-shrink: 0; transition: all 0.2s; }
+  .opt-btn.correct { background: rgba(187,247,208,0.7); border-color: #22c55e; color: #14532d; }
+  .opt-btn.correct .opt-ltr { background: #22c55e; color: white; }
+  .opt-btn.wrong { background: rgba(254,202,202,0.7); border-color: #ef4444; color: #7f1d1d; }
+  .opt-btn.wrong .opt-ltr { background: #ef4444; color: white; }
+  .opt-btn:disabled { cursor: default; }
+  .q-fb { border-radius: var(--radius-md); padding: 0.7rem 1rem; font-weight: 700; font-size: 0.9rem; margin-top: 0.75rem; display: none; gap: 0.5rem; align-items: center; }
+  .q-fb.show { display: flex; }
+  .q-fb.correct { background: rgba(187,247,208,0.6); color: #15803d; border: 1.5px solid #86efac; }
+  .q-fb.wrong { background: rgba(254,202,202,0.6); color: #dc2626; border: 1.5px solid #fca5a5; }
+  .next-q { margin-top: 1rem; padding: 0.75rem 1.8rem; background: linear-gradient(135deg, var(--orange-400), var(--orange-600)); color: white; border: none; border-radius: 99px; font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 0.95rem; cursor: pointer; box-shadow: 0 4px 16px rgba(234,88,12,0.25); display: none; transition: all 0.2s; }
+  .next-q.show { display: inline-block; }
+  .next-q:hover { transform: translateY(-2px); }
+  /* QUIZ RESULTS */
+  .quiz-results { text-align: center; padding: 1.5rem 0.5rem; }
+  .quiz-results .r-emoji { font-size: 4rem; margin-bottom: 0.75rem; }
+  .quiz-results h3 { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1.7rem; color: var(--orange-700); }
+  .r-score { font-family: 'Baloo 2', cursive; font-size: 3.5rem; font-weight: 800; color: var(--orange-600); line-height: 1; margin: 0.6rem 0; }
+  .r-pct { font-size: 14px; color: #a05022; font-weight: 600; margin-bottom: 1.5rem; }
+  .r-wrong-list { text-align: left; margin: 1rem 0; }
+  .r-wrong-item { background: rgba(255,255,255,0.7); border-radius: var(--radius-md); padding: 0.7rem 1rem; margin-bottom: 0.5rem; font-size: 13px; color: #3a1a00; border-left: 4px solid #E24B4A; }
+  .r-wrong-item .ca { color: #3B6D11; font-weight: 700; }
+  .r-restart { padding: 0.8rem 2rem; background: linear-gradient(135deg, var(--orange-400), var(--orange-600)); border: none; border-radius: 99px; font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1rem; cursor: pointer; color: white; box-shadow: 0 4px 16px rgba(234,88,12,0.25); margin-top: 0.75rem; transition: all 0.2s; }
+  .r-restart:hover { transform: translateY(-2px); }
+  /* SECTION NAV BTN */
+  .next-sec-btn { display: none; margin: 1rem auto 2rem; padding: 0.8rem 2rem; background: linear-gradient(135deg, var(--orange-400), var(--orange-600)); color: white; border: none; border-radius: 99px; font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 16px rgba(234,88,12,0.28); transition: all 0.25s; letter-spacing: 0.04em; }
+  .next-sec-btn:hover { transform: translateY(-2px) scale(1.03); }
+  .next-sec-btn.show { display: block; }
+  /* ANIMATIONS */
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  .fade-in { animation: fadeInUp 0.5s ease both; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  /* RESPONSIVE */
+  @media (max-width: 650px) {
+    header { padding: 0.6rem 1rem; }
+    .header-center { max-width: 120px; }
+    .section-card, .quiz-wrap { padding: 1.3rem 1.1rem; }
+    .tri-grid { grid-template-columns: 1fr 1fr; }
+    .logo-text { font-size: 1rem; }
+  }
+  @media (max-width: 420px) {
+    .tri-grid { grid-template-columns: 1fr; }
+    .polygon-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header style="position:relative;">
+  <a href="index.html" class="logo" style="text-decoration:none;">
+    <img src="logo1.png" alt="Logo" style="width:38px;height:38px;object-fit:contain;border-radius:8px;background:#fff;box-shadow:0 2px 8px rgba(249,115,22,0.10);">
+    <div>
+      <div class="logo-text">Aulas Master Educação</div>
+      <div class="logo-sub">MapleBear · Math Y5</div>
+    </div>
+  </a>
+  <div class="header-center">
+    <div class="progress-label">Progress · Progresso</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+  <div class="score-badge">⭐ <span id="scoreDisplay">0</span> pts</div>
+  <img src="logo2.png" alt="Logo 2" style="position:absolute;right:2rem;top:50%;transform:translateY(-50%);width:38px;height:38px;object-fit:contain;border-radius:8px;background:#fff;box-shadow:0 2px 8px rgba(249,115,22,0.10);">
+</header>
+
+<!-- ══════════════ HERO ══════════════ -->
+<div class="hero fade-in">
+  <div class="hero-badge">📐 Math · Geometry · Year 5</div>
+  <h1>Triangles <span style="font-size:.55em;color:var(--orange-500);">Triângulos</span></h1>
+  <p>Shapes, angles, and classification — from the basics to combining types.</p>
+</div>
+
+<!-- ══════════════ NAV DOTS ══════════════ -->
+<div class="section-nav" id="sectionNav">
+  <div class="nav-dot active" data-section="0" title="What is a Triangle?">1</div>
+  <div class="nav-dot" data-section="1" title="By Angles">2</div>
+  <div class="nav-dot" data-section="2" title="By Sides">3</div>
+  <div class="nav-dot" data-section="3" title="Practice">4</div>
+  <div class="nav-dot" data-section="4" title="Quiz">5</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 0 — WHAT IS A TRIANGLE?
+══════════════════════════════════════════════════ -->
+<div class="lesson-section reveal" id="sec0">
+
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">📐</div>
+      <div>
+        <div class="section-subtitle">Section 1 · Seção 1</div>
+        <div class="section-title">What is a Triangle? <span style="font-size:.6em;color:var(--orange-400);">O que é um Triângulo?</span></div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>
+        A <span class="kt"><b>triangle</b><em>triângulo</em></span> is a
+        <span class="kt"><b>polygon</b><em>polígono</em></span> with exactly
+        <strong>3 <span class="kt"><b>sides</b><em>lados</em></span></strong> and
+        <strong>3 <span class="kt"><b>angles</b><em>ângulos</em></span></strong>.
+        Each corner where two sides meet is called a
+        <span class="kt"><b>vertex</b><em>vértice</em></span>
+        (plural: <span class="kt"><b>vertices</b><em>vértices</em></span>).
+      </p>
+
+      <!-- SVG: Basic labeled triangle -->
+      <div style="display:flex;justify-content:center;margin:1.5rem 0;">
+        <svg viewBox="0 0 300 200" width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Fill -->
+          <polygon points="150,18 30,178 270,178" fill="#FFF3E0" stroke="#ea580c" stroke-width="2.5" stroke-linejoin="round"/>
+          <!-- Angle arc at A (top) -->
+          <path d="M 138,38 A 24,24 0 0,1 162,38" fill="none" stroke="#ea580c" stroke-width="1.8"/>
+          <!-- Angle arc at B (bottom-left) -->
+          <path d="M 48,165 A 24,24 0 0,1 54,144" fill="none" stroke="#ea580c" stroke-width="1.8"/>
+          <!-- Angle arc at C (bottom-right) -->
+          <path d="M 246,144 A 24,24 0 0,1 252,165" fill="none" stroke="#ea580c" stroke-width="1.8"/>
+          <!-- Vertex labels -->
+          <text x="143" y="14" font-family="Baloo 2, sans-serif" font-size="16" font-weight="800" fill="#c2410c" text-anchor="middle">A</text>
+          <text x="18" y="190" font-family="Baloo 2, sans-serif" font-size="16" font-weight="800" fill="#c2410c">B</text>
+          <text x="270" y="190" font-family="Baloo 2, sans-serif" font-size="16" font-weight="800" fill="#c2410c">C</text>
+          <!-- Side labels -->
+          <text x="82" y="112" font-family="Nunito, sans-serif" font-size="12" font-weight="700" fill="#f97316" transform="rotate(-55,82,112)">side AB</text>
+          <text x="210" y="100" font-family="Nunito, sans-serif" font-size="12" font-weight="700" fill="#f97316" transform="rotate(55,210,100)">side AC</text>
+          <text x="150" y="172" font-family="Nunito, sans-serif" font-size="12" font-weight="700" fill="#f97316" text-anchor="middle">side BC</text>
+          <!-- Angle labels -->
+          <text x="150" y="54" font-family="Nunito, sans-serif" font-size="11" fill="#c2410c" text-anchor="middle" font-weight="700">∠A</text>
+          <text x="68" y="152" font-family="Nunito, sans-serif" font-size="11" fill="#c2410c" font-weight="700">∠B</text>
+          <text x="226" y="152" font-family="Nunito, sans-serif" font-size="11" fill="#c2410c" font-weight="700">∠C</text>
+          <!-- 180° note -->
+          <text x="150" y="195" font-family="Baloo 2, sans-serif" font-size="13" fill="#ea580c" text-anchor="middle" font-weight="800">∠A + ∠B + ∠C = 180°</text>
+        </svg>
+      </div>
+
+      <div class="key-phrase-en">
+        The <strong>sum of all interior angles</strong> of any triangle always equals <strong>180°</strong>.<br>
+        <span style="font-size:0.88em;color:#b45309;">A soma de todos os ângulos interiores de qualquer triângulo é sempre igual a 180°.</span>
+      </div>
+
+      <p>
+        Triangles are one of the most fundamental shapes in
+        <span class="kt"><b>geometry</b><em>geometria</em></span>.
+        They appear everywhere in architecture, engineering, and nature because the triangle is the only
+        <span class="kt"><b>rigid</b><em>rígido</em></span> polygon — it cannot be deformed without changing the length of a side.
+      </p>
+    </div>
+
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulary · Vocabulário</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Triangle · Triângulo<div class="vocab-tooltip">Polygon with 3 sides and 3 angles.</div></div>
+        <div class="vocab-term">Polygon · Polígono<div class="vocab-tooltip">Closed shape with straight sides.</div></div>
+        <div class="vocab-term">Vertex · Vértice<div class="vocab-tooltip">Corner where two sides meet.</div></div>
+        <div class="vocab-term">Interior angle · Ângulo interno<div class="vocab-tooltip">Angle inside the polygon.</div></div>
+        <div class="vocab-term">Side · Lado<div class="vocab-tooltip">A straight line segment of the shape.</div></div>
+        <div class="vocab-term">Geometry · Geometria<div class="vocab-tooltip">Branch of math about shapes and space.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="next-sec-btn show" onclick="goToSection(1)">Section 2: Classifying by Angles ➜</button>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 1 — CLASSIFYING BY ANGLES
+══════════════════════════════════════════════════ -->
+<div class="lesson-section reveal" id="sec1" style="display:none">
+
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">📏</div>
+      <div>
+        <div class="section-subtitle">Section 2 · Seção 2</div>
+        <div class="section-title">Classifying by Angles <span style="font-size:.6em;color:var(--orange-400);">Por Ângulos</span></div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>
+        We can classify triangles by looking at their
+        <span class="kt"><b>angles</b><em>ângulos</em></span>.
+        There are three types based on the size of the largest angle.
+      </p>
+
+      <div class="tri-grid">
+
+        <!-- RIGHT TRIANGLE -->
+        <div class="tri-card">
+          <svg viewBox="0 0 220 175" width="200" height="160" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="35,158 35,22 195,158" fill="#E6F1FB" stroke="#185FA5" stroke-width="2.5" stroke-linejoin="round"/>
+            <!-- Right angle square at B=(35,158) -->
+            <path d="M 35,140 L 53,140 L 53,158" fill="none" stroke="#185FA5" stroke-width="2"/>
+            <!-- Vertex labels -->
+            <text x="28" y="18" font-family="Baloo 2,sans-serif" font-size="14" font-weight="800" fill="#185FA5">A</text>
+            <text x="10" y="172" font-family="Baloo 2,sans-serif" font-size="14" font-weight="800" fill="#185FA5">B</text>
+            <text x="198" y="172" font-family="Baloo 2,sans-serif" font-size="14" font-weight="800" fill="#185FA5">C</text>
+            <!-- 90° label -->
+            <text x="58" y="153" font-family="Nunito,sans-serif" font-size="11" fill="#185FA5" font-weight="800">90°</text>
+            <!-- Hypotenuse label -->
+            <text x="122" y="82" font-family="Nunito,sans-serif" font-size="10" fill="#185FA5" font-weight="700" transform="rotate(40,122,82)">hypotenuse</text>
+          </svg>
+          <div class="tri-label">Right Triangle</div>
+          <div class="tri-sublabel">Triângulo Retângulo</div>
+          <div class="tri-tag tag-r">1 angle = 90°</div>
+        </div>
+
+        <!-- ACUTE TRIANGLE -->
+        <div class="tri-card">
+          <svg viewBox="0 0 220 175" width="200" height="160" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="110,18 22,158 198,158" fill="#EAF3DE" stroke="#3B6D11" stroke-width="2.5" stroke-linejoin="round"/>
+            <!-- Angle arcs: all points equidistant (d=22) from each vertex -->
+            <!-- A=(110,18): arc from (-14,+19) to (+14,+19) symmetric, sweep into triangle -->
+            <path d="M 96,38 A 22,22 0 0,1 124,38" fill="none" stroke="#3B6D11" stroke-width="1.8"/>
+            <!-- B=(22,158): BA unit=(0.532,-0.847) → (34,139); BC unit=(1,0) → (44,158) -->
+            <path d="M 34,139 A 22,22 0 0,1 44,158" fill="none" stroke="#3B6D11" stroke-width="1.8"/>
+            <!-- C=(198,158): CA unit=(-0.532,-0.847) → (186,139); CB unit=(-1,0) → (176,158) -->
+            <path d="M 186,139 A 22,22 0 0,0 176,158" fill="none" stroke="#3B6D11" stroke-width="1.8"/>
+            <!-- Labels -->
+            <text x="110" y="14" font-family="Baloo 2,sans-serif" font-size="14" font-weight="800" fill="#27500A" text-anchor="middle">A</text>
+            <text x="6" y="172" font-family="Baloo 2,sans-serif" font-size="14" font-weight="800" fill="#27500A">B</text>
+            <text x="200" y="172" font-family="Baloo 2,sans-serif" font-size="14" font-weight="800" fill="#27500A">C</text>
+            <text x="110" y="55" font-family="Nunito,sans-serif" font-size="10" fill="#3B6D11" text-anchor="middle" font-weight="700">&lt;90°</text>
+            <text x="47" y="146" font-family="Nunito,sans-serif" font-size="10" fill="#3B6D11" font-weight="700">&lt;90°</text>
+            <text x="155" y="146" font-family="Nunito,sans-serif" font-size="10" fill="#3B6D11" font-weight="700">&lt;90°</text>
+          </svg>
+          <div class="tri-label">Acute Triangle</div>
+          <div class="tri-sublabel">Triângulo Acutângulo</div>
+          <div class="tri-tag tag-a">All angles &lt; 90°</div>
+        </div>
+
+        <!-- OBTUSE TRIANGLE -->
+        <div class="tri-card">
+          <svg viewBox="0 0 240 185" width="200" height="160" xmlns="http://www.w3.org/2000/svg">
+            <!-- Obtuse at B(120,168): A(22,30), B(120,168), C(218,102) -->
+            <polygon points="22,30 120,168 218,102" fill="#FBEAF0" stroke="#993556" stroke-width="2.5" stroke-linejoin="round"/>
+            <!-- Wide arc at B to show obtuse angle (points equidistant from B) -->
+            <path d="M 103,144 A 30,30 0 0,1 145,151" fill="none" stroke="#993556" stroke-width="2"/>
+            <!-- Angle labels -->
+            <text x="22" y="26" font-family="Baloo 2,sans-serif" font-size="14" font-weight="800" fill="#72243E">A</text>
+            <text x="110" y="184" font-family="Baloo 2,sans-serif" font-size="14" font-weight="800" fill="#72243E">B</text>
+            <text x="220" y="100" font-family="Baloo 2,sans-serif" font-size="14" font-weight="800" fill="#72243E">C</text>
+            <text x="120" y="148" font-family="Nunito,sans-serif" font-size="10" fill="#993556" text-anchor="middle" font-weight="800">&gt;90°</text>
+          </svg>
+          <div class="tri-label">Obtuse Triangle</div>
+          <div class="tri-sublabel">Triângulo Obtusângulo</div>
+          <div class="tri-tag tag-o">1 angle &gt; 90°</div>
+        </div>
+
+      </div><!-- .tri-grid -->
+
+      <div class="key-phrase-en">
+        A <strong>right triangle</strong> has one angle of exactly 90°, marked with a small square symbol (□).<br>
+        <span style="font-size:0.88em;color:#b45309;">Um triângulo retângulo tem um ângulo de exatamente 90°, marcado com um símbolo de quadrado pequeno (□).</span>
+      </div>
+
+      <div class="info-box">
+        💡 The side opposite the right angle in a right triangle is called the <strong>hypotenuse</strong> <em style="font-weight:600;color:#4338ca;">(hipotenusa)</em> — it is always the longest side.
+      </div>
+
+      <p>
+        To identify triangle types, mathematicians use a
+        <span class="kt"><b>protractor</b><em>transferidor</em></span>
+        to measure
+        <span class="kt"><b>angles</b><em>ângulos</em></span>
+        and a
+        <span class="kt"><b>ruler</b><em>régua</em></span>
+        to measure
+        <span class="kt"><b>sides</b><em>lados</em></span>.
+      </p>
+    </div>
+
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulary · Vocabulário</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Right angle · Ângulo reto<div class="vocab-tooltip">Angle that measures exactly 90°.</div></div>
+        <div class="vocab-term">Acute · Agudo<div class="vocab-tooltip">Less than 90°. Afiado, menor que 90°.</div></div>
+        <div class="vocab-term">Obtuse · Obtuso<div class="vocab-tooltip">Greater than 90°. Maior que 90°.</div></div>
+        <div class="vocab-term">Hypotenuse · Hipotenusa<div class="vocab-tooltip">Longest side of a right triangle.</div></div>
+        <div class="vocab-term">Protractor · Transferidor<div class="vocab-tooltip">Tool used to measure angles.</div></div>
+        <div class="vocab-term">Degrees (°) · Graus<div class="vocab-tooltip">Unit used to measure angles.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="next-sec-btn show" onclick="goToSection(2)">Section 3: Classifying by Sides ➜</button>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 2 — CLASSIFYING BY SIDES
+══════════════════════════════════════════════════ -->
+<div class="lesson-section reveal" id="sec2" style="display:none">
+
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">📐</div>
+      <div>
+        <div class="section-subtitle">Section 3 · Seção 3</div>
+        <div class="section-title">Classifying by Sides <span style="font-size:.6em;color:var(--orange-400);">Por Lados</span></div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>
+        We can also classify triangles by the
+        <span class="kt"><b>length</b><em>comprimento</em></span>
+        of their
+        <span class="kt"><b>sides</b><em>lados</em></span>.
+        Small tick marks (✓) on sides show which sides are <strong>equal</strong> <em style="color:var(--orange-500);font-size:.9em;">(iguais)</em>.
+      </p>
+
+      <div class="tri-grid">
+
+        <!-- EQUILATERAL -->
+        <div class="tri-card">
+          <svg viewBox="0 0 240 195" width="200" height="165" xmlns="http://www.w3.org/2000/svg">
+            <!-- A=(120,12), B=(22,178), C=(218,178) — near-equilateral -->
+            <polygon points="120,12 22,178 218,178" fill="#EEEDFE" stroke="#534AB7" stroke-width="2.5" stroke-linejoin="round"/>
+            <!-- Tick marks on all 3 sides (single tick = equal) -->
+            <!-- Side AB midpoint≈(71,95), dir=(-98,166), L≈195, perp=(166,98)/195=(0.851,0.503) -->
+            <line x1="63" y1="91" x2="79" y2="99" stroke="#534AB7" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Side AC midpoint≈(169,95), dir=(98,166), L≈195, perp=(-166,98)/195=(-0.851,0.503) -->
+            <line x1="177" y1="91" x2="161" y2="99" stroke="#534AB7" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Side BC midpoint=(120,178), dir horizontal, perp vertical -->
+            <line x1="120" y1="170" x2="120" y2="186" stroke="#534AB7" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Angle labels -->
+            <text x="120" y="40" font-family="Nunito,sans-serif" font-size="11" fill="#3C3489" text-anchor="middle" font-weight="800">60°</text>
+            <text x="46" y="163" font-family="Nunito,sans-serif" font-size="11" fill="#3C3489" font-weight="800">60°</text>
+            <text x="186" y="163" font-family="Nunito,sans-serif" font-size="11" fill="#3C3489" font-weight="800">60°</text>
+            <!-- Vertex labels -->
+            <text x="113" y="9" font-family="Baloo 2,sans-serif" font-size="14" font-weight="800" fill="#3C3489">A</text>
+            <text x="6" y="192" font-family="Baloo 2,sans-serif" font-size="14" font-weight="800" fill="#3C3489">B</text>
+            <text x="220" y="192" font-family="Baloo 2,sans-serif" font-size="14" font-weight="800" fill="#3C3489">C</text>
+          </svg>
+          <div class="tri-label">Equilateral</div>
+          <div class="tri-sublabel">Equilátero</div>
+          <div class="tri-tag tag-eq">3 equal sides · 60° each</div>
+        </div>
+
+        <!-- ISOSCELES -->
+        <div class="tri-card">
+          <svg viewBox="0 0 240 195" width="200" height="165" xmlns="http://www.w3.org/2000/svg">
+            <!-- A=(120,15), B=(45,178), C=(195,178) -->
+            <polygon points="120,15 45,178 195,178" fill="#FAEEDA" stroke="#BA7517" stroke-width="2.5" stroke-linejoin="round"/>
+            <!-- Tick on AB: midpoint=(82.5,96.5), dir=(-75,163),L≈180, perp=(163,75)/180=(0.906,0.417) -->
+            <line x1="74" y1="93" x2="91" y2="100" stroke="#BA7517" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Tick on AC: midpoint=(157.5,96.5), dir=(75,163),L≈180, perp=(-163,75)/180 -->
+            <line x1="166" y1="93" x2="149" y2="100" stroke="#BA7517" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- No tick on BC (different length) -->
+            <!-- Vertex labels -->
+            <text x="113" y="11" font-family="Baloo 2,sans-serif" font-size="14" font-weight="800" fill="#633806">A</text>
+            <text x="29" y="192" font-family="Baloo 2,sans-serif" font-size="14" font-weight="800" fill="#633806">B</text>
+            <text x="197" y="192" font-family="Baloo 2,sans-serif" font-size="14" font-weight="800" fill="#633806">C</text>
+            <!-- Equal sides note: centered on each side's midpoint, rotated along the side -->
+            <!-- AB midpoint=(82,97), direction angle≈-65° from horizontal -->
+            <text x="82" y="97" font-family="Nunito,sans-serif" font-size="9" fill="#BA7517" font-weight="700" text-anchor="middle" transform="rotate(-65,82,97)">equal</text>
+            <!-- AC midpoint=(158,97), direction angle≈65° from horizontal -->
+            <text x="158" y="97" font-family="Nunito,sans-serif" font-size="9" fill="#BA7517" font-weight="700" text-anchor="middle" transform="rotate(65,158,97)">equal</text>
+          </svg>
+          <div class="tri-label">Isosceles</div>
+          <div class="tri-sublabel">Isósceles</div>
+          <div class="tri-tag tag-is">2 equal sides</div>
+        </div>
+
+        <!-- SCALENE -->
+        <div class="tri-card">
+          <svg viewBox="0 0 240 195" width="200" height="165" xmlns="http://www.w3.org/2000/svg">
+            <!-- A=(55,18), B=(18,170), C=(210,170) — all different sides -->
+            <polygon points="55,18 18,170 210,170" fill="#F9FAFB" stroke="#6B7280" stroke-width="2.5" stroke-linejoin="round"/>
+            <!-- Side length labels centered on each side's midpoint -->
+            <!-- AB midpoint=(36,94), angle≈-76° → rotate(-76,36,94) -->
+            <text x="36" y="94" font-family="Nunito,sans-serif" font-size="10" fill="#6B7280" font-weight="700" text-anchor="middle" transform="rotate(-76,36,94)">≈150 mm</text>
+            <!-- BC midpoint=(114,170), horizontal → label just above the line -->
+            <text x="114" y="163" font-family="Nunito,sans-serif" font-size="10" fill="#6B7280" font-weight="700" text-anchor="middle">≈190 mm</text>
+            <!-- AC midpoint=(132,94), angle≈44° → rotate(44,132,94) -->
+            <text x="132" y="94" font-family="Nunito,sans-serif" font-size="10" fill="#6B7280" font-weight="700" text-anchor="middle" transform="rotate(44,132,94)">≈200 mm</text>
+            <!-- Vertex labels -->
+            <text x="48" y="14" font-family="Baloo 2,sans-serif" font-size="14" font-weight="800" fill="#374151">A</text>
+            <text x="4" y="185" font-family="Baloo 2,sans-serif" font-size="14" font-weight="800" fill="#374151">B</text>
+            <text x="212" y="185" font-family="Baloo 2,sans-serif" font-size="14" font-weight="800" fill="#374151">C</text>
+          </svg>
+          <div class="tri-label">Scalene</div>
+          <div class="tri-sublabel">Escaleno</div>
+          <div class="tri-tag tag-sc">No equal sides</div>
+        </div>
+
+      </div><!-- .tri-grid -->
+
+      <div class="key-phrase-en">
+        An <strong>equilateral</strong> triangle has all sides equal and all angles equal to <strong>60°</strong>. An <strong>isosceles</strong> triangle has exactly two equal sides. A <strong>scalene</strong> triangle has all sides different.<br>
+        <span style="font-size:0.88em;color:#b45309;">Um triângulo <strong>equilátero</strong> tem todos os lados iguais. Um triângulo <strong>isósceles</strong> tem dois lados iguais. Um triângulo <strong>escaleno</strong> tem todos os lados diferentes.</span>
+      </div>
+
+      <div class="info-box">
+        💡 In an isosceles triangle, the two <span class="kt"><b>base angles</b><em>ângulos da base</em></span> (opposite the equal sides) are also equal.
+      </div>
+
+      <!-- Combining classifications -->
+      <div style="margin-top:1.5rem;">
+        <p style="font-weight:700;font-size:1.05rem;color:var(--orange-700);margin-bottom:0.8rem;">⚡ Combining Both Classifications</p>
+        <p>These two systems work <strong>together</strong>. A triangle can be described by <em>both</em> its angle type and its side type:</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.8rem;margin-top:1rem;">
+          <div style="background:rgba(255,255,255,0.7);border:1.5px solid var(--orange-200);border-radius:var(--radius-md);padding:0.85rem 1rem;">
+            <div style="font-weight:800;color:var(--orange-700);font-size:0.95rem;">Right + Scalene</div>
+            <div style="font-size:0.85rem;color:#4a2000;margin-top:0.3rem;">One 90° angle + all sides different.<br><em style="color:var(--orange-500);">Retângulo + Escaleno</em></div>
+          </div>
+          <div style="background:rgba(255,255,255,0.7);border:1.5px solid var(--orange-200);border-radius:var(--radius-md);padding:0.85rem 1rem;">
+            <div style="font-weight:800;color:var(--orange-700);font-size:0.95rem;">Acute + Isosceles</div>
+            <div style="font-size:0.85rem;color:#4a2000;margin-top:0.3rem;">All angles &lt; 90° + two equal sides.<br><em style="color:var(--orange-500);">Acutângulo + Isósceles</em></div>
+          </div>
+          <div style="background:rgba(255,255,255,0.7);border:1.5px solid var(--orange-200);border-radius:var(--radius-md);padding:0.85rem 1rem;">
+            <div style="font-weight:800;color:var(--orange-700);font-size:0.95rem;">Equilateral → always Acute</div>
+            <div style="font-size:0.85rem;color:#4a2000;margin-top:0.3rem;">60° + 60° + 60° = always &lt; 90°.<br><em style="color:var(--orange-500);">Equilátero → sempre Acutângulo</em></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vocab-box">
+      <div class="vocab-title">📖 Vocabulary · Vocabulário</div>
+      <div class="vocab-grid">
+        <div class="vocab-term">Equilateral · Equilátero<div class="vocab-tooltip">3 equal sides, 3 equal angles (60°).</div></div>
+        <div class="vocab-term">Isosceles · Isósceles<div class="vocab-tooltip">Exactly 2 equal sides.</div></div>
+        <div class="vocab-term">Scalene · Escaleno<div class="vocab-tooltip">All 3 sides have different lengths.</div></div>
+        <div class="vocab-term">Tick mark · Traço<div class="vocab-tooltip">Mark on a side showing equal length.</div></div>
+        <div class="vocab-term">Base angles · Ângulos da base<div class="vocab-tooltip">Equal angles of an isosceles triangle.</div></div>
+        <div class="vocab-term">Rigid · Rígido<div class="vocab-tooltip">Cannot be deformed without changing sides.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="next-sec-btn show" onclick="goToSection(3)">Section 4: Practice Exercises ➜</button>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 3 — PRACTICE EXERCISES
+══════════════════════════════════════════════════ -->
+<div class="lesson-section reveal" id="sec3" style="display:none">
+
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon">✏️</div>
+      <div>
+        <div class="section-subtitle">Section 4 · Seção 4</div>
+        <div class="section-title">Practice Exercises <span style="font-size:.6em;color:var(--orange-400);">Exercícios Práticos</span></div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="practice-card">
+        <div class="practice-num">Exercise · Exercício 11</div>
+        <div class="practice-text">Use a <span class="kt"><b>ruler</b><em>régua</em></span> and a <span class="kt"><b>protractor</b><em>transferidor</em></span>. Construct the triangles.</div>
+        <ul class="practice-items">
+          <li>Triangle ABC: ∠B = 30°, side AB = 5 cm, side BC = 3 cm.</li>
+          <li>Triangle ABD: side AB = 56 mm, ∠A = 35°, ∠B = 90°.</li>
+          <li>Triangle RST: side TS = 5.2 cm, ∠T = 26°, side RT = 3.4 cm.</li>
+        </ul>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-num">Exercise · Exercício 12</div>
+        <div class="practice-text">Use a <span class="kt"><b>protractor</b><em>transferidor</em></span>. Draw an <span class="kt"><b>angle</b><em>ângulo</em></span> with each measure.</div>
+        <ul class="practice-items">
+          <li>65°</li>
+          <li>135°</li>
+          <li>95°</li>
+        </ul>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-num">Exercise · Exercício 13</div>
+        <div class="practice-text">Name the angles in Exercise 12 as <span class="kt"><b>acute</b><em>agudo</em></span>, <span class="kt"><b>obtuse</b><em>obtuso</em></span> or <span class="kt"><b>right</b><em>reto</em></span>.</div>
+        <ul class="practice-items">
+          <li>65° → <strong>Acute</strong> <em style="color:var(--orange-500);">(Agudo)</em> — less than 90°</li>
+          <li>135° → <strong>Obtuse</strong> <em style="color:var(--orange-500);">(Obtuso)</em> — greater than 90°</li>
+          <li>95° → <strong>Obtuse</strong> <em style="color:var(--orange-500);">(Obtuso)</em> — greater than 90°</li>
+        </ul>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-num">Exercise · Exercício 14</div>
+        <div class="practice-text">Construct the following <span class="kt"><b>triangles</b><em>triângulos</em></span>:</div>
+        <ul class="practice-items">
+          <li>Scalene <em style="color:var(--orange-500);">(Escaleno)</em> — all sides different</li>
+          <li>Isosceles <em style="color:var(--orange-500);">(Isósceles)</em> — two sides equal</li>
+          <li>Equilateral <em style="color:var(--orange-500);">(Equilátero)</em> — all sides equal, all angles 60°</li>
+        </ul>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-num">Exercise · Exercício 15</div>
+        <div class="practice-text">What is a <span class="kt"><b>polygon</b><em>polígono</em></span>?</div>
+        <ul class="practice-items">
+          <li>A <strong>polygon</strong> is a closed, flat figure made entirely of straight line segments (sides). <em style="color:var(--orange-500);">Um polígono é uma figura plana fechada formada apenas por segmentos de reta.</em></li>
+        </ul>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-num">Exercise · Exercício 16</div>
+        <div class="practice-text">Construct the following <span class="kt"><b>polygons</b><em>polígonos</em></span>:</div>
+        <ul class="practice-items">
+          <li>Pentagon <em style="color:var(--orange-500);">(Pentágono)</em> — 5 sides</li>
+          <li>Triangle <em style="color:var(--orange-500);">(Triângulo)</em> — 3 sides</li>
+          <li>Octagon <em style="color:var(--orange-500);">(Octógono)</em> — 8 sides</li>
+          <li>Hexagon <em style="color:var(--orange-500);">(Hexágono)</em> — 6 sides</li>
+          <li>Quadrilateral <em style="color:var(--orange-500);">(Quadrilátero)</em> — 4 sides</li>
+        </ul>
+      </div>
+
+      <!-- Polygon SVG reference -->
+      <p style="font-family:'Baloo 2',cursive;font-weight:800;color:var(--orange-700);font-size:1.05rem;margin:1.5rem 0 0.75rem;">Polygon Reference · Referência de Polígonos</p>
+      <div class="polygon-grid">
+
+        <!-- Triangle -->
+        <div class="poly-card">
+          <svg viewBox="0 0 200 175" width="120" height="105" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="100,15 18,162 182,162" fill="#EAF3DE" stroke="#3B6D11" stroke-width="2.5" stroke-linejoin="round"/>
+          </svg>
+          <div class="poly-name">Triangle</div>
+          <div class="poly-info">Triângulo · 3 sides</div>
+        </div>
+
+        <!-- Quadrilateral -->
+        <div class="poly-card">
+          <svg viewBox="0 0 200 175" width="120" height="105" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="30,40 175,30 188,145 25,152" fill="#E6F1FB" stroke="#185FA5" stroke-width="2.5" stroke-linejoin="round"/>
+          </svg>
+          <div class="poly-name">Quadrilateral</div>
+          <div class="poly-info">Quadrilátero · 4 sides</div>
+        </div>
+
+        <!-- Pentagon -->
+        <div class="poly-card">
+          <svg viewBox="0 0 200 175" width="120" height="105" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="100,15 171,64 144,152 56,152 29,64" fill="#FBEAF0" stroke="#993556" stroke-width="2.5" stroke-linejoin="round"/>
+          </svg>
+          <div class="poly-name">Pentagon</div>
+          <div class="poly-info">Pentágono · 5 sides</div>
+        </div>
+
+        <!-- Hexagon -->
+        <div class="poly-card">
+          <svg viewBox="0 0 200 175" width="120 " height="105" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="100,15 165,51 165,124 100,160 35,124 35,51" fill="#FAEEDA" stroke="#BA7517" stroke-width="2.5" stroke-linejoin="round"/>
+          </svg>
+          <div class="poly-name">Hexagon</div>
+          <div class="poly-info">Hexágono · 6 sides</div>
+        </div>
+
+        <!-- Octagon -->
+        <div class="poly-card">
+          <svg viewBox="0 0 200 175" width="120" height="105" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="100,12 148,30 172,75 172,118 148,158 100,165 52,158 28,118 28,75 52,30" fill="#EEEDFE" stroke="#534AB7" stroke-width="2.5" stroke-linejoin="round"/>
+          </svg>
+          <div class="poly-name">Octagon</div>
+          <div class="poly-info">Octógono · 8 sides</div>
+        </div>
+
+      </div><!-- .polygon-grid -->
+    </div><!-- .section-body -->
+  </div><!-- .section-card -->
+
+  <button class="next-sec-btn show" onclick="goToSection(4)">Section 5: Quiz ➜</button>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 4 — QUIZ (10 questions)
+══════════════════════════════════════════════════ -->
+<div class="lesson-section reveal" id="sec4" style="display:none">
+  <div class="quiz-wrap">
+    <div class="quiz-head">
+      <span style="font-size:1.4rem;">🧠</span>
+      <span class="quiz-title">Geometry Quiz — Triangles &amp; Polygons</span>
+    </div>
+    <div class="q-progress"><div class="q-progress-fill" id="qProgressFill"></div></div>
+    <div id="quizArea"></div>
+  </div>
+</div>
+
+<!-- back home -->
+<div style="text-align:center;padding:1rem 0 3rem;position:relative;z-index:1;">
+  <a href="index.html" style="font-size:14px;font-weight:700;color:var(--orange-600);text-decoration:none;padding:0.5rem 1.2rem;border:1.5px solid var(--orange-300);border-radius:99px;transition:background 0.15s;" onmouseover="this.style.background='#fff7ed'" onmouseout="this.style.background='transparent'">← Back to Home · Voltar ao Início</a>
+</div>
+
+
+<script>
+/* ── SECTION NAVIGATION ── */
+const TOTAL_SECTIONS = 5;
+let currentSection = 0;
+let totalScore = 0;
+
+function updateProgress() {
+  const pct = (currentSection / (TOTAL_SECTIONS - 1)) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function goToSection(n) {
+  const prev = document.getElementById('sec' + currentSection);
+  if (prev) prev.style.display = 'none';
+
+  const dots = document.querySelectorAll('.nav-dot');
+  dots[currentSection].classList.remove('active');
+  dots[currentSection].classList.add('done');
+
+  currentSection = n;
+  const next = document.getElementById('sec' + n);
+  if (next) { next.style.display = 'block'; setTimeout(() => next.classList.add('visible'), 50); }
+  dots[n].classList.add('active');
+  dots[n].classList.remove('done');
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (n === 4) initQuiz();
+}
+
+document.querySelectorAll('.nav-dot').forEach(dot => {
+  dot.addEventListener('click', () => goToSection(parseInt(dot.dataset.section)));
+});
+
+/* scroll reveal */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+updateProgress();
+
+
+/* ── QUIZ ── */
+const QUESTIONS = [
+  {
+    q: "How many sides does a triangle have?<br><em style='font-size:.88em;color:#a05022;'>Quantos lados tem um triângulo?</em>",
+    opts: ["2", "3", "4", "5"],
+    correct: 1,
+    explain: "A triangle always has 3 sides, 3 angles, and 3 vertices."
+  },
+  {
+    q: "The sum of the interior angles of any triangle equals:<br><em style='font-size:.88em;color:#a05022;'>A soma dos ângulos interiores de qualquer triângulo é:</em>",
+    opts: ["90°", "120°", "180°", "360°"],
+    correct: 2,
+    explain: "All triangles: ∠A + ∠B + ∠C = 180°. Always!"
+  },
+  {
+    q: "Which triangle has one angle of exactly 90°?<br><em style='font-size:.88em;color:#a05022;'>Qual triângulo tem um ângulo de exatamente 90°?</em>",
+    opts: ["Acute · Acutângulo", "Scalene · Escaleno", "Obtuse · Obtusângulo", "Right · Retângulo"],
+    correct: 3,
+    explain: "A right triangle (triângulo retângulo) has one 90° angle, marked with a small square symbol."
+  },
+  {
+    q: "In an acute triangle, all angles are:<br><em style='font-size:.88em;color:#a05022;'>Em um triângulo acutângulo, todos os ângulos são:</em>",
+    opts: ["Equal to 90°", "Greater than 90°", "Less than 90°", "One of each type"],
+    correct: 2,
+    explain: "Acute (agudo) means less than 90°. In an acute triangle, ALL three angles are less than 90°."
+  },
+  {
+    q: "An obtuse triangle has:<br><em style='font-size:.88em;color:#a05022;'>Um triângulo obtusângulo tem:</em>",
+    opts: ["All angles equal", "All angles less than 90°", "Two angles greater than 90°", "One angle greater than 90°"],
+    correct: 3,
+    explain: "Obtuse (obtuso) means greater than 90°. Only ONE angle can be obtuse in a triangle (the other two must be acute to sum to 180°)."
+  },
+  {
+    q: "In an equilateral triangle, each angle measures:<br><em style='font-size:.88em;color:#a05022;'>Em um triângulo equilátero, cada ângulo mede:</em>",
+    opts: ["45°", "60°", "90°", "120°"],
+    correct: 1,
+    explain: "Equilateral → all angles equal → 180° ÷ 3 = 60° each."
+  },
+  {
+    q: "An isosceles triangle has:<br><em style='font-size:.88em;color:#a05022;'>Um triângulo isósceles tem:</em>",
+    opts: ["All 3 sides different", "All 3 sides equal", "Exactly 2 sides equal", "No equal sides"],
+    correct: 2,
+    explain: "Isosceles (isósceles): exactly 2 sides are equal. The two base angles opposite those sides are also equal."
+  },
+  {
+    q: "A scalene triangle has:<br><em style='font-size:.88em;color:#a05022;'>Um triângulo escaleno tem:</em>",
+    opts: ["All sides equal", "Two equal sides", "All sides different", "One right angle"],
+    correct: 2,
+    explain: "Scalene (escaleno): all 3 sides have different lengths, so all 3 angles are also different."
+  },
+  {
+    q: "An equilateral triangle is always classified as:<br><em style='font-size:.88em;color:#a05022;'>Um triângulo equilátero é sempre classificado como:</em>",
+    opts: ["Obtuse · Obtusângulo", "Right · Retângulo", "Acute · Acutângulo", "Scalene · Escaleno"],
+    correct: 2,
+    explain: "All three angles of an equilateral triangle are 60°. Since 60° < 90°, it is always acute."
+  },
+  {
+    q: "What is a polygon?<br><em style='font-size:.88em;color:#a05022;'>O que é um polígono?</em>",
+    opts: [
+      "Any 3D solid shape",
+      "A shape with at least one curved side",
+      "A closed flat figure made entirely of straight sides",
+      "A shape with more than 6 sides"
+    ],
+    correct: 2,
+    explain: "A polygon (polígono) is a closed, flat (2D) figure formed only by straight line segments. Triangles, quadrilaterals, pentagons, and hexagons are all polygons."
+  }
+];
+
+let qCurrent = 0, qScore = 0, qAnswered = false, qWrong = [];
+
+function initQuiz() {
+  qCurrent = 0; qScore = 0; qAnswered = false; qWrong = [];
+  renderQuestion();
+}
+
+function renderQuestion() {
+  if (qCurrent >= QUESTIONS.length) { showQuizResults(); return; }
+  qAnswered = false;
+  const q = QUESTIONS[qCurrent];
+  const pct = (qCurrent / QUESTIONS.length) * 100;
+  document.getElementById('qProgressFill').style.width = pct + '%';
+
+  document.getElementById('quizArea').innerHTML = `
+    <div class="q-counter">Question ${qCurrent + 1} of ${QUESTIONS.length} · +10 pts each</div>
+    <div class="q-text">${q.q}</div>
+    <div class="q-opts">
+      ${q.opts.map((o, i) => `
+        <button class="opt-btn" onclick="answerQ(${i})" id="qopt${i}">
+          <span class="opt-ltr">${String.fromCharCode(65+i)}</span>${o}
+        </button>`).join('')}
+    </div>
+    <div class="q-fb" id="qFb"></div>
+    <button class="next-q" id="nextQBtn" onclick="nextQuestion()">
+      ${qCurrent === QUESTIONS.length - 1 ? 'See Results →' : 'Next Question →'}
+    </button>`;
+}
+
+function answerQ(i) {
+  if (qAnswered) return;
+  qAnswered = true;
+  const q = QUESTIONS[qCurrent];
+  const correct = i === q.correct;
+  document.querySelectorAll('.opt-btn').forEach((b, idx) => {
+    b.disabled = true;
+    if (idx === q.correct) b.classList.add('correct');
+    else if (idx === i && !correct) b.classList.add('wrong');
+  });
+  const fb = document.getElementById('qFb');
+  fb.classList.add('show');
+  if (correct) {
+    qScore += 10;
+    totalScore += 10;
+    document.getElementById('scoreDisplay').textContent = totalScore;
+    fb.classList.add('correct');
+    fb.innerHTML = `✓ Correct! +10 pts — ${q.explain}`;
+  } else {
+    fb.classList.add('wrong');
+    fb.innerHTML = `✗ Incorrect. Correct: <strong>${q.opts[q.correct]}</strong> — ${q.explain}`;
+    qWrong.push({ q: q.q.replace(/<[^>]+>/g,''), chosen: q.opts[i], correct: q.opts[q.correct] });
+  }
+  document.getElementById('nextQBtn').classList.add('show');
+}
+
+function nextQuestion() { qCurrent++; renderQuestion(); }
+
+function showQuizResults() {
+  document.getElementById('qProgressFill').style.width = '100%';
+  const pct = Math.round(qScore / 100 * 100);
+  const emoji = pct >= 80 ? '🏆' : pct >= 60 ? '⭐' : '💪';
+  const msg = pct >= 80 ? 'Excellent work!' : pct >= 60 ? 'Good job!' : 'Keep practicing!';
+  const wrongHtml = qWrong.length === 0
+    ? `<p style="color:#a05022;font-size:14px;text-align:center;margin:1rem 0;">Perfect score — no mistakes! 🎉</p>`
+    : qWrong.map(w => `<div class="r-wrong-item"><div style="font-weight:600;margin-bottom:3px;">${w.q}</div><div>Your answer: <span style="color:#E24B4A;font-weight:700;">${w.chosen}</span> → Correct: <span class="ca">${w.correct}</span></div></div>`).join('');
+
+  document.getElementById('quizArea').innerHTML = `
+    <div class="quiz-results">
+      <div class="r-emoji">${emoji}</div>
+      <h3>${msg}</h3>
+      <div class="r-score">${qScore} / 100</div>
+      <div class="r-pct">${pct}% correct · ${pct}% correto</div>
+      ${qWrong.length > 0 ? `<div class="r-wrong-list"><div style="font-size:13px;font-weight:700;color:#a05022;margin-bottom:0.5rem;">Questions to review · Para revisar:</div>${wrongHtml}</div>` : wrongHtml}
+      <button class="r-restart" onclick="initQuiz()">Try Again · Tentar novamente</button>
+      <br>
+      <a href="index.html" style="display:inline-block;margin-top:0.75rem;font-size:14px;font-weight:700;color:var(--orange-600);text-decoration:none;padding:0.5rem 1.2rem;border:1.5px solid var(--orange-300);border-radius:99px;">← Back to Home</a>
+    </div>`;
+}
+</script>
+</body>
+</html>

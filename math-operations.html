@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math Operations · MapleBear</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange-50: #fff7ed;
+    --orange-100: #ffedd5;
+    --orange-200: #fed7aa;
+    --orange-300: #fdba74;
+    --orange-400: #fb923c;
+    --orange-500: #f97316;
+    --orange-600: #ea580c;
+    --orange-700: #c2410c;
+    --white: #ffffff;
+    --glass-bg: rgba(255,255,255,0.65);
+    --glass-border: rgba(249,115,22,0.18);
+    --shadow-soft: 0 8px 32px rgba(249,115,22,0.10);
+    --shadow-card: 0 4px 24px rgba(249,115,22,0.13);
+    --radius-xl: 2rem;
+    --radius-lg: 1.25rem;
+    --radius-md: 0.875rem;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 40%, #fff3e0 70%, #fde8d0 100%);
+    min-height: 100vh;
+    color: #3a1a00;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -120px; right: -120px;
+    width: 520px; height: 520px;
+    background: radial-gradient(circle, rgba(251,146,60,0.18) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -100px; left: -100px;
+    width: 440px; height: 440px;
+    background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* HEADER */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(18px) saturate(1.4);
+    background: rgba(255,255,255,0.72);
+    border-bottom: 1.5px solid rgba(249,115,22,0.15);
+    box-shadow: 0 2px 18px rgba(249,115,22,0.08);
+    padding: 0.7rem 2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .logo { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
+  .logo-text { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1.2rem; color: var(--orange-600); line-height: 1; }
+  .logo-sub { font-size: 0.72rem; font-weight: 600; color: var(--orange-400); letter-spacing: 0.04em; }
+
+  .header-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .progress-bar-wrap { width: 200px; }
+  .progress-label { font-size: 0.7rem; font-weight: 700; color: var(--orange-500); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .progress-track { height: 8px; background: rgba(253,186,116,0.35); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--orange-400), var(--orange-600)); border-radius: 99px; transition: width 0.5s cubic-bezier(.4,0,.2,1); width: 0%; }
+
+  .score-badge {
+    background: linear-gradient(135deg, var(--orange-400), var(--orange-600));
+    color: #fff; font-weight: 800; font-size: 0.95rem;
+    padding: 0.38rem 0.9rem; border-radius: 99px;
+    box-shadow: 0 3px 12px rgba(234,88,12,0.28);
+    white-space: nowrap;
+  }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 3rem 1.5rem 2rem;
+    position: relative; z-index: 1;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: linear-gradient(90deg, #fb923c22, #f9731611);
+    border: 1.5px solid var(--orange-300);
+    border-radius: 99px;
+    padding: 0.3rem 1rem;
+    font-size: 0.78rem; font-weight: 700;
+    color: var(--orange-600);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    color: var(--orange-700);
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+  .hero p { font-size: 1rem; color: #a05022; max-width: 520px; margin: 0 auto; font-weight: 500; }
+
+  /* QUIZ AREA */
+  #quiz-wrap {
+    max-width: 680px;
+    margin: 0 auto 4rem auto;
+    padding: 0 1rem;
+    position: relative; z-index: 1;
+  }
+
+  /* LEVEL BADGE */
+  .level-badge {
+    font-size: 11px; font-weight: 700;
+    padding: 3px 12px; border-radius: 99px;
+    display: inline-block; margin-bottom: 0.75rem;
+    letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .level-1 { background: #E6F1FB; color: #0C447C; }
+  .level-2 { background: #EAF3DE; color: #27500A; }
+  .level-3 { background: #FAEEDA; color: #633806; }
+  .level-4 { background: #FBEAF0; color: #72243E; }
+  .level-5 { background: #EEEDFE; color: #3C3489; }
+
+  /* QUESTION CARD */
+  .q-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(1.3);
+    border: 1.5px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-soft);
+    padding: 2rem 2.2rem 1.8rem;
+    margin-bottom: 1rem;
+    position: relative; overflow: hidden;
+    animation: fadeInUp 0.4s cubic-bezier(.4,0,.2,1);
+  }
+  .q-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--orange-400), var(--orange-600), var(--orange-300));
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+
+  .q-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+  .q-num { font-size: 13px; color: #a05022; font-weight: 600; }
+
+  .translate-btn {
+    background: none;
+    border: 1.5px solid var(--orange-300);
+    border-radius: 99px;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex; align-items: center; gap: 6px;
+    color: #a05022; font-family: 'Nunito', sans-serif;
+    transition: background 0.15s;
+    font-weight: 600;
+  }
+  .translate-btn:hover { background: var(--orange-50); }
+  .translate-note { font-size: 11px; color: var(--orange-600); font-weight: 700; }
+
+  .question-text {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.2rem; font-weight: 700;
+    color: var(--orange-700);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  /* OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .opt-btn {
+    background: rgba(255,255,255,0.8);
+    border: 1.5px solid var(--orange-200);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1.1rem;
+    text-align: left; cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px; font-weight: 600;
+    color: #3a1a00;
+    transition: background 0.15s, border-color 0.15s, transform 0.1s;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .opt-btn:hover:not(:disabled) {
+    background: var(--orange-50);
+    border-color: var(--orange-400);
+    transform: translateX(3px);
+  }
+  .opt-btn.correct {
+    background: #EAF3DE; border-color: #639922; color: #27500A;
+  }
+  .opt-btn.wrong {
+    background: #FCEBEB; border-color: #E24B4A; color: #501313;
+  }
+  .opt-btn.reveal {
+    background: #EAF3DE; border-color: #639922; color: #27500A;
+  }
+  .opt-label {
+    font-weight: 800;
+    min-width: 26px;
+    width: 26px; height: 26px;
+    background: var(--orange-100);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: var(--orange-700);
+    flex-shrink: 0;
+  }
+  .opt-btn.correct .opt-label { background: #c6e89a; color: #27500A; }
+  .opt-btn.wrong .opt-label { background: #f5b8b8; color: #501313; }
+  .opt-btn.reveal .opt-label { background: #c6e89a; color: #27500A; }
+
+  /* FEEDBACK */
+  .feedback {
+    margin-top: 1rem;
+    padding: 0.85rem 1.1rem;
+    border-radius: var(--radius-md);
+    font-size: 14px; font-weight: 700;
+    display: none;
+    border-left: 4px solid transparent;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: #EAF3DE; color: #27500A; border-left-color: #639922; }
+  .feedback.wrong { background: #FCEBEB; color: #501313; border-left-color: #E24B4A; }
+
+  /* NEXT BUTTON */
+  .next-btn {
+    margin-top: 1rem; width: 100%;
+    padding: 0.85rem;
+    background: linear-gradient(135deg, var(--orange-400), var(--orange-600));
+    border: none;
+    border-radius: var(--radius-md);
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px; font-weight: 800;
+    cursor: pointer; color: #fff;
+    box-shadow: 0 4px 16px rgba(234,88,12,0.25);
+    display: none;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .next-btn.show { display: block; }
+  .next-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+
+  /* RESULTS */
+  .results {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(1.3);
+    border: 1.5px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-soft);
+    padding: 2.5rem 2.2rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+    animation: fadeInUp 0.5s cubic-bezier(.4,0,.2,1);
+  }
+  .results::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--orange-400), var(--orange-600), var(--orange-300));
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+  .results h2 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.6rem; font-weight: 800;
+    margin-bottom: 0.4rem; color: var(--orange-700);
+  }
+  .final-score {
+    font-family: 'Baloo 2', cursive;
+    font-size: 3.5rem; font-weight: 800;
+    color: var(--orange-600);
+    margin: 1rem 0;
+    line-height: 1;
+  }
+  .final-pct { font-size: 14px; color: #a05022; font-weight: 600; margin-bottom: 1.5rem; }
+
+  .wrong-list { text-align: left; margin: 1.5rem 0; }
+  .wrong-list-title { font-size: 14px; font-weight: 700; margin-bottom: 0.75rem; color: #a05022; }
+  .wrong-item {
+    background: rgba(255,255,255,0.7);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1.1rem;
+    margin-bottom: 0.5rem;
+    font-size: 14px; color: #3a1a00;
+    border-left: 4px solid #E24B4A;
+  }
+  .wrong-item .correct-ans { color: #3B6D11; font-weight: 700; }
+
+  .restart-btn {
+    padding: 0.85rem 2.2rem;
+    background: linear-gradient(135deg, var(--orange-400), var(--orange-600));
+    border: none; border-radius: var(--radius-md);
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px; font-weight: 800;
+    cursor: pointer; color: #fff;
+    box-shadow: 0 4px 16px rgba(234,88,12,0.25);
+    margin-top: 1rem;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .restart-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+  .back-home {
+    display: inline-block; margin-top: 0.75rem;
+    font-size: 14px; font-weight: 700;
+    color: var(--orange-600); text-decoration: none;
+    padding: 0.5rem 1.2rem;
+    border: 1.5px solid var(--orange-300);
+    border-radius: 99px;
+    transition: background 0.15s;
+  }
+  .back-home:hover { background: var(--orange-50); }
+
+  /* ANIMATIONS */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    header { padding: 0.6rem 1rem; }
+    .progress-bar-wrap { display: none; }
+    .hero { padding: 2rem 1rem 1.5rem; }
+    .q-card { padding: 1.5rem 1.2rem; }
+    .question-text { font-size: 1.05rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo" style="text-decoration:none;">
+    <img src="logo1.png" alt="Logo" style="width:38px;height:38px;object-fit:contain;border-radius:8px;background:#fff;box-shadow:0 2px 8px rgba(249,115,22,0.10);">
+    <div>
+      <div class="logo-text">Aulas Master Educação</div>
+      <div class="logo-sub">MapleBear</div>
+    </div>
+  </a>
+
+  <div class="header-right">
+    <div class="progress-bar-wrap">
+      <div class="progress-label">Progresso</div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress"></div>
+      </div>
+    </div>
+    <div class="score-badge">⭐ <span id="score-display">0</span> / 300</div>
+    <img src="logo2.png" alt="Logo 2" style="width:38px;height:38px;object-fit:contain;border-radius:8px;background:#fff;box-shadow:0 2px 8px rgba(249,115,22,0.10);">
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-badge">Math · Y5</div>
+  <h1>Math Operations</h1>
+  <p>Test your multiplication and division skills across 5 levels of challenge.</p>
+</section>
+
+<div id="quiz-wrap"></div>
+
+<script>
+const QUESTIONS = [
+  {level:1,levelName:"Level 1 — Procedural",en:"What is 15 × 12?",pt:"Quanto é 15 × 12?",options:["A) 160","B) 170","C) 180","D) 190"],correct:2},
+  {level:1,levelName:"Level 1 — Procedural",en:"What is 4800 ÷ 6?",pt:"Quanto é 4800 ÷ 6?",options:["A) 600","B) 700","C) 800","D) 900"],correct:2},
+  {level:1,levelName:"Level 1 — Procedural",en:"What is 37 × 100?",pt:"Quanto é 37 × 100?",options:["A) 370","B) 3070","C) 3700","D) 37000"],correct:2},
+  {level:1,levelName:"Level 1 — Procedural",en:"What is 96 ÷ 8?",pt:"Quanto é 96 ÷ 8?",options:["A) 10","B) 11","C) 12","D) 13"],correct:2},
+  {level:1,levelName:"Level 1 — Procedural",en:"What is 45 × 20?",pt:"Quanto é 45 × 20?",options:["A) 800","B) 850","C) 900","D) 950"],correct:2},
+  {level:2,levelName:"Level 2 — One Operation",en:"A bakery made 36 boxes with 15 muffins in each box. How many muffins were made?",pt:"Uma padaria fez 36 caixas com 15 bolinhos em cada caixa. Quantos bolinhos foram feitos?",options:["A) 480","B) 500","C) 540","D) 560"],correct:2},
+  {level:2,levelName:"Level 2 — One Operation",en:"A teacher bought 84 crayons and shared them equally among 7 students. How many crayons did each student get?",pt:"Uma professora comprou 84 lápis de cor e dividiu igualmente entre 7 alunos. Quantos lápis cada aluno recebeu?",options:["A) 10","B) 11","C) 12","D) 13"],correct:2},
+  {level:2,levelName:"Level 2 — One Operation",en:"A hamster eats 18 g of food each day. How much food does it eat in 30 days?",pt:"Um hamster come 18 g de comida por dia. Quanto ele come em 30 dias?",options:["A) 480 g","B) 500 g","C) 540 g","D) 560 g"],correct:2},
+  {level:2,levelName:"Level 2 — One Operation",en:"Tickets to a show cost $45 each. How much do 60 tickets cost?",pt:"Ingressos para um show custam $45 cada. Quanto custam 60 ingressos?",options:["A) $2,400","B) $2,600","C) $2,700","D) $2,800"],correct:2},
+  {level:2,levelName:"Level 2 — One Operation",en:"A factory packs pencils in boxes of 12. How many pencils are needed to fill 45 boxes?",pt:"Uma fábrica embala lápis em caixas de 12. Quantos lápis são necessários para encher 45 caixas?",options:["A) 480","B) 520","C) 540","D) 560"],correct:2},
+  {level:3,levelName:"Level 3 — Two Operations",en:"What is (30 × 5) + 75?",pt:"Quanto é (30 × 5) + 75?",options:["A) 225","B) 235","C) 245","D) 255"],correct:0},
+  {level:3,levelName:"Level 3 — Two Operations",en:"What is (120 ÷ 6) × 9?",pt:"Quanto é (120 ÷ 6) × 9?",options:["A) 150","B) 170","C) 180","D) 200"],correct:2},
+  {level:3,levelName:"Level 3 — Two Operations",en:"What is (22 × 4) − 18?",pt:"Quanto é (22 × 4) − 18?",options:["A) 64","B) 68","C) 70","D) 76"],correct:2},
+  {level:3,levelName:"Level 3 — Two Operations",en:"What is (450 ÷ 9) + 35?",pt:"Quanto é (450 ÷ 9) + 35?",options:["A) 80","B) 85","C) 90","D) 95"],correct:1},
+  {level:3,levelName:"Level 3 — Two Operations",en:"What is (14 × 6) + (8 × 5)?",pt:"Quanto é (14 × 6) + (8 × 5)?",options:["A) 114","B) 118","C) 124","D) 130"],correct:2},
+  {level:4,levelName:"Level 4 — Problem Solving (1 op)",en:"Margie packed 80 pamphlets in each of 70 envelopes. How many pamphlets did she pack?",pt:"Margie colocou 80 panfletos em cada um dos 70 envelopes. Quantos panfletos ela embalou?",options:["A) 4,800","B) 5,200","C) 5,600","D) 6,000"],correct:2},
+  {level:4,levelName:"Level 4 — Problem Solving (1 op)",en:"A theatre has 60 rows of 30 seats. How many seats is that altogether?",pt:"Um teatro tem 60 fileiras de 30 assentos. Quantos assentos há no total?",options:["A) 1,600","B) 1,700","C) 1,800","D) 1,900"],correct:2},
+  {level:4,levelName:"Level 4 — Problem Solving (1 op)",en:"Nya earns $22 a week babysitting. How much does she earn in 15 weeks?",pt:"Nya ganha $22 por semana cuidando de crianças. Quanto ela ganha em 15 semanas?",options:["A) $300","B) $310","C) $320","D) $330"],correct:3},
+  {level:4,levelName:"Level 4 — Problem Solving (1 op)",en:"A box holds 24 chocolate bars. How many bars are in 55 boxes?",pt:"Uma caixa contém 24 barras de chocolate. Quantas barras há em 55 caixas?",options:["A) 1,220","B) 1,300","C) 1,320","D) 1,400"],correct:2},
+  {level:5,levelName:"Level 5 — Problem Solving (2 ops)",en:"A payroll clerk writes 20 cheques for $600 and 12 cheques for $400. What is the total amount?",pt:"Um contador emite 20 cheques de $600 e 12 cheques de $400. Qual é o valor total?",options:["A) $14,400","B) $15,400","C) $16,800","D) $17,200"],correct:2},
+];
+
+let current = 0, score = 0, answered = false, translated = false;
+let translatedThisQ = false, wrongAnswers = [];
+
+function render() {
+  if (current >= QUESTIONS.length) { showResults(); return; }
+  const q = QUESTIONS[current];
+  translated = false;
+  translatedThisQ = false;
+  answered = false;
+  document.getElementById('progress').style.width = (current / QUESTIONS.length * 100) + '%';
+  document.getElementById('score-display').textContent = score;
+
+  document.getElementById('quiz-wrap').innerHTML = `
+    <div class="q-card">
+      <div class="q-header">
+        <span class="level-badge level-${q.level}">${q.levelName}</span>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="q-num">Question ${current + 1} of ${QUESTIONS.length}</span>
+          <button class="translate-btn" id="trans-btn" onclick="toggleTranslate()">
+            🇧🇷 <span id="trans-label">Translate</span>
+            <span class="translate-note">(−10 pts)</span>
+          </button>
+        </div>
+      </div>
+      <div class="question-text" id="q-text">${q.en}</div>
+      <div class="options" id="options">
+        ${q.options.map((o, i) => `
+          <button class="opt-btn" onclick="answer(${i})" id="opt-${i}">
+            <span class="opt-label">${o[0]}</span>
+            ${o.slice(3)}
+          </button>
+        `).join('')}
+      </div>
+      <div class="feedback" id="feedback"></div>
+      <button class="next-btn" id="next-btn" onclick="nextQ()">
+        ${current === QUESTIONS.length - 1 ? 'Ver Resultado →' : 'Próxima Pergunta →'}
+      </button>
+    </div>`;
+}
+
+function toggleTranslate() {
+  if (answered) return;
+  const q = QUESTIONS[current];
+  translated = !translated;
+  document.getElementById('q-text').textContent = translated ? q.pt : q.en;
+  document.getElementById('trans-label').textContent = translated ? 'English' : 'Translate';
+  if (translated && !translatedThisQ) translatedThisQ = true;
+}
+
+function answer(i) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  const pts = translatedThisQ ? 5 : 15;
+  const correct = i === q.correct;
+  document.querySelectorAll('.opt-btn').forEach((b, idx) => {
+    b.disabled = true;
+    if (idx === q.correct) b.classList.add('correct');
+    else if (idx === i && !correct) b.classList.add('wrong');
+  });
+  const fb = document.getElementById('feedback');
+  fb.classList.add('show');
+  if (correct) {
+    score += pts;
+    document.getElementById('score-display').textContent = score;
+    fb.classList.add('correct');
+    fb.textContent = translatedThisQ
+      ? `✓ Correto! +${pts} pontos (penalidade de tradução aplicada)`
+      : `✓ Correct! +${pts} points`;
+  } else {
+    fb.classList.add('wrong');
+    fb.textContent = `✗ Incorrect. Correct answer: ${q.options[q.correct]}`;
+    wrongAnswers.push({ q: q.en, correct: q.options[q.correct], chosen: q.options[i] });
+  }
+  document.getElementById('next-btn').classList.add('show');
+}
+
+function nextQ() { current++; render(); }
+
+function showResults() {
+  document.getElementById('progress').style.width = '100%';
+  const pct = Math.round(score / 300 * 100);
+  const emoji = pct >= 80 ? '🏆' : pct >= 60 ? '⭐' : '💪';
+  const msg = pct >= 80 ? 'Excellent work!' : pct >= 60 ? 'Good job!' : 'Keep practicing!';
+  const wrongHtml = wrongAnswers.length === 0
+    ? `<p style="color:#a05022;font-size:14px;text-align:center;">Perfect score — no wrong answers! 🎉</p>`
+    : wrongAnswers.map(w => `
+        <div class="wrong-item">
+          <div style="margin-bottom:4px;font-weight:600;">${w.q}</div>
+          <div>Your answer: <span style="color:#E24B4A;font-weight:700;">${w.chosen}</span>
+            → Correct: <span class="correct-ans">${w.correct}</span></div>
+        </div>`).join('');
+
+  document.getElementById('quiz-wrap').innerHTML = `
+    <div class="results">
+      <div style="font-size:4rem;margin-bottom:0.5rem;">${emoji}</div>
+      <h2>${msg}</h2>
+      <div class="final-score">${score} / 300</div>
+      <div class="final-pct">${pct}% correct</div>
+      ${wrongAnswers.length > 0 ? `
+        <div class="wrong-list">
+          <div class="wrong-list-title">Questions to review:</div>
+          ${wrongHtml}
+        </div>` : wrongHtml}
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;">
+        <button class="restart-btn" onclick="restart()">Tentar novamente com novas perguntas</button>
+        <a href="index.html" class="back-home">← Voltar ao início</a>
+      </div>
+    </div>`;
+}
+
+function restart() {
+  current = 0; score = 0; wrongAnswers = [];
+  answered = false; translated = false; translatedThisQ = false;
+  shuffleNumbers();
+  render();
+}
+
+function shuffleNumbers() {
+  QUESTIONS.forEach(q => {
+    if (q.level === 1) {
+      const a = [11,12,13,14,15,16,17,18,19][Math.floor(Math.random() * 9)];
+      const b = [5,6,7,8,9,10,11,12][Math.floor(Math.random() * 8)];
+      const ans = a * b;
+      q.en = `What is ${a} × ${b}?`;
+      q.pt = `Quanto é ${a} × ${b}?`;
+      const opts = generateOpts(ans, 4);
+      q.options = opts.map((v, i) => String.fromCharCode(65 + i) + ') ' + v);
+      q.correct = opts.indexOf(ans);
+    }
+  });
+}
+
+function generateOpts(ans, count) {
+  const s = new Set([ans]);
+  while (s.size < count) {
+    const delta = (Math.floor(Math.random() * 4) + 1) * 10 * (Math.random() < 0.5 ? 1 : -1);
+    const v = ans + delta;
+    if (v > 0) s.add(v);
+  }
+  return Array.from(s).sort((a, b) => a - b);
+}
+
+render();
+</script>
+</body>
+</html>
