@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persuasive Writing and Speaking · MapleBear</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+  :root {
+    --orange-50:#fff7ed;--orange-100:#ffedd5;--orange-200:#fed7aa;--orange-300:#fdba74;
+    --orange-400:#fb923c;--orange-500:#f97316;--orange-600:#ea580c;--orange-700:#c2410c;
+    --white:#ffffff;
+    --glass-bg:rgba(255,255,255,0.65);
+    --glass-border:rgba(249,115,22,0.18);
+    --shadow-soft:0 8px 32px rgba(249,115,22,0.10);
+    --shadow-card:0 4px 24px rgba(249,115,22,0.13);
+    --radius-xl:2rem;--radius-lg:1.25rem;--radius-md:0.875rem;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Nunito',sans-serif;background:linear-gradient(135deg,#fff7ed 0%,#ffedd5 40%,#fff3e0 70%,#fde8d0 100%);min-height:100vh;color:#3a1a00;}
+  body::before{content:'';position:fixed;top:-120px;right:-120px;width:520px;height:520px;background:radial-gradient(circle,rgba(251,146,60,0.18) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0;}
+  body::after{content:'';position:fixed;bottom:-100px;left:-100px;width:440px;height:440px;background:radial-gradient(circle,rgba(249,115,22,0.12) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0;}
+  a{text-decoration:none;}
+
+  header{position:sticky;top:0;z-index:100;backdrop-filter:blur(18px) saturate(1.4);background:rgba(255,255,255,0.72);border-bottom:1.5px solid rgba(249,115,22,0.15);box-shadow:0 2px 18px rgba(249,115,22,0.08);padding:0.7rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+  .logo{display:flex;align-items:center;gap:0.7rem;}
+  .logo-text{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.2rem;color:var(--orange-600);}
+  .logo-sub{font-size:0.72rem;font-weight:600;color:var(--orange-400);letter-spacing:.04em;}
+  .progress-bar-wrap{flex:1;max-width:320px;}
+  .progress-label{font-size:0.7rem;font-weight:700;color:var(--orange-500);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;}
+  .progress-track{height:8px;background:rgba(253,186,116,0.35);border-radius:99px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--orange-400),var(--orange-600));border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1);width:0%;}
+  .score-badge{background:linear-gradient(135deg,var(--orange-400),var(--orange-600));color:#fff;font-weight:800;font-size:0.95rem;padding:.38rem .9rem;border-radius:99px;box-shadow:0 3px 12px rgba(234,88,12,0.28);display:flex;align-items:center;gap:.4rem;white-space:nowrap;}
+
+  .hero{text-align:center;padding:3.2rem 1.5rem 2.2rem;position:relative;z-index:1;}
+  .hero-badge{display:inline-block;background:linear-gradient(90deg,#fb923c22,#f9731611);border:1.5px solid var(--orange-300);border-radius:99px;padding:.3rem 1rem;font-size:.78rem;font-weight:700;color:var(--orange-600);letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.1rem;}
+  .hero h1{font-family:'Baloo 2',cursive;font-weight:800;font-size:clamp(2rem,5vw,3rem);color:var(--orange-700);line-height:1.15;margin-bottom:.6rem;}
+  .hero p{font-size:1.05rem;color:#a05022;max-width:640px;margin:0 auto;font-weight:500;}
+  .hero-meta{display:flex;justify-content:center;gap:1.2rem;margin-top:1.2rem;flex-wrap:wrap;}
+  .meta-chip{background:var(--glass-bg);border:1.5px solid var(--glass-border);border-radius:99px;padding:.28rem .85rem;font-size:.76rem;font-weight:700;color:var(--orange-600);backdrop-filter:blur(8px);}
+
+  .section-nav{display:flex;justify-content:center;gap:.6rem;padding:1rem 1rem .5rem;position:relative;z-index:1;flex-wrap:wrap;}
+  .nav-chip{background:var(--glass-bg);border:1.5px solid var(--glass-border);border-radius:99px;padding:.38rem 1rem;font-size:.78rem;font-weight:800;color:var(--orange-600);cursor:pointer;transition:all .2s;backdrop-filter:blur(8px);}
+  .nav-chip:hover{background:var(--orange-500);color:#fff;border-color:var(--orange-500);transform:translateY(-2px);}
+
+  .lesson-section{max-width:880px;margin:1.5rem auto;padding:0 1rem;position:relative;z-index:1;}
+  .section-card{background:var(--glass-bg);backdrop-filter:blur(20px) saturate(1.3);border:1.5px solid var(--glass-border);border-radius:var(--radius-xl);box-shadow:var(--shadow-soft);padding:2rem 2.2rem 1.8rem;margin-bottom:1.5rem;position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s;}
+  .section-card:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(249,115,22,0.14);}
+  .section-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--orange-400),var(--orange-600),var(--orange-300));border-radius:var(--radius-xl) var(--radius-xl) 0 0;}
+
+  .section-header{display:flex;align-items:center;gap:.9rem;margin-bottom:1.5rem;}
+  .section-icon{width:52px;height:52px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:0 4px 16px rgba(234,88,12,0.22);flex-shrink:0;}
+  .section-icon.purple{background:linear-gradient(135deg,#a78bfa,#7c3aed);}
+  .section-icon.green{background:linear-gradient(135deg,#34d399,#059669);}
+  .section-icon.blue{background:linear-gradient(135deg,#60a5fa,#2563eb);}
+  .section-icon.orange{background:linear-gradient(135deg,var(--orange-400),var(--orange-600));}
+  .section-icon.pink{background:linear-gradient(135deg,#f472b6,#db2777);}
+  .section-title{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.5rem;color:var(--orange-700);line-height:1.2;}
+  .section-subtitle{font-size:.78rem;font-weight:700;color:var(--orange-400);text-transform:uppercase;letter-spacing:.07em;}
+  .section-body{font-size:1rem;line-height:1.75;color:#4a2000;}
+  .section-body p{margin-bottom:1rem;}
+
+  .key-phrase-en{background:linear-gradient(90deg,rgba(251,191,36,0.18),rgba(245,158,11,0.08));border-left:4px solid #f59e0b;border-radius:0 var(--radius-md) var(--radius-md) 0;padding:.8rem 1.1rem;margin:1.4rem 0;font-weight:700;font-size:1.02rem;color:#92400e;font-style:italic;position:relative;}
+  .key-phrase-en::before{content:'🔑 EN';position:absolute;top:-.62rem;left:.8rem;font-size:.65rem;font-weight:800;background:#f59e0b;color:#fff;padding:.15rem .45rem;border-radius:99px;letter-spacing:.04em;font-style:normal;}
+  .key-phrase-pt{background:linear-gradient(90deg,rgba(253,186,116,0.35),rgba(249,115,22,0.10));border-left:4px solid var(--orange-500);border-radius:0 var(--radius-md) var(--radius-md) 0;padding:.8rem 1.1rem;margin:1.4rem 0;font-weight:700;font-size:1.02rem;color:var(--orange-700);position:relative;}
+  .key-phrase-pt::before{content:'🔑 PT';position:absolute;top:-.62rem;left:.8rem;font-size:.65rem;font-weight:800;background:var(--orange-500);color:#fff;padding:.15rem .45rem;border-radius:99px;letter-spacing:.04em;}
+
+  .memory-box{background:linear-gradient(135deg,#fef9c3,#fef3c7);border:1.5px solid #fde68a;border-radius:var(--radius-lg);padding:1rem 1.2rem;margin:1rem 0;display:flex;gap:.8rem;align-items:flex-start;}
+  .memory-box .mem-emoji{font-size:1.6rem;}
+  .memory-box strong{display:block;font-size:.82rem;font-weight:800;color:#92400e;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.2rem;}
+  .memory-box p{font-size:.9rem;color:#78350f;font-weight:600;margin:0;}
+
+  .compare-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.8rem;margin:1rem 0;}
+  .compare-card{border-radius:var(--radius-md);padding:.9rem 1rem;}
+  .compare-card.a{background:linear-gradient(135deg,#ede9fe,#ddd6fe);border:1.5px solid #c4b5fd;}
+  .compare-card.b{background:linear-gradient(135deg,#dbeafe,#bfdbfe);border:1.5px solid #93c5fd;}
+  .compare-card.c{background:linear-gradient(135deg,#dcfce7,#d1fae5);border:1.5px solid #86efac;}
+  .compare-card strong{display:block;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.4rem;}
+  .compare-card.a strong{color:#5b21b6;}
+  .compare-card.b strong{color:#1d4ed8;}
+  .compare-card.c strong{color:#166534;}
+  .compare-card span{font-size:.88rem;font-weight:600;color:#3a1a00;line-height:1.5;}
+
+  /* OREO */
+  .oreo{display:flex;flex-direction:column;gap:.55rem;margin:1rem 0;}
+  .oreo-row{display:flex;align-items:flex-start;gap:.9rem;background:rgba(255,255,255,0.75);border:1.5px solid rgba(253,186,116,0.35);border-radius:var(--radius-md);padding:.8rem 1.1rem;transition:transform .2s,box-shadow .2s;}
+  .oreo-row:hover{transform:translateX(4px);box-shadow:0 4px 16px rgba(249,115,22,0.12);}
+  .oreo-letter{width:38px;height:38px;background:linear-gradient(135deg,var(--orange-400),var(--orange-600));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2',cursive;font-weight:800;color:#fff;font-size:1.15rem;flex-shrink:0;}
+  .oreo-body h4{font-family:'Baloo 2',cursive;font-weight:800;color:var(--orange-700);font-size:1rem;}
+  .oreo-body p{font-size:.88rem;color:#5c2800;margin:.2rem 0 0;}
+  .oreo-body .step-tip{font-size:.78rem;color:var(--orange-600);background:rgba(255,237,213,0.8);border-radius:6px;padding:.2rem .5rem;margin-top:.35rem;display:inline-block;font-weight:700;}
+
+  /* Exemplos */
+  .ex-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1rem;margin-top:.5rem;}
+  .ex-card{background:rgba(255,247,237,0.9);border:1.5px solid rgba(253,186,116,0.5);border-radius:var(--radius-lg);padding:1.1rem 1.3rem;display:flex;flex-direction:column;gap:.5rem;transition:transform .2s,box-shadow .2s;}
+  .ex-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(249,115,22,0.14);}
+  .ex-top{display:flex;align-items:center;gap:.6rem;}
+  .ex-emoji{font-size:1.6rem;}
+  .ex-title{font-family:'Baloo 2',cursive;font-weight:800;color:var(--orange-700);font-size:1.05rem;line-height:1.2;}
+  .ex-when{font-size:.74rem;font-weight:800;color:var(--orange-400);text-transform:uppercase;letter-spacing:.05em;}
+  .ex-model{background:#fff;border:1.5px dashed var(--orange-300);border-radius:var(--radius-md);padding:.7rem .9rem;font-size:.89rem;color:#4a2000;line-height:1.6;font-weight:600;}
+  .ex-model b{color:var(--orange-600);}
+  .ex-note{font-size:.82rem;color:#8a4520;font-weight:700;}
+
+  .word-bank{background:linear-gradient(135deg,rgba(255,237,213,0.8),rgba(255,247,237,0.9));border:1.5px solid rgba(253,186,116,0.5);border-radius:var(--radius-lg);padding:1.1rem 1.4rem;margin:1.2rem 0;}
+  .word-bank-title{font-family:'Baloo 2',cursive;font-weight:800;color:var(--orange-600);font-size:1rem;margin-bottom:.7rem;display:flex;align-items:center;gap:.4rem;}
+  .word-grid{display:flex;flex-wrap:wrap;gap:.45rem;}
+  .word-chip{background:#fff;border:1.5px solid var(--orange-300);border-radius:99px;padding:.26rem .8rem;font-size:.83rem;font-weight:700;color:var(--orange-700);}
+
+  /* Quiz */
+  .quiz-section{background:var(--glass-bg);backdrop-filter:blur(20px) saturate(1.3);border:1.5px solid var(--glass-border);border-radius:var(--radius-xl);box-shadow:var(--shadow-card);padding:1.8rem 2.2rem;margin-bottom:1.5rem;position:relative;overflow:hidden;}
+  .quiz-section::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#f59e0b,var(--orange-500),#f97316);border-radius:var(--radius-xl) var(--radius-xl) 0 0;}
+  .quiz-header{display:flex;align-items:center;gap:.8rem;margin-bottom:1.3rem;}
+  .quiz-icon{font-size:1.4rem;}
+  .quiz-title{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.15rem;color:var(--orange-700);}
+  .quiz-sub{font-size:.78rem;font-weight:700;color:var(--orange-400);}
+
+  .question-block{margin-bottom:1.5rem;}
+  .question-num{font-size:.73rem;font-weight:800;color:var(--orange-400);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem;}
+  .question-text{font-weight:700;font-size:1rem;color:#3a1a00;margin-bottom:.85rem;line-height:1.5;}
+  .options{display:flex;flex-direction:column;gap:.55rem;}
+  .option-btn{background:rgba(255,255,255,0.8);border:2px solid rgba(253,186,116,0.4);border-radius:var(--radius-md);padding:.75rem 1.1rem;font-family:'Nunito',sans-serif;font-size:.93rem;font-weight:600;color:#5c2800;cursor:pointer;text-align:left;transition:all .2s;display:flex;align-items:center;gap:.7rem;}
+  .option-btn:hover:not(:disabled){background:rgba(255,237,213,0.95);border-color:var(--orange-400);transform:translateX(4px);}
+  .option-letter{width:28px;height:28px;background:linear-gradient(135deg,var(--orange-200),var(--orange-300));border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.82rem;color:var(--orange-700);flex-shrink:0;transition:all .2s;}
+  .option-btn.correct{background:rgba(187,247,208,0.7);border-color:#22c55e;color:#14532d;}
+  .option-btn.correct .option-letter{background:#22c55e;color:#fff;}
+  .option-btn.wrong{background:rgba(254,202,202,0.7);border-color:#ef4444;color:#7f1d1d;}
+  .option-btn.wrong .option-letter{background:#ef4444;color:#fff;}
+  .option-btn:disabled{cursor:default;}
+  .feedback-msg{border-radius:var(--radius-md);padding:.7rem 1rem;font-weight:700;font-size:.9rem;margin-top:.7rem;display:none;}
+  .feedback-msg.correct{background:rgba(187,247,208,0.6);color:#15803d;border:1.5px solid #86efac;display:flex;gap:.5rem;align-items:center;}
+  .feedback-msg.wrong{background:rgba(254,202,202,0.6);color:#dc2626;border:1.5px solid #fca5a5;display:flex;gap:.5rem;align-items:center;}
+
+  /* Keyword typing exercise — validação caractere por caractere */
+  .kw-intro{background:rgba(255,247,237,0.85);border:1.5px solid rgba(253,186,116,0.45);border-radius:var(--radius-md);padding:.85rem 1.1rem;font-size:.9rem;font-weight:700;color:#5c2800;margin-bottom:1.2rem;line-height:1.6;}
+  .kw-item{background:rgba(255,255,255,0.72);border:1.5px solid rgba(253,186,116,0.4);border-radius:var(--radius-lg);padding:1rem 1.2rem;margin-bottom:.9rem;transition:border-color .25s,box-shadow .25s,background .25s;}
+  .kw-item.solved{background:rgba(220,252,231,0.65);border-color:#86efac;box-shadow:0 4px 18px rgba(34,197,94,0.14);}
+  .kw-item.revealed{background:rgba(254,243,199,0.6);border-color:#fcd34d;}
+  .kw-head{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;}
+  .kw-badge{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--orange-400),var(--orange-600));color:#fff;font-family:'Baloo 2',cursive;font-weight:800;font-size:.85rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .kw-hint{font-size:.78rem;font-weight:800;color:var(--orange-500);}
+  .kw-sentence{font-size:.98rem;font-weight:600;color:#3a1a00;line-height:2.4;}
+  .kw-sentence b{color:var(--orange-700);}
+
+  .kw-slot{display:inline-flex;gap:.22rem;vertical-align:middle;flex-wrap:wrap;margin:0 .18rem;}
+  .kw-char{width:2rem;height:2.4rem;padding:0;border:2px solid var(--orange-300);border-radius:.5rem;background:#fff;text-align:center;font-family:'Baloo 2',cursive;font-weight:800;font-size:1.05rem;color:var(--orange-700);outline:none;transition:border-color .15s,background .15s,box-shadow .15s,transform .15s;caret-color:var(--orange-600);}
+  .kw-char:focus{border-color:var(--orange-600);box-shadow:0 0 0 3px rgba(249,115,22,0.2);transform:translateY(-1px);}
+  .kw-char.ok{border-color:#22c55e;background:#f0fdf4;color:#15803d;}
+  .kw-char.err{border-color:#ef4444;background:#fef2f2;color:#b91c1c;animation:shakeX .28s;}
+  .kw-char.shown{border-color:#f59e0b;background:#fffbeb;color:#b45309;}
+  .kw-char:disabled{opacity:1;cursor:default;}
+  .kw-space{width:.7rem;display:inline-block;}
+
+  .kw-foot{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-top:.6rem;}
+  .kw-status{font-size:.85rem;font-weight:800;display:none;align-items:center;gap:.35rem;}
+  .kw-status.ok{display:inline-flex;color:#15803d;}
+  .kw-status.warn{display:inline-flex;color:#b45309;}
+  .btn-mini{background:rgba(255,255,255,0.9);border:1.5px solid var(--orange-300);color:var(--orange-600);border-radius:99px;padding:.32rem .9rem;font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:800;cursor:pointer;transition:all .2s;}
+  .btn-mini:hover{background:var(--orange-500);color:#fff;border-color:var(--orange-500);}
+  .btn-mini:disabled{opacity:.45;cursor:default;}
+
+  .kw-summary{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;background:linear-gradient(135deg,rgba(255,237,213,0.85),rgba(255,247,237,0.9));border:1.5px solid rgba(253,186,116,0.5);border-radius:var(--radius-lg);padding:.9rem 1.2rem;margin-top:1.1rem;}
+  .kw-summary strong{font-family:'Baloo 2',cursive;font-weight:800;color:var(--orange-700);font-size:1rem;}
+  .btn-check{background:linear-gradient(90deg,var(--orange-400),var(--orange-600));color:#fff;border:none;border-radius:99px;padding:.55rem 1.4rem;font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(234,88,12,0.25);}
+  .btn-check:hover{filter:brightness(1.08);transform:translateY(-1px);}
+
+  .section-complete{display:none;text-align:center;padding:1.5rem;margin-top:1rem;background:linear-gradient(135deg,rgba(187,247,208,0.4),rgba(134,239,172,0.2));border:1.5px solid #86efac;border-radius:var(--radius-lg);}
+  .section-complete.show{display:block;}
+  .section-complete h3{font-family:'Baloo 2',cursive;font-weight:800;color:#15803d;font-size:1.3rem;margin-bottom:.4rem;}
+  .section-complete p{color:#166534;font-size:.9rem;}
+
+  .final-trophy{display:none;text-align:center;padding:2rem 1rem 3rem;position:relative;z-index:1;}
+  .final-trophy.show{display:block;}
+  .trophy-card{background:var(--glass-bg);backdrop-filter:blur(20px);border:2px solid rgba(253,186,116,0.4);border-radius:var(--radius-xl);padding:3rem 2rem;max-width:540px;margin:0 auto;box-shadow:0 16px 48px rgba(249,115,22,0.15);}
+  .trophy-emoji{font-size:5rem;margin-bottom:1rem;display:block;}
+  .trophy-card h2{font-family:'Baloo 2',cursive;font-weight:800;font-size:2rem;color:var(--orange-700);margin-bottom:.7rem;}
+  .trophy-score{font-size:3rem;font-weight:900;color:var(--orange-600);font-family:'Baloo 2',cursive;}
+  .trophy-card p{color:#a05022;margin-top:.8rem;font-size:1rem;}
+
+  .confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;}
+  .confetti-piece{position:absolute;width:10px;height:10px;border-radius:2px;animation:confettiFall 1.2s ease-in forwards;}
+
+  footer{text-align:center;padding:2.5rem 1rem 3rem;position:relative;z-index:1;}
+  footer p{font-size:.82rem;color:#a05022;font-weight:600;}
+
+  @keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg) scale(1);}100%{opacity:0;transform:translateY(100vh) rotate(540deg) scale(.6);}}
+  @keyframes shakeX{0%,100%{transform:translateX(0);}25%{transform:translateX(-3px);}75%{transform:translateX(3px);}}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  @media(max-width:600px){
+    .section-card,.quiz-section{padding:1.3rem 1.1rem;}
+    header{padding:.6rem 1rem;}
+    .logo-text{font-size:1rem;}
+    .progress-bar-wrap{max-width:130px;}
+    .kw-char{width:1.75rem;height:2.15rem;font-size:.95rem;}
+    .kw-sentence{font-size:.92rem;}
+  }
+</style>
+</head>
+<body>
+<div class="confetti-container" id="confettiContainer"></div>
+
+<header>
+  <a href="index.html" class="logo" title="Voltar para o início">
+    <div style="width:38px;height:38px;background:linear-gradient(135deg,var(--orange-400),var(--orange-600));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 4px 12px rgba(234,88,12,0.25);">📣</div>
+    <div style="margin-left:6px;">
+      <div class="logo-text">MapleBear</div>
+      <div class="logo-sub">Persuasive Writing &amp; Speaking</div>
+    </div>
+  </a>
+  <div class="progress-bar-wrap">
+    <div class="progress-label">Progresso · Progress</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+  <div class="score-badge">⭐ <span id="scoreDisplay">0</span> pts</div>
+</header>
+
+<div class="hero">
+  <div class="hero-badge">📣 E.L.A · Persuasive Writing and Speaking</div>
+  <h1>Persuasive Writing and Speaking<br><span style="font-size:.55em;color:var(--orange-500);">Escrita e Fala Persuasiva</span></h1>
+  <p>Aprenda a defender a sua opinião com clareza — e a convencer quem lê ou escuta você.</p>
+  <div class="hero-meta">
+    <span class="meta-chip">📖 Explicação simplificada</span>
+    <span class="meta-chip">💡 4 exemplos de uso</span>
+    <span class="meta-chip">🧠 Como usar na prática</span>
+    <span class="meta-chip">🎯 5 questões</span>
+    <span class="meta-chip">⌨️ 10 palavras-chave</span>
+  </div>
+</div>
+
+<div class="section-nav">
+  <div class="nav-chip" data-go="sec-o-que-e">📖 O que é</div>
+  <div class="nav-chip" data-go="sec-exemplos">💡 4 Exemplos</div>
+  <div class="nav-chip" data-go="sec-conceitos">🧠 Como usar</div>
+  <div class="nav-chip" data-go="sec-quiz">🎯 Quiz</div>
+  <div class="nav-chip" data-go="sec-keywords">⌨️ Palavras-chave</div>
+</div>
+
+<!-- ================= 1. O QUE É ================= -->
+<div class="lesson-section reveal" id="sec-o-que-e">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon orange">📖</div>
+      <div>
+        <div class="section-subtitle">Parte 1 · Explicação simplificada</div>
+        <div class="section-title">O que é Persuasive Writing and Speaking?</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p><strong>Persuasive writing and speaking</strong> é quando você escreve ou fala com <strong>um objetivo bem claro</strong>: convencer outra pessoa a <strong>concordar com a sua opinião</strong> ou a <strong>fazer alguma coisa</strong>.</p>
+      <p>Não basta dizer “eu acho que sim”. Você precisa dizer <b>o que pensa</b> (opinião), <b>por que pensa isso</b> (motivo) e <b>como prova isso</b> (evidência). É como ser um advogado defendendo uma ideia — só que com palavras simples e organizadas.</p>
+
+      <div class="key-phrase-en">Persuasive writing and speaking is when you give your <b>opinion</b> and use <b>reasons</b> and <b>evidence</b> to convince other people to agree with you or to take action.</div>
+      <div class="key-phrase-pt">Escrita e fala persuasiva é quando você dá a sua <b>opinião</b> e usa <b>motivos</b> e <b>evidências</b> para convencer as pessoas a concordar com você ou a fazer algo.</div>
+
+      <p style="font-weight:700;color:var(--orange-700);margin-bottom:.5rem;">📚 Comparando com outros tipos de texto:</p>
+      <div class="compare-grid">
+        <div class="compare-card a"><strong>📰 Informative</strong><span>Só <b>informa</b>.<br>“Recess is 20 minutes long.”<br><i>Não tenta convencer ninguém.</i></span></div>
+        <div class="compare-card b"><strong>📕 Narrative</strong><span>Conta uma <b>história</b>.<br>“Yesterday, at recess, I found a lost kitten…”</span></div>
+        <div class="compare-card c"><strong>📣 Persuasive</strong><span>Quer <b>convencer</b>.<br>“Recess should be longer <b>because</b> students learn better after moving.”</span></div>
+      </div>
+
+      <div class="memory-box">
+        <div class="mem-emoji">🧠</div>
+        <div><strong>Dica de memória</strong><p><b>Writing</b> = você convence com a <b>caneta</b> ✍️ (carta, redação, anúncio, resenha). <b>Speaking</b> = você convence com a <b>voz</b> 🎤 (discurso, apresentação, debate). A estrutura é a MESMA — muda só o jeito de entregar.</p></div>
+      </div>
+
+      <div class="memory-box" style="background:linear-gradient(135deg,#dbeafe,#e0f2fe);border-color:#93c5fd;">
+        <div class="mem-emoji">⚖️</div>
+        <div><strong style="color:#1e40af;">Fact × Opinion</strong><p style="color:#1e3a8a;"><b>Fact</b> = pode ser provado (“Water boils at 100°C”). <b>Opinion</b> = o que você acha (“Science is the best subject”). Um bom texto persuasivo começa com uma <b>opinião</b> e a defende com <b>fatos</b>.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 2. EXEMPLOS ================= -->
+<div class="lesson-section reveal" id="sec-exemplos">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon green">💡</div>
+      <div>
+        <div class="section-subtitle">Parte 2 · 4 exemplos de como utilizar</div>
+        <div class="section-title">Onde você usa isso na vida real</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p>A escrita e a fala persuasiva aparecem muito mais do que você imagina. Veja <strong>4 situações</strong> e um modelo curto para cada uma:</p>
+
+      <div class="ex-grid">
+        <div class="ex-card">
+          <div class="ex-top"><span class="ex-emoji">✉️</span><div><div class="ex-title">1. Carta para a diretora</div><div class="ex-when">Writing · pedir uma mudança</div></div></div>
+          <div class="ex-model">
+            “Dear Principal, I believe recess <b>should be 30 minutes</b> long. <b>First</b>, students focus better after moving their bodies. <b>In fact</b>, our science book says exercise helps the brain. <b>Please</b> consider this change for next term.”
+          </div>
+          <div class="ex-note">👉 Opinião + motivo + evidência + pedido educado.</div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-top"><span class="ex-emoji">📺</span><div><div class="ex-title">2. Anúncio / Cartaz</div><div class="ex-when">Writing · vender uma ideia</div></div></div>
+          <div class="ex-model">
+            “Thirsty? <b>Try SuperJuice!</b> It has <b>zero sugar</b> and <b>100% real fruit</b>. Nine out of ten students say it tastes amazing. <b>Get yours today</b> at the school cafeteria!”
+          </div>
+          <div class="ex-note">👉 Frase de impacto + números + call to action.</div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-top"><span class="ex-emoji">🎤</span><div><div class="ex-title">3. Discurso de candidato</div><div class="ex-when">Speaking · eleição da turma</div></div></div>
+          <div class="ex-model">
+            “Good morning, everyone! I <b>should be</b> your class representative <b>because</b> I always listen. Last year I organized the book club, and it grew from 5 to 20 students. <b>Vote for me on Friday!</b>”
+          </div>
+          <div class="ex-note">👉 Contato visual, voz firme e um final marcante.</div>
+        </div>
+
+        <div class="ex-card">
+          <div class="ex-top"><span class="ex-emoji">⭐</span><div><div class="ex-title">4. Resenha de livro</div><div class="ex-when">Writing · convencer um amigo</div></div></div>
+          <div class="ex-model">
+            “You <b>must read</b> <i>Tales of a Fourth Grade Nothing</i>. It is <b>the funniest</b> book of the year. <b>Some people say</b> it is childish, <b>but</b> every chapter has a real lesson about family. <b>Borrow it today!</b>”
+          </div>
+          <div class="ex-note">👉 Aqui aparece o <b>counterargument</b> (“some people say… but…”).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 3. CONCEITOS ================= -->
+<div class="lesson-section reveal" id="sec-conceitos">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-icon purple">🧠</div>
+      <div>
+        <div class="section-subtitle">Parte 3 · Como utilizar conceitualmente</div>
+        <div class="section-title">Os 7 tópicos que fazem você convencer</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <p style="font-weight:800;color:var(--orange-700);">🍪 Tópico 1 — A estrutura OREO (o esqueleto do texto)</p>
+      <div class="oreo">
+        <div class="oreo-row">
+          <div class="oreo-letter">O</div>
+          <div class="oreo-body"><h4>Opinion · Opinião (o claim)</h4><p>Diga logo no começo o que você defende. Uma frase, direta e forte.</p><span class="step-tip">“I believe that…” / “Our school should…”</span></div>
+        </div>
+        <div class="oreo-row">
+          <div class="oreo-letter">R</div>
+          <div class="oreo-body"><h4>Reason · Motivo</h4><p>Explique <b>por quê</b>. Cada motivo é um parágrafo (ou uma parte do discurso).</p><span class="step-tip">“because…” / “The main reason is…”</span></div>
+        </div>
+        <div class="oreo-row">
+          <div class="oreo-letter">E</div>
+          <div class="oreo-body"><h4>Evidence · Evidência</h4><p>Prove com fatos, números, exemplos ou a fala de um especialista.</p><span class="step-tip">“For example…” / “Studies show that…”</span></div>
+        </div>
+        <div class="oreo-row">
+          <div class="oreo-letter">O</div>
+          <div class="oreo-body"><h4>Opinion again · Conclusão</h4><p>Repita a opinião com outras palavras e termine com um pedido claro.</p><span class="step-tip">“That is why… Please…”</span></div>
+        </div>
+      </div>
+
+      <p style="font-weight:800;color:var(--orange-700);margin-top:1.4rem;">🎯 Tópico 2 — Conheça a sua audience (público)</p>
+      <p>Antes de escrever a primeira palavra, pergunte: <b>quem vai ler ou ouvir?</b> Para a diretora você usa linguagem formal (“Dear Principal… I would like to suggest”). Para um colega, linguagem informal (“Hey! You have to try this!”). O mesmo argumento muda de roupa dependendo do público.</p>
+
+      <p style="font-weight:800;color:var(--orange-700);margin-top:1.4rem;">⚖️ Tópico 3 — Separe fact de opinion</p>
+      <p>A sua <b>opinião</b> é o ponto de partida; os <b>fatos</b> são o que sustentam ela. Argumento só com opinião (“porque sim, é melhor”) não convence ninguém. Sempre pergunte: <i>“Como eu provo isso?”</i></p>
+
+      <p style="font-weight:800;color:var(--orange-700);margin-top:1.4rem;">🗣️ Tópico 4 — Os 3 apelos (appeals)</p>
+      <div class="compare-grid">
+        <div class="compare-card a"><strong>🤝 Ethos · Confiança</strong><span>Mostra que você é confiável.<br>“Como capitão do time há dois anos, eu sei que…”</span></div>
+        <div class="compare-card b"><strong>🧮 Logos · Lógica</strong><span>Usa dados e raciocínio.<br>“8 em cada 10 alunos pediram isso.”</span></div>
+        <div class="compare-card c"><strong>❤️ Pathos · Emoção</strong><span>Toca o sentimento.<br>“Imagine chegar em casa e não ter o que ler.”</span></div>
+      </div>
+
+      <p style="font-weight:800;color:var(--orange-700);margin-top:1.4rem;">🛡️ Tópico 5 — Antecipe o counterargument</p>
+      <p>Diga o que o outro lado pensa <b>e responda</b>. Isso mostra que você estudou o assunto e derruba a dúvida antes dela nascer.</p>
+      <div class="ex-model" style="margin:.6rem 0;">“<b>Some people say</b> a longer recess wastes class time, <b>but</b> teachers report that students finish tasks faster after moving.”</div>
+
+      <p style="font-weight:800;color:var(--orange-700);margin-top:1.4rem;">📢 Tópico 6 — Termine com um call to action</p>
+      <p>Nunca termine no vazio. Diga <b>exatamente</b> o que a pessoa deve fazer: “Vote for me on Friday!”, “Sign this letter!”, “Try it today!”. Um texto persuasivo sem pedido final é um foguete sem fósforo.</p>
+
+      <p style="font-weight:800;color:var(--orange-700);margin-top:1.4rem;">🎤 Tópico 7 — No <i>speaking</i>, o corpo também argumenta</p>
+      <div class="compare-grid">
+        <div class="compare-card a"><strong>👀 Eye contact</strong><span>Olhe para a plateia, não para o papel.</span></div>
+        <div class="compare-card b"><strong>🐢 Pace &amp; pause</strong><span>Fale devagar e faça uma pausa antes da frase mais importante.</span></div>
+        <div class="compare-card c"><strong>🔊 Emphasis</strong><span>Aumente a voz nas palavras-chave e repita a ideia principal.</span></div>
+      </div>
+
+      <div class="word-bank">
+        <div class="word-bank-title">🗂️ Word Bank — palavras que convencem</div>
+        <div class="word-grid">
+          <span class="word-chip">I believe</span><span class="word-chip">In my opinion</span><span class="word-chip">should / must</span>
+          <span class="word-chip">because</span><span class="word-chip">First of all</span><span class="word-chip">Also</span>
+          <span class="word-chip">For example</span><span class="word-chip">In fact</span><span class="word-chip">Most importantly</span>
+          <span class="word-chip">Some people say… but</span><span class="word-chip">Therefore</span><span class="word-chip">That is why</span>
+          <span class="word-chip">Finally</span><span class="word-chip">Please</span><span class="word-chip">Join us!</span>
+        </div>
+      </div>
+
+      <div class="memory-box">
+        <div class="mem-emoji">✅</div>
+        <div><strong>Checklist antes de entregar</strong><p>1) Minha opinião está clara? 2) Tenho pelo menos 2 motivos? 3) Cada motivo tem evidência? 4) Respondi ao outro lado? 5) Terminei com um pedido? 6) Usei palavras persuasivas?</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 4. QUIZ ================= -->
+<div class="lesson-section reveal" id="sec-quiz">
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">🎯</span>
+      <div>
+        <div class="quiz-title">Quiz — 5 questões de múltipla escolha</div>
+        <div class="quiz-sub">Cada acerto vale 10 pontos</div>
+      </div>
+    </div>
+    <div id="quiz-mc"></div>
+    <div class="section-complete" id="complete-mc"><h3>🎉 Quiz concluído!</h3><p>Agora vá para os exercícios de palavras-chave. 👇</p></div>
+  </div>
+</div>
+
+<!-- ================= 5. KEYWORDS ================= -->
+<div class="lesson-section reveal" id="sec-keywords">
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <span class="quiz-icon">⌨️</span>
+      <div>
+        <div class="quiz-title">10 exercícios — escreva a palavra-chave</div>
+        <div class="quiz-sub">Validação letra por letra · 10 pontos por palavra</div>
+      </div>
+    </div>
+
+    <div class="kw-intro">
+      ✍️ Digite a palavra-chave que completa cada frase. <b>Cada caractere é validado na hora</b>:
+      <span style="color:#15803d;">verde = letra certa</span> · <span style="color:#b91c1c;">vermelho = letra errada</span>.
+      Use <b>Backspace</b> para apagar e as <b>setas ←→</b> para andar entre as caixinhas.
+    </div>
+
+    <div id="kwList"></div>
+
+    <div class="kw-summary">
+      <strong>Palavras corretas: <span id="kwDone">0</span> / 10</strong>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap;">
+        <button class="btn-mini" onclick="resetKeywords()">🔄 Limpar tudo</button>
+        <button class="btn-check" onclick="checkAllKeywords()">✅ Verificar todas</button>
+      </div>
+    </div>
+
+    <div class="section-complete" id="complete-kw"><h3>🏅 Todas as palavras corretas!</h3><p>Você domina o vocabulário de Persuasive Writing and Speaking!</p></div>
+    <button class="btn-check" id="btnTrophy" style="display:none;margin:1rem auto 0;" onclick="showTrophy()">Ver resultado final 🏆</button>
+  </div>
+</div>
+
+<!-- ================= TROPHY ================= -->
+<div class="final-trophy" id="finalTrophy">
+  <div class="trophy-card">
+    <span class="trophy-emoji">🏆</span>
+    <h2>You are persuasive!<br><span style="font-size:.6em;color:var(--orange-500);">Você é persuasivo!</span></h2>
+    <div class="trophy-score"><span id="finalScore">0</span> pts</div>
+    <p id="finalMsg">Keep practising your arguments!</p>
+    <button onclick="location.reload()" style="margin-top:1.5rem;padding:.7rem 2rem;background:linear-gradient(135deg,var(--orange-400),var(--orange-600));color:#fff;border:none;border-radius:99px;font-family:'Baloo 2',cursive;font-weight:800;font-size:1rem;cursor:pointer;">Recomeçar · Restart 🔄</button>
+  </div>
+</div>
+
+<footer>
+  <p>📣 Persuasive Writing and Speaking · E.L.A · Maple Bear Maceió</p>
+  <p style="margin-top:.4rem">Opinion + Reason + Evidence = argumento que convence! 🚀</p>
+</footer>
+
+<script>
+/* ============================================================
+   ESTADO GERAL
+   ============================================================ */
+const MC_TOTAL = 5;
+const KW_TOTAL = 10;
+let score = 0;
+let mcAnswered = 0;
+let kwSolved = 0;
+
+/* ============================================================
+   1) QUIZ DE MÚLTIPLA ESCOLHA — 5 QUESTÕES
+   ============================================================ */
+const quizMC = [
+  {
+    q: 'Qual é o objetivo principal de um texto (ou discurso) persuasivo?',
+    opts: [
+      'Contar uma história engraçada para divertir o leitor',
+      'Convencer o leitor ou ouvinte a concordar com uma opinião ou a fazer algo',
+      'Explicar um assunto sem dar nenhuma opinião',
+      'Descrever um lugar com muitos adjetivos'
+    ],
+    c: 1,
+    why: 'Persuadir = convencer alguém a concordar com você ou a tomar uma atitude.'
+  },
+  {
+    q: 'Which sentence is an OPINION (not a fact)?',
+    opts: [
+      'Recess lasts twenty minutes at our school.',
+      'Water boils at 100 degrees Celsius.',
+      'Recess is the best part of the school day.',
+      'The library has 400 books.'
+    ],
+    c: 2,
+    why: '“The best part” não pode ser provado — é o que a pessoa acha. Opinião!'
+  },
+  {
+    q: 'Na estrutura OREO, o que significa a letra "E"?',
+    opts: [
+      'Ending — o final do texto',
+      'Emotion — a emoção do leitor',
+      'Example only — apenas um exemplo inventado',
+      'Evidence — fatos, números e exemplos que provam o motivo'
+    ],
+    c: 3,
+    why: 'OREO = Opinion, Reason, Evidence, Opinion again.'
+  },
+  {
+    q: 'Qual é o melhor CALL TO ACTION para terminar um discurso de campanha?',
+    opts: [
+      'Vote for me on Friday!',
+      'Well, that is everything I had to say.',
+      'Thank you for listening to my speech.',
+      'I think maybe you could consider it someday.'
+    ],
+    c: 0,
+    why: 'Um call to action diz EXATAMENTE o que a pessoa deve fazer — e quando.'
+  },
+  {
+    q: 'Por que um bom texto persuasivo apresenta o COUNTERARGUMENT?',
+    opts: [
+      'Para deixar o texto mais longo',
+      'Para mostrar que você entende o outro lado e então respondê-lo com força',
+      'Para o leitor escolher o lado que preferir',
+      'Para desistir da sua própria opinião no final'
+    ],
+    c: 1,
+    why: 'Você mostra o outro lado ("Some people say…") e responde ("…but…"). Isso derruba a dúvida.'
+  }
+];
+
+function renderMC(){
+  const el = document.getElementById('quiz-mc');
+  const letters = ['A','B','C','D'];
+  el.innerHTML = quizMC.map((q,qi)=>`
+    <div class="question-block">
+      <div class="question-num">Pergunta ${qi+1} de ${MC_TOTAL}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options" id="opts-${qi}">
+        ${q.opts.map((o,oi)=>`
+          <button class="option-btn" data-oi="${oi}" onclick="checkMC(this,${qi},${oi})">
+            <span class="option-letter">${letters[oi]}</span><span>${o}</span>
+          </button>`).join('')}
+      </div>
+      <div class="feedback-msg" id="fb-${qi}"></div>
+    </div>`).join('');
+}
+
+function checkMC(btn, qi, chosen){
+  const q = quizMC[qi];
+  const opts = document.querySelectorAll(`#opts-${qi} .option-btn`);
+  opts.forEach(b => b.disabled = true);
+  const fb = document.getElementById(`fb-${qi}`);
+  if(chosen === q.c){
+    btn.classList.add('correct');
+    fb.className = 'feedback-msg correct';
+    fb.innerHTML = `✅ Correto! ${q.why}`;
+    score += 10;
+    launchConfetti();
+  } else {
+    btn.classList.add('wrong');
+    opts[q.c].classList.add('correct');
+    fb.className = 'feedback-msg wrong';
+    fb.innerHTML = `❌ A resposta certa é <strong>${q.opts[q.c]}</strong> — ${q.why}`;
+  }
+  fb.style.display = 'flex';
+  mcAnswered++;
+  updateScore();
+  if(mcAnswered >= MC_TOTAL){
+    document.getElementById('complete-mc').classList.add('show');
+  }
+}
+
+/* ============================================================
+   2) EXERCÍCIOS DE PALAVRA-CHAVE — validação caractere a caractere
+   ============================================================ */
+const keywords = [
+  { answer:'claim',           hint:'a afirmação principal que você defende',
+    before:'A strong ', after:' tells the reader exactly what you believe.' },
+  { answer:'reason',          hint:'o motivo que explica a sua opinião',
+    before:'Every claim needs a clear ', after:' that explains why you think that way.' },
+  { answer:'evidence',        hint:'a prova: fatos, números e exemplos',
+    before:'Facts, numbers and examples are the ', after:' that supports your reason.' },
+  { answer:'audience',        hint:'o público que vai ler ou ouvir você',
+    before:'Think about your ', after:' before you write: who will read or listen to you?' },
+  { answer:'opinion',         hint:'o que você acha — não pode ser provado',
+    before:'An ', after:' is what you think or feel, and it can be different for each person.' },
+  { answer:'fact',            hint:'algo que pode ser provado como verdadeiro',
+    before:'A ', after:' can be proved true, like “Water boils at 100 degrees Celsius”.' },
+  { answer:'persuade',        hint:'o verbo “convencer” em inglês',
+    before:'The goal of this kind of text is to ', after:' someone to agree with you.' },
+  { answer:'because',         hint:'a conjunção que liga a opinião ao motivo',
+    before:'Use the word ', after:' to connect your opinion to your reason.' },
+  { answer:'counterargument', hint:'o argumento do outro lado, que você responde',
+    before:'A ', after:' shows what the other side thinks — and then you answer it.' },
+  { answer:'conclusion',      hint:'a parte final do texto',
+    before:'In the ', after:', repeat your opinion and end with a call to action.' }
+];
+
+function renderKeywords(){
+  const list = document.getElementById('kwList');
+  list.innerHTML = keywords.map((k,i)=>`
+    <div class="kw-item" id="kw-${i}" data-answer="${k.answer}" data-idx="${i}">
+      <div class="kw-head">
+        <span class="kw-badge">${i+1}</span>
+        <span class="kw-hint">💡 ${k.hint}</span>
+      </div>
+      <div class="kw-sentence">${k.before}<span class="kw-slot" id="slot-${i}"></span>${k.after}</div>
+      <div class="kw-foot">
+        <span class="kw-status" id="kwst-${i}"></span>
+        <button class="btn-mini" onclick="revealKeyword(${i})" id="kwrv-${i}">👀 Mostrar resposta</button>
+      </div>
+    </div>`).join('');
+
+  keywords.forEach((k,i)=> buildSlot(i));
+}
+
+function buildSlot(i){
+  const answer = keywords[i].answer;
+  const slot = document.getElementById(`slot-${i}`);
+  slot.innerHTML = '';
+  [...answer].forEach((ch, pos)=>{
+    if(ch === ' '){
+      const gap = document.createElement('span');
+      gap.className = 'kw-space';
+      slot.appendChild(gap);
+      return;
+    }
+    const inp = document.createElement('input');
+    inp.type = 'text';
+    inp.className = 'kw-char';
+    inp.maxLength = 1;
+    inp.autocomplete = 'off';
+    inp.spellcheck = false;
+    inp.dataset.pos = pos;
+    inp.dataset.item = i;
+    inp.setAttribute('aria-label', `Exercício ${i+1}, letra ${pos+1}`);
+    slot.appendChild(inp);
+  });
+
+  slot.addEventListener('input', onCharInput);
+  slot.addEventListener('keydown', onCharKeydown);
+  slot.addEventListener('paste', onCharPaste);
+  // ao focar/clicar numa caixinha já preenchida, seleciona a letra
+  // para que a próxima tecla substitua o caractere (maxlength=1)
+  slot.addEventListener('focusin', selectCharBox);
+  slot.addEventListener('click', selectCharBox);
+}
+
+function selectCharBox(e){
+  const inp = e.target;
+  if(inp.classList && inp.classList.contains('kw-char') && !inp.disabled) inp.select();
+}
+
+function charInputs(i){
+  return Array.from(document.querySelectorAll(`#slot-${i} .kw-char`));
+}
+
+/* Valida UM caractere assim que ele é digitado */
+function validateChar(inp){
+  const i = +inp.dataset.item;
+  const pos = +inp.dataset.pos;
+  const expected = keywords[i].answer[pos].toLowerCase();
+  const typed = inp.value.trim().toLowerCase();
+  inp.classList.remove('ok','err');
+  if(typed === '') return null;
+  if(typed === expected){ inp.classList.add('ok'); return true; }
+  inp.classList.add('err');
+  return false;
+}
+
+function onCharInput(e){
+  const inp = e.target;
+  if(!inp.classList.contains('kw-char')) return;
+  // mantém apenas o último caractere digitado
+  if(inp.value.length > 1) inp.value = inp.value.slice(-1);
+  const i = +inp.dataset.item;
+  validateChar(inp);
+  if(inp.value !== '') focusSibling(i, inp, +1);
+  evaluateKeyword(i);
+}
+
+function onCharKeydown(e){
+  const inp = e.target;
+  if(!inp.classList.contains('kw-char')) return;
+  const i = +inp.dataset.item;
+  if(e.key === 'Backspace'){
+    if(inp.value === ''){
+      e.preventDefault();
+      const prev = focusSibling(i, inp, -1);
+      if(prev){ prev.value=''; prev.classList.remove('ok','err','shown'); evaluateKeyword(i); }
+    } else {
+      inp.value = '';
+      inp.classList.remove('ok','err','shown');
+      e.preventDefault();
+      evaluateKeyword(i);
+    }
+  } else if(e.key === 'ArrowLeft'){
+    e.preventDefault(); focusSibling(i, inp, -1);
+  } else if(e.key === 'ArrowRight'){
+    e.preventDefault(); focusSibling(i, inp, +1);
+  } else if(e.key === 'Enter'){
+    e.preventDefault(); evaluateKeyword(i, true);
+  }
+}
+
+function onCharPaste(e){
+  const inp = e.target;
+  if(!inp.classList.contains('kw-char')) return;
+  e.preventDefault();
+  const i = +inp.dataset.item;
+  const text = (e.clipboardData || window.clipboardData).getData('text').replace(/\s/g,'');
+  const boxes = charInputs(i);
+  let start = boxes.indexOf(inp);
+  [...text].forEach(ch=>{
+    if(start >= boxes.length) return;
+    boxes[start].value = ch;
+    validateChar(boxes[start]);
+    start++;
+  });
+  if(boxes[Math.min(start, boxes.length-1)]) boxes[Math.min(start, boxes.length-1)].focus();
+  evaluateKeyword(i);
+}
+
+function focusSibling(i, inp, dir){
+  const boxes = charInputs(i);
+  const idx = boxes.indexOf(inp) + dir;
+  if(idx >= 0 && idx < boxes.length){ boxes[idx].focus(); boxes[idx].select(); return boxes[idx]; }
+  return null;
+}
+
+/* Confere a palavra inteira (todos os caracteres) */
+function evaluateKeyword(i, showFeedback){
+  const item = document.getElementById(`kw-${i}`);
+  const st = document.getElementById(`kwst-${i}`);
+  const boxes = charInputs(i);
+  const filled = boxes.every(b => b.value.trim() !== '');
+  const allOk  = boxes.every(b => b.classList.contains('ok'));
+
+  if(filled && allOk){
+    if(!item.classList.contains('solved')){
+      item.classList.add('solved');
+      item.classList.remove('revealed');
+      boxes.forEach(b => b.disabled = true);
+      document.getElementById(`kwrv-${i}`).disabled = true;
+      st.className = 'kw-status ok';
+      st.innerHTML = `✅ Perfeito! <span style="text-transform:uppercase;letter-spacing:.05em;">${keywords[i].answer}</span>`;
+      if(!item.dataset.revealed){ score += 10; updateScore(); launchConfetti(); }
+      kwSolved++;
+      document.getElementById('kwDone').textContent = kwSolved;
+      if(kwSolved >= KW_TOTAL){
+        document.getElementById('complete-kw').classList.add('show');
+        document.getElementById('btnTrophy').style.display = 'block';
+      }
+    }
+    return;
+  }
+
+  if(showFeedback || filled){
+    const wrong = boxes.filter(b => b.classList.contains('err')).length;
+    st.className = 'kw-status warn';
+    st.innerHTML = wrong > 0
+      ? `⚠️ ${wrong} letra(s) em vermelho — corrija e tente de novo.`
+      : '⚠️ Faltam letras para completar a palavra.';
+  } else {
+    st.className = 'kw-status';
+    st.innerHTML = '';
+  }
+}
+
+function revealKeyword(i){
+  const item = document.getElementById(`kw-${i}`);
+  if(item.classList.contains('solved')) return;
+  item.dataset.revealed = '1';
+  item.classList.add('revealed');
+  const boxes = charInputs(i);
+  const letters = [...keywords[i].answer].filter(c => c !== ' ');
+  boxes.forEach((b, idx)=>{
+    b.value = letters[idx];
+    b.classList.remove('err','ok');
+    b.classList.add('shown');
+    b.disabled = true;
+  });
+  document.getElementById(`kwrv-${i}`).disabled = true;
+  const st = document.getElementById(`kwst-${i}`);
+  st.className = 'kw-status warn';
+  st.innerHTML = `👀 Resposta: <b style="text-transform:uppercase;letter-spacing:.05em;">${keywords[i].answer}</b> (sem pontos)`;
+}
+
+function checkAllKeywords(){
+  keywords.forEach((k,i)=>{
+    charInputs(i).forEach(validateChar);
+    evaluateKeyword(i, true);
+  });
+}
+
+function resetKeywords(){
+  kwSolved = 0;
+  document.getElementById('kwDone').textContent = '0';
+  document.getElementById('complete-kw').classList.remove('show');
+  document.getElementById('btnTrophy').style.display = 'none';
+  keywords.forEach((k,i)=>{
+    const item = document.getElementById(`kw-${i}`);
+    // devolve os pontos ganhos para que não haja pontuação duplicada
+    if(item.classList.contains('solved') && !item.dataset.revealed) score -= 10;
+    item.classList.remove('solved','revealed');
+    delete item.dataset.revealed;
+    document.getElementById(`kwrv-${i}`).disabled = false;
+    const st = document.getElementById(`kwst-${i}`);
+    st.className = 'kw-status'; st.innerHTML = '';
+    charInputs(i).forEach(b=>{
+      b.value = ''; b.disabled = false; b.classList.remove('ok','err','shown');
+    });
+  });
+  updateScore();
+}
+
+/* ============================================================
+   PONTUAÇÃO, PROGRESSO E EXTRAS
+   ============================================================ */
+function updateScore(){
+  document.getElementById('scoreDisplay').textContent = score;
+  const totalItems = MC_TOTAL + KW_TOTAL;
+  const done = mcAnswered + kwSolved;
+  document.getElementById('progressFill').style.width = (done / totalItems * 100) + '%';
+}
+
+function showTrophy(){
+  document.getElementById('finalScore').textContent = score;
+  const max = (MC_TOTAL + KW_TOTAL) * 10;
+  const pct = Math.round(score / max * 100);
+  document.getElementById('finalMsg').textContent =
+    pct >= 90 ? '🌟 Exceptional! Você argumenta como um profissional!' :
+    pct >= 70 ? '👏 Very well done! Muito bem — continue praticando!' :
+                '📚 Keep studying! Revise a estrutura OREO e tente de novo.';
+  const t = document.getElementById('finalTrophy');
+  t.classList.add('show');
+  t.scrollIntoView({behavior:'smooth'});
+  launchConfetti(); launchConfetti();
+}
+
+function launchConfetti(){
+  const c = document.getElementById('confettiContainer');
+  const colors = ['#f97316','#fb923c','#fbbf24','#f59e0b','#fdba74','#fed7aa','#fff'];
+  for(let i=0;i<22;i++){
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.cssText = `left:${Math.random()*100}vw;top:-10px;background:${colors[Math.floor(Math.random()*colors.length)]};width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${.7+Math.random()*.8}s;animation-delay:${Math.random()*.3}s`;
+    c.appendChild(p);
+    setTimeout(()=>p.remove(),1500);
+  }
+}
+
+document.querySelectorAll('.nav-chip').forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    const el = document.getElementById(chip.dataset.go);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.06});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+renderMC();
+renderKeywords();
+updateScore();
+document.getElementById('sec-o-que-e').classList.add('visible');
+</script>
+</body>
+</html>
